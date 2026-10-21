@@ -7,7 +7,7 @@
    Neue Hausschrift einbauen:
      1. .woff2-Dateien nach /assets/fonts/ legen
      2. @font-face unten einkommentieren und anpassen
-     3. Namen vorne in --font-display / --font-body eintragen
+     3. Namen vorne in --font-text eintragen (gilt dann überall)
    ===================================================================== */
 
 /*
@@ -17,9 +17,12 @@
 
 :root {
   /* Schriften */
-  --font-display: "Bodoni 72", Didot, "Bodoni MT", "Playfair Display", "Iowan Old Style", Georgia, serif;
-  --font-body: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Formulare, Admin */
+  /* Eine Schriftfamilie für die ganze Website; Hierarchie nur über Größe und Gewicht */
+  --font-text: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-display: var(--font-text);
+  --font-body: var(--font-text);
+  --font-ui: var(--font-text);
+  --font-admin: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* nur Admin-Oberfläche */
 
   /* Farben */
   --c-night: #15100d;      /* Grund dunkel (Ofen, Hero, Footer) */

@@ -1,5 +1,6 @@
 import { loadMenu, visibleSections, formatPrice, formatDate, esc } from './menu-core.js';
 import { ILL } from './ills.js';
+import { toggleHTML, wireDialog } from './season.js';
 const IMG = (n, w) => new URL(`../img/foto/${n}-${w}.webp`, import.meta.url).href;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -44,24 +45,38 @@ function dish(i, s, compact) {
     <p class="dish-al">${al.map((a) => `<abbr title="${esc(MENU.allergensLong?.[a] || MENU.allergens?.[a] || a)}">${esc(a)}</abbr>`).join('')}</p>
   </article>`;
 }
+const active = () => !!(state.q || state.veg || state.vegan || state.spicy || state.noAl.size);
+function secHTML(s, groups, idp = '') {
+  return `<section class="mk-sec ${s.style === 'season' ? 'mk-season' : ''} ${s.compact ? 'compact' : ''}" ${idp ? '' : `id="${esc(s.id)}"`} aria-labelledby="h-${idp}${esc(s.id)}">
+      ${idp ? '<button class="sd-close" type="button" data-close aria-label="Schließen">×</button>' : ''}
+      <div class="mk-sec-head">${ILL[s.icon] || ''}<h2 id="h-${idp}${esc(s.id)}">${esc(s.title)}</h2>${s.subtitle ? `<span class="sub">${esc(s.subtitle)}</span>` : ''}</div>
+      ${s.photo ? `<figure class="mk-photo"><img src="${IMG(s.photo, 1400)}" srcset="${IMG(s.photo, 800)} 800w, ${IMG(s.photo, 1400)} 1400w" sizes="(max-width: 760px) 100vw, 1200px" alt="" loading="lazy" decoding="async"></figure>` : ''}
+      ${s.note ? `<p class="mk-sec-note">${esc(s.note)}</p>` : ''}${groups}</section>`;
+}
+let openSeason = () => {};
 function render() {
-  let shown = 0;
+  let shown = 0, seasonDlg = '';
   const html = SECS.map((s) => {
     const compact = !!s.compact;
+    let count = 0;
     const groups = s.groups.map((g) => {
       const items = g.items.filter((i) => matches(i, s));
-      shown += items.length;
+      shown += items.length; count += items.length;
       if (!items.length) return '';
       return `${g.title ? `<h3 class="mk-group-title">${esc(g.title)}</h3>` : ''}${g.note ? `<p class="mk-group-note">${esc(g.note)}</p>` : ''}
         <div class="mk-grid">${items.map((i) => dish(i, s, compact)).join('')}</div>${g.tip ? `<p class="mk-tip">${esc(g.tip)}</p>` : ''}`;
     }).join('');
     if (!groups) return '';
-    return `<section class="mk-sec ${s.style === 'season' ? 'mk-season' : ''} ${compact ? 'compact' : ''}" id="${esc(s.id)}" aria-labelledby="h-${esc(s.id)}">
-      <div class="mk-sec-head">${ILL[s.icon] || ''}<h2 id="h-${esc(s.id)}">${esc(s.title)}</h2>${s.subtitle ? `<span class="sub">${esc(s.subtitle)}</span>` : ''}</div>
-      ${s.photo ? `<figure class="mk-photo"><img src="${IMG(s.photo, 1400)}" srcset="${IMG(s.photo, 800)} 800w, ${IMG(s.photo, 1400)} 1400w" sizes="(max-width: 760px) 100vw, 1200px" alt="" loading="lazy" decoding="async"></figure>` : ''}
-      ${s.note ? `<p class="mk-sec-note">${esc(s.note)}</p>` : ''}${groups}</section>`;
+    // Saison: ohne Suche/Filter zugeklappt, öffnet als Fenster
+    if (s.style === 'season' && !active()) {
+      seasonDlg = secHTML(s, groups, 'dlg-');
+      return `<section class="mk-sec mk-season-mini" id="${esc(s.id)}" aria-label="${esc(s.title)}"><button class="season-toggle" type="button" data-season aria-haspopup="dialog" aria-controls="season-dlg">${toggleHTML(s, count)}</button></section>`;
+    }
+    return secHTML(s, groups);
   }).join('');
   $('mk-sections').innerHTML = html;
+  $('season-dlg').innerHTML = seasonDlg;
+  openSeason = wireDialog($('season-dlg'), [...document.querySelectorAll('[data-season]')]);
   animate();
   $('mk-empty').hidden = shown > 0;
   const n = (state.veg + state.vegan + state.spicy) + state.noAl.size;
@@ -69,7 +84,7 @@ function render() {
   renderCats();
 }
 function renderCats() {
-  const present = [...document.querySelectorAll('.mk-sec')].map((s) => s.id);
+  const present = [...document.querySelectorAll('#mk-sections .mk-sec')].map((s) => s.id);
   $('mk-cats').innerHTML = SECS.filter((s) => present.includes(s.id)).map((s) => `<a href="#${esc(s.id)}" data-id="${esc(s.id)}">${esc(s.title)}</a>`).join('');
   spy();
 }
@@ -77,12 +92,12 @@ function renderCats() {
 let inObs;
 function animate() {
   if (reduced) return;
-  document.querySelectorAll('.mk-sec-head .ill').forEach((svg) => svg.querySelectorAll('path, ellipse, circle, line').forEach((el) => {
+  document.querySelectorAll('#mk-sections .mk-sec-head .ill').forEach((svg) => svg.querySelectorAll('path, ellipse, circle, line').forEach((el) => {
     try { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L; } catch { }
   }));
   inObs?.disconnect();
   inObs = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); inObs.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.mk-sec-head, .dish, .mk-photo').forEach((el) => { el.classList.add('will-in'); inObs.observe(el); });
+  document.querySelectorAll('#mk-sections .mk-sec-head, #mk-sections .dish, #mk-sections .mk-photo').forEach((el) => { el.classList.add('will-in'); inObs.observe(el); });
 }
 let pTick = false;
 function parallax() {
@@ -113,7 +128,7 @@ function spy() {
       a?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
     });
   }, { rootMargin: '-160px 0px -65% 0px' });
-  document.querySelectorAll('.mk-sec').forEach((s) => spyObs.observe(s));
+  document.querySelectorAll('#mk-sections .mk-sec').forEach((s) => spyObs.observe(s));
 }
 
 loadMenu().then(({ menu }) => {
@@ -123,7 +138,11 @@ loadMenu().then(({ menu }) => {
   $('mk-legend').innerHTML = `<h2>Allergeninformation</h2><dl>${Object.entries(menu.allergensLong || menu.allergens || {}).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
     <p>Allergenkennzeichnung gemäß Codex-Empfehlung, jeweils inklusive daraus gewonnener Erzeugnisse. * fleischlos · ${esc(menu.footer || '')}</p>`;
   render();
-  if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  if (location.hash) {
+    const t = document.getElementById(location.hash.slice(1));
+    t?.scrollIntoView();
+    if (t?.classList.contains('mk-season-mini')) openSeason();
+  }
 });
 
 /* Bedienung */
@@ -138,3 +157,9 @@ $('mk-filters').addEventListener('change', (e) => {
 });
 function reset() { state.veg = state.vegan = state.spicy = false; state.noAl.clear(); state.q = ''; $('mk-q').value = ''; $('mk-filters').querySelectorAll('input').forEach((i) => i.checked = false); render(); }
 $('mk-reset').addEventListener('click', reset); $('mk-reset2').addEventListener('click', reset);
+
+/* Kategorie „Saison“ in der Leiste öffnet das Fenster */
+$('mk-cats').addEventListener('click', (e) => {
+  const a = e.target.closest('a'); if (!a) return;
+  if (document.getElementById(a.dataset.id)?.classList.contains('mk-season-mini')) { e.preventDefault(); openSeason(); }
+});

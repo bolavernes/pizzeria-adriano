@@ -403,7 +403,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   let oven = null, mode = 'glb';
   const KEY = {
     // Innenansicht: Kamera bleibt vor dem offenen Ofen, schwenkt sanft und fährt näher ans Feuer
-    glb: { interior: true, sweep: 0.24, start: { d: 3.9, dp: 6.1, h: 2.3, ty: 1.6, tz: -0.12 }, end: { d: 2.55, dp: 4.2, h: 1.85, ty: 1.46, tz: -0.36 } },
+    glb: { interior: true, sweep: 0.24, start: { d: 3.9, dp: 4.6, h: 2.3, ty: 1.6, tz: -0.12 }, end: { d: 2.55, dp: 3.2, h: 1.85, ty: 1.46, tz: -0.36 } },
     proc: { rot0: -0.85, start: { d: 8.2, dp: 13.5, h: 2.9, ty: 1.15, tz: 0 }, end: { d: 3.9, dp: 6.2, h: 1.55, ty: 1.28, tz: 0.9 } }
   };
   function useProcedural() { mode = 'proc'; oven = buildOven({ lowPower }); stage.add(oven); onReady && onReady(); }
@@ -476,9 +476,10 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
     stage.rotation.y = rot;
     // Kamera: Totale -> an die Ofenöffnung
     const k = KEY[mode].interior ? ease(smooth) : ease(Math.min(1, Math.max(0, (smooth - 0.55) / 0.45)));
-    const portrait = camera.aspect < 0.9;
+    // Hochformat: stufenlos etwas zurück, damit die Öffnung ins Bild passt (Tablet kaum, Handy mehr)
+    const pf = Math.min(1, Math.max(0, (0.9 - camera.aspect) / 0.42));
     const a = K.start, b = K.end, L = THREE.MathUtils.lerp;
-    const dist = L(portrait ? a.dp : a.d, portrait ? b.dp : b.d, k);
+    const dist = L(L(a.d, a.dp, pf), L(b.d, b.dp, pf), k);
     const height = L(a.h, b.h, k);
     target.set(0, L(a.ty, b.ty, k), L(a.tz, b.tz, k));
     camPos.set(0, height, dist);

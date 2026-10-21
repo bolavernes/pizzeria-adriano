@@ -1,4 +1,5 @@
 import { loadMenu, visibleSections, formatPrice, esc } from './menu-core.js';
+import { toggleHTML, wireDialog } from './season.js';
 import { ILL } from './ills.js';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -41,7 +42,7 @@ if (canvas && hasWebGL()) {
     modelUrl: new URL('../models/pizzaofen.glb', import.meta.url).href,
     onReady: () => canvas.classList.remove('is-loading'),
     shiftX: (w, h) => (w / h > 1.15 ? 0.15 : 0),
-    shiftY: (w, h) => (w / h < 0.9 ? 0.2 : 0)
+    shiftY: (w, h) => (w / h < 0.9 ? 0.2 * Math.min(1, (0.9 - w / h) / 0.3) : 0)
   })).catch(() => document.documentElement.classList.add('no-webgl'));
 } else document.documentElement.classList.add('no-webgl');
 
@@ -53,13 +54,16 @@ loadMenu().then(({ menu }) => {
     <li><a href="speisekarte/#${esc(s.id)}">${ILL[s.icon] || ''}<span class="t">${esc(s.title)}</span><span class="s">${esc(s.subtitle || '')}</span></a></li>`).join('');
   hoverPreview(secs);
   const season = secs.find((s) => s.style === 'season');
-  const box = document.getElementById('season');
-  if (season && box) {
+  const box = document.getElementById('season'), sBtn = document.getElementById('season-btn'), sDlg = document.getElementById('season-dlg');
+  if (season && box && sBtn && sDlg) {
     const items = season.groups.flatMap((g) => g.items);
-    box.innerHTML = `<h3>${ILL[season.icon] || ''}${esc(season.title)}</h3><p class="when">${esc(season.subtitle || '')}</p>
+    sBtn.innerHTML = toggleHTML(season, items.length);
+    box.innerHTML = `<button class="sd-close" type="button" data-close aria-label="Schließen">×</button>
+      <h3 id="season-h">${ILL[season.icon] || ''}${esc(season.title)}</h3><p class="when">${esc(season.subtitle || '')}</p>
       <ul>${items.map((i) => `<li><span class="n">${esc(i.name)}</span><span class="p">${esc(formatPrice(i.price, i.pricePrefix))}</span>${i.desc ? `<div class="d">${esc(i.desc)}</div>` : ''}</li>`).join('')}</ul>
       <a class="link" href="speisekarte/#${esc(season.id)}">In der Speisekarte ansehen</a>`;
-    box.hidden = false;
+    sBtn.hidden = false;
+    wireDialog(sDlg, [sBtn]);
   }
   const pizza = secs.find((s) => s.id === 'pizza');
   if (pizza) {

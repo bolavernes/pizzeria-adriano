@@ -1,6 +1,6 @@
 /* Admin – Speisekarte bearbeiten */
 * { box-sizing: border-box; }
-body { margin: 0; font-family: var(--font-ui, system-ui, sans-serif); font-size: 15px; color: var(--c-ink); background: #f3efe9; }
+body { margin: 0; font-family: var(--font-admin, system-ui, sans-serif); font-size: 15px; color: var(--c-ink); background: #f3efe9; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 button, input, textarea, select { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--c-wine); outline-offset: 2px; }

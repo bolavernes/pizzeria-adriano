@@ -72,21 +72,20 @@
     </div>
   </section>
 
-  <div class="wordmark" aria-hidden="true"><div class="wm-track"><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i></div></div>
-
   <!-- Karte -->
   <section class="section" id="karte">
     <div class="wrap">
       <div class="section-head has-stamp reveal">
         <h2>Die Karte</h2>
-        <div class="stamp" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="st-c" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width=".8"/><text font-size="10.5" letter-spacing="2.2"><textPath href="#st-c">PIZZERIA ADRIANO · HOLZOFEN · WIEN 1200 ·</textPath></text><text x="60" y="57" text-anchor="middle" font-size="9" letter-spacing="1">DAL</text><text x="60" y="71" text-anchor="middle" font-size="13" font-weight="700">FORNO</text></svg></div>
+        <div class="stamp" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="st-c" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width=".8"/><text font-size="10.5" letter-spacing="1.2"><textPath href="#st-c" textLength="272" lengthAdjust="spacing">Pizzeria Adriano · Holzofen · Wien 1200 ·</textPath></text><text x="60" y="57" text-anchor="middle" font-size="10" font-style="italic">dal</text><text x="60" y="71" text-anchor="middle" font-size="13" font-weight="700">Forno</text></svg></div>
         <p class="dropcap">Antipasti, Pasta, Fisch und über vierzig Holzofenpizzen. Vieles machen wir selbst – vom Pesto bis zum Tiramisu.</p>
       </div>
       <div class="menu-teaser">
         <ul class="cat-list reveal" id="cat-list" aria-label="Kategorien der Speisekarte"></ul>
         <div class="teaser-side">
           <figure class="teaser-photo reveal"><img src="assets/img/foto/speisekarte-hand-800.webp" srcset="assets/img/foto/speisekarte-hand-800.webp 800w, assets/img/foto/speisekarte-hand-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 40vw" alt="Ein Gast blättert in der roten Adriano-Speisekarte" width="800" height="1000" loading="lazy"></figure>
-          <aside class="season reveal" id="season" hidden></aside>
+          <button class="season-toggle reveal" id="season-btn" type="button" aria-haspopup="dialog" aria-controls="season-dlg" hidden></button>
+          <dialog class="season-dlg" id="season-dlg" aria-labelledby="season-h"><div class="season" id="season"></div></dialog>
         </div>
       </div>
       <p class="reveal" style="margin-top:40px"><a class="btn" href="speisekarte/">Ganze Speisekarte öffnen</a></p>
@@ -204,7 +203,6 @@
   </section>
 </main>
 <div class="gingham" aria-hidden="true"></div>
-<div class="wordmark wm-foot" aria-hidden="true"><div class="wm-track"><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i><span>Adriano</span><i>◆</i><span>Pizzeria</span><i>◆</i><span>Holzofen</span><i>◆</i></div></div>
 <footer class="site-foot">
   <div class="wrap">
     <div><a class="brand" href="./">Adriano</a><p>Ristorante – Pizzeria<br>Wallensteinstraße 54, 1200 Wien</p></div>
