@@ -207,3 +207,91 @@ figcaption { font-size: .85rem; color: var(--c-ink-soft); margin-top: 10px; }
 .cat-preview { position: fixed; left: 0; top: 0; width: 220px; aspect-ratio: 4 / 5; pointer-events: none; z-index: 60; opacity: 0; transition: opacity .3s; border-radius: 3px; overflow: hidden; box-shadow: 0 20px 50px #15100d40; }
 .cat-preview.is-on { opacity: 1; }
 .cat-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+
+/* =====================================================================
+   TRATTORIA-EBENE – Papier, Tomatenrot, Doppelrahmen, Karo
+   (inspiriert von klassischen römischen Trattoria-Karten)
+   ===================================================================== */
+body { font-size: 18px; }
+.form input, .form textarea, .btn, .head-call, .nav a, .menu-btn { font-family: var(--font-ui); }
+h1, h2, h3 { font-weight: 700; }
+
+/* Rahmen um die ganze Seite */
+body::after { content: ""; position: fixed; inset: 10px; border: 1px solid color-mix(in srgb, var(--c-wine) 70%, transparent); outline: 1px solid color-mix(in srgb, var(--c-wine) 35%, transparent); outline-offset: 4px; pointer-events: none; z-index: 44; }
+@media (max-width: 760px) { body::after { inset: 6px; outline-offset: 3px; } }
+
+/* Kopfzeile auf Papier */
+.site-head.is-solid { background: color-mix(in srgb, var(--c-paper) 96%, transparent); color: var(--c-ink); border-bottom: 1px solid color-mix(in srgb, var(--c-wine) 30%, transparent); }
+.site-head .brand { font-style: italic; letter-spacing: .02em; }
+.site-head.is-solid .brand { color: var(--c-wine); }
+.site-head.is-solid .nav a { color: var(--c-ink-soft); }
+.site-head.is-solid .nav a:hover, .site-head.is-solid .nav a[aria-current="page"] { color: var(--c-wine); }
+.nav a { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; }
+@media (max-width: 860px) { .site-head.is-solid .nav { background: var(--c-paper); } .site-head.is-solid .nav a { color: var(--c-ink); border-bottom-color: #2b262214; } }
+
+/* Überschriften: versal, rot, mit Raute */
+.section-head h2 { text-transform: uppercase; letter-spacing: -.005em; color: var(--c-wine); font-size: clamp(2.6rem, 6.4vw, 5.6rem); line-height: .95; }
+.section-head h2::before { content: "◆"; font-size: .32em; vertical-align: .55em; margin-right: .4em; }
+.dark .section-head h2, .rosso .section-head h2 { color: inherit; }
+.section-head.has-stamp { position: relative; padding-right: 150px; }
+.stamp { position: absolute; right: 0; top: -10px; width: 132px; color: var(--c-wine); opacity: .85; animation: spin 38s linear infinite; }
+.stamp svg { display: block; width: 100%; fill: currentColor; font-family: var(--font-display); }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 760px) { .section-head.has-stamp { padding-right: 0; } .stamp { width: 92px; top: -40px; } }
+
+/* Initiale im schwarzen Kasten */
+.dropcap::first-letter { float: left; font-family: var(--font-display); font-weight: 700; font-size: 3.3em; line-height: .82; padding: .12em .16em .08em; margin: .08em .28em 0 0; background: var(--c-ink); color: var(--c-paper); }
+.rosso .dropcap::first-letter, .dark .dropcap::first-letter { background: var(--c-paper); color: var(--c-wine); }
+
+/* Buttons mit Doppelrahmen */
+.btn { background: transparent; color: var(--c-wine); border: 1px solid currentColor; outline: 1px solid currentColor; outline-offset: 3px; border-radius: 0; text-transform: uppercase; letter-spacing: .16em; font-size: .82rem; font-weight: 600; padding: 14px 22px; margin: 4px; }
+.btn:hover { background: var(--c-wine); color: var(--c-paper); }
+.hero .btn { background: var(--c-wine); color: #fff; border-color: var(--c-wine); outline-color: color-mix(in srgb, var(--c-wine) 60%, transparent); }
+.hero .btn:hover { background: var(--c-wine-bright); }
+.rosso .btn { color: var(--c-paper); }
+.rosso .btn:hover { background: var(--c-paper); color: var(--c-wine); }
+.head-call { border-radius: 0; text-transform: uppercase; letter-spacing: .1em; font-size: .78rem; }
+
+/* Laufband-Wortmarke */
+.wordmark { overflow: hidden; background: var(--c-paper); color: var(--c-wine); border-block: 1px solid color-mix(in srgb, var(--c-wine) 50%, transparent); padding: clamp(10px, 1.4vw, 18px) 0; }
+.wm-track { display: flex; width: max-content; gap: .35em; align-items: center; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: clamp(3.4rem, 12vw, 11rem); line-height: .9; letter-spacing: -.01em; animation: wm 46s linear infinite; }
+.wm-track i { font-style: normal; font-size: .28em; }
+.wm-track span:nth-child(4n+3) { font-style: italic; }
+.wm-foot { background: var(--c-night); color: var(--c-wine-bright); border: 0; }
+@keyframes wm { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .wm-track, .stamp { animation: none; } }
+
+/* Karo-Bordüre wie die Tischtücher */
+.gingham { height: 16px; background-color: var(--c-paper); background-image: linear-gradient(90deg, color-mix(in srgb, var(--c-wine) 55%, transparent) 50%, transparent 50%), linear-gradient(color-mix(in srgb, var(--c-wine) 55%, transparent) 50%, transparent 50%); background-size: 16px 16px; }
+
+/* Saison-Kasten in Rot */
+.season { background: var(--c-wine); }
+.season .when, .season h3 .ill { color: var(--c-paper); }
+.season .d, .season .p { color: color-mix(in srgb, var(--c-paper) 80%, transparent); }
+.season li { border-bottom-color: #ffffff2a; }
+.season .link { color: var(--c-paper); }
+
+/* Galerie auf Papier */
+.gallery-sec .section-head p { color: var(--c-ink-soft); }
+
+/* Feiern in Rot */
+.rosso { background: var(--c-wine); color: var(--c-paper); }
+.rosso .section-head p, .rosso .feiern p, .rosso .form label, .rosso .form .hint { color: color-mix(in srgb, var(--c-paper) 85%, transparent); }
+.rosso .feiern h3 { color: var(--c-paper); }
+.rosso .form input, .rosso .form textarea { background: color-mix(in srgb, var(--c-ink) 14%, transparent); border-color: color-mix(in srgb, var(--c-paper) 40%, transparent); color: var(--c-paper); }
+.rosso .form input::placeholder, .rosso .form textarea::placeholder { color: color-mix(in srgb, var(--c-paper) 60%, transparent); }
+.rosso .form input:focus, .rosso .form textarea:focus { border-color: var(--c-paper); }
+.rosso .link { color: var(--c-paper); }
+.rosso .feiern-photo img { outline: 1px solid color-mix(in srgb, var(--c-paper) 50%, transparent); outline-offset: 6px; }
+
+/* Kategorien */
+.cat-list .t { text-transform: uppercase; font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
+.cat-list a:hover .t { color: var(--c-wine); font-style: italic; }
+.cat-list .ill { color: var(--c-wine); }
+
+/* Zahlen im Lokal */
+.fact .v { font-style: italic; }
+.besuch-tel, .visit .big-tel { font-style: italic; }
+.visit h3, .feiern h3 { text-transform: uppercase; letter-spacing: .02em; }
+.site-foot .brand { font-style: italic; color: var(--c-wine-bright); }
