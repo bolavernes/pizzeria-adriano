@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pizzeria Adriano – Holzofenpizza in 1200 Wien</title>
+<meta name="description" content="Holzofenpizza, Pasta und Pesce in der Wallensteinstraße 54, 1200 Wien. Täglich 11–24 Uhr, warme Küche bis 22:30. Speisekarte online, Feiern bis 40 Personen.">
+<link rel="canonical" href="https://www.pizzeria-adriano.at/">
+<meta property="og:type" content="restaurant">
+<meta property="og:title" content="Pizzeria Adriano – Holzofenpizza in 1200 Wien">
+<meta property="og:description" content="Holzofenpizza, Pasta und Pesce in der Wallensteinstraße 54. Täglich 11–24 Uhr.">
+<meta property="og:image" content="https://www.pizzeria-adriano.at/assets/img/og-adriano.jpg">
+<meta property="og:url" content="https://www.pizzeria-adriano.at/">
+<meta name="theme-color" content="#15100d">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/brand.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="modulepreload" href="assets/vendor/three.module.min.js">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Pizzeria Adriano","servesCuisine":["Italienisch","Pizza"],"url":"https://www.pizzeria-adriano.at/","telephone":"+43 1 3327351","email":"info@pizzeria-adriano.at","menu":"https://www.pizzeria-adriano.at/speisekarte/","address":{"@type":"PostalAddress","streetAddress":"Wallensteinstraße 54","postalCode":"1200","addressLocality":"Wien","addressCountry":"AT"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"11:00","closes":"24:00"}],"image":"https://www.pizzeria-adriano.at/assets/img/og-adriano.jpg"}
+</script>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="site-head" id="kopf">
+  <div class="wrap">
+    <a class="brand" href="./">Adriano</a>
+    <nav class="nav" id="nav" aria-label="Hauptnavigation">
+      <a href="speisekarte/">Speisekarte</a>
+      <a href="#lokal">Das Lokal</a>
+      <a href="#feiern">Feiern &amp; Gutscheine</a>
+      <a href="#besuch">Besuch</a>
+    </nav>
+    <a class="head-call" href="tel:+4313327351">01 33 27 351</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menü</button>
+  </div>
+</header>
+
+<main id="inhalt">
+  <!-- Hero: der Ofen dreht sich beim Scrollen -->
+  <section class="hero" id="ofen" aria-label="Der Holzofen">
+    <div class="hero-stage">
+      <img class="hero-fallback" src="assets/img/ofen-1600.webp" alt="" width="1600" height="1066">
+      <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht unseres Holzofens. Zum Drehen ziehen oder Pfeiltasten verwenden."></canvas>
+      <div class="hero-copy">
+        <div class="wrap">
+          <div class="hero-step is-on" data-from="0" data-to="0.3">
+            <h1>Pizza aus dem Holzofen.</h1>
+            <p class="lead">Pizzeria Adriano in der Wallensteinstraße 54 – täglich von 11 bis 24 Uhr, warme Küche bis 22:30.</p>
+            <div class="hero-actions">
+              <a class="btn" href="speisekarte/">Speisekarte ansehen</a>
+              <a class="link" href="tel:+4313327351">Tisch reservieren: 01 33 27 351</a>
+            </div>
+          </div>
+          <div class="hero-step" data-from="0.36" data-to="0.66">
+            <h2>Den Ofen sehen Sie vom Tisch aus.</h2>
+            <p class="lead">Wer im ersten Raum nach dem Eingang Platz nimmt, schaut unserem Pizzakoch direkt bei der Arbeit am Holzofen zu.</p>
+          </div>
+          <div class="hero-step" data-from="0.74" data-to="1.01">
+            <h2><span data-count="pizza">42</span> Pizzen. Ein Feuer.</h2>
+            <p class="lead">Von der Marinara bis zur Pizza Adriano – jede wird im Holzofen gebacken.</p>
+            <div class="hero-actions"><a class="btn" href="speisekarte/#pizza">Zu den Pizzen</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v13M6 12l6 6 6-6"/></svg>Scrollen – oder den Ofen mit der Maus drehen</div>
+      <div class="hero-progress" aria-hidden="true"><i id="prog"></i></div>
+    </div>
+  </section>
+
+  <!-- Karte -->
+  <section class="section" id="karte">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Die Karte</h2>
+        <p>Antipasti, Pasta, Fisch und über vierzig Holzofenpizzen. Vieles machen wir selbst – vom Pesto bis zum Tiramisu.</p>
+      </div>
+      <div class="menu-teaser">
+        <ul class="cat-list reveal" id="cat-list" aria-label="Kategorien der Speisekarte"></ul>
+        <aside class="season reveal" id="season" hidden></aside>
+      </div>
+      <p class="reveal" style="margin-top:40px"><a class="btn" href="speisekarte/">Ganze Speisekarte öffnen</a></p>
+    </div>
+  </section>
+
+  <!-- Lokal -->
+  <section class="section tone" id="lokal">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Zwei Räume, ein Holzofen</h2>
+      </div>
+      <div class="lokal">
+        <figure class="big reveal">
+          <img src="assets/img/ofen-1600.webp" srcset="assets/img/ofen-900.webp 900w, assets/img/ofen-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 66vw" alt="Der Holzofen der Pizzeria Adriano mit Ziegelbogen und Holzlager, daneben die Pizza-Station" width="1600" height="1066" loading="lazy">
+        </figure>
+        <div class="txt reveal">
+          <p>Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
+          <p>Die beiden Räume sind offen verbunden. In den warmen Monaten sitzen Sie auch draußen im Schanigarten.</p>
+        </div>
+        <figure class="small reveal">
+          <img src="assets/img/gastraum-1600.webp" srcset="assets/img/gastraum-900.webp 900w, assets/img/gastraum-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 42vw" alt="Gastraum mit Holztischen, roten Servietten und Ziegelbogen" width="1600" height="1066" loading="lazy">
+        </figure>
+        <div class="facts reveal">
+          <div class="fact"><div class="v">40</div><div class="l">Plätze in zwei Räumen</div></div>
+          <div class="fact"><div class="v">7</div><div class="l">Tage die Woche geöffnet – kein Ruhetag</div></div>
+          <div class="fact"><div class="v">22:30</div><div class="l">warme Küche bis</div></div>
+          <div class="fact"><div class="v">2014</div><div class="l">übernommen von Familie Spoljar</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feiern & Gutscheine -->
+  <section class="section dark" id="feiern">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Feiern im Adriano</h2>
+        <p>Geburtstag, Firmenessen oder Taufe: Für geschlossene Gesellschaften stellen wir Ihnen das ganze Lokal mit 40 Plätzen zur Verfügung.</p>
+      </div>
+      <div class="feiern">
+        <div class="reveal">
+          <h3>Anfrage für Ihre Feier</h3>
+          <p>Schreiben Sie uns Datum und Personenzahl – wir melden uns mit einem Vorschlag.</p>
+          <form class="form" name="feier-anfrage" method="POST" data-netlify="true" netlify-honeypot="firma" action="danke.html">
+            <input type="hidden" name="form-name" value="feier-anfrage">
+            <p class="sr-only"><label>Nicht ausfüllen <input name="firma" id="f-firma"></label></p>
+            <label>Name <input id="f-name" name="name" autocomplete="name" required></label>
+            <label>Telefon oder E-Mail <input id="f-kontakt" name="kontakt" required></label>
+            <label>Datum <input id="f-datum" name="datum" type="date" required></label>
+            <label>Personen <input id="f-personen" name="personen" type="number" min="1" max="40" inputmode="numeric" required></label>
+            <label class="full">Ihre Nachricht <textarea id="f-nachricht" name="nachricht" placeholder="z. B. Geburtstag, Uhrzeit, Menüwünsche"></textarea></label>
+            <p class="hint">Ihre Angaben verwenden wir nur zur Beantwortung der Anfrage. <a class="link" href="datenschutz/">Datenschutz</a></p>
+            <button class="btn" type="submit">Anfrage senden</button>
+          </form>
+        </div>
+        <div class="reveal">
+          <h3>Gutscheine</h3>
+          <p>Das ideale Geschenk: Freude und Genuss schenken mit einem Gutschein vom Adriano. Jeder beliebige Betrag ist möglich – erhältlich direkt im Lokal.</p>
+          <p><a class="link" style="color:var(--c-cream)" href="tel:+4313327351">Gutschein telefonisch reservieren</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Besuch -->
+  <section class="section" id="besuch">
+    <div class="wrap">
+      <div class="section-head reveal"><h2>Besuch &amp; Reservierung</h2></div>
+      <div class="visit reveal">
+        <div>
+          <h3>Reservieren</h3>
+          <a class="big-tel" href="tel:+4313327351">01 33 27 351</a>
+          <p>Mobil: <a href="tel:+4368181352828">0681 81 352 828</a></p>
+          <p>E-Mail: <a href="mailto:info@pizzeria-adriano.at">info@pizzeria-adriano.at</a></p>
+          <p style="margin-top:14px">Auch zum Abholen – einfach anrufen und bestellen.</p>
+        </div>
+        <div>
+          <h3>Öffnungszeiten</h3>
+          <table class="hours"><tbody>
+            <tr><td>Montag – Sonntag</td><td>11:00 – 24:00</td></tr>
+            <tr><td>Warme Küche</td><td>bis 22:30</td></tr>
+            <tr><td>Ruhetag</td><td>keiner</td></tr>
+          </tbody></table>
+        </div>
+        <div>
+          <h3>Adresse</h3>
+          <p>Wallensteinstraße 54<br>1200 Wien</p>
+          <p style="margin-top:14px"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Route planen</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div><a class="brand" href="./">Adriano</a><p>Ristorante – Pizzeria<br>Wallensteinstraße 54, 1200 Wien</p></div>
+    <ul>
+      <li><a href="speisekarte/">Speisekarte</a></li>
+      <li><a href="#lokal">Das Lokal</a></li>
+      <li><a href="#feiern">Feiern &amp; Gutscheine</a></li>
+    </ul>
+    <ul>
+      <li><a href="tel:+4313327351">01 33 27 351</a></li>
+      <li><a href="mailto:info@pizzeria-adriano.at">info@pizzeria-adriano.at</a></li>
+      <li><a href="https://www.facebook.com/AdrianoPizzeria" target="_blank" rel="noopener">Facebook</a></li>
+    </ul>
+    <div class="legal"><span>© Pizzeria Adriano</span><a href="impressum/">Impressum</a><a href="datenschutz/">Datenschutz</a></div>
+  </div>
+</footer>
+
+<script type="module" src="assets/js/site.js"></script>
+</body>
+</html>

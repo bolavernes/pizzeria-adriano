@@ -1,0 +1,14 @@
+{
+  "name": "pizzeria-adriano",
+  "private": true,
+  "type": "module",
+  "description": "Website der Pizzeria Adriano mit 3D-Holzofen, interaktiver Speisekarte und Admin zum Bearbeiten",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "check": "python3 tools/shipcheck.py ."
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  },
+  "engines": { "node": ">=20" }
+}

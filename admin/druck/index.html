@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Speisekarte Druckversion – Adriano</title>
+<meta name="description" content="Druckversion der Speisekarte der Pizzeria Adriano im A4-Format.">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/brand.css">
+<link rel="stylesheet" href="../../assets/css/print.css">
+</head>
+<body>
+<div class="toolbar">
+  <h1 class="tb-title">Druckversion</h1>
+  <span id="info">Wird gesetzt …</span>
+  <label>Schrift <button id="smaller" aria-label="Schrift kleiner">−</button><button id="bigger" aria-label="Schrift größer">+</button></label>
+  <label>Ziel <select id="target"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option></select> Seiten</label>
+  <button class="go" id="print">Drucken / als PDF speichern</button>
+  <span class="tb-hint">Im Druckdialog: Format A4, Ränder „Keine“, „Hintergrundgrafiken“ aktivieren.</span>
+</div>
+<main id="pages"></main>
+<script type="module" src="../../assets/js/print.js"></script>
+</body>
+</html>

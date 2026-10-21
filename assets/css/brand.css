@@ -1,0 +1,37 @@
+/* =====================================================================
+   BRANDING – Pizzeria Adriano
+   Hier und nur hier werden Schriften und Farben festgelegt.
+   Alle Seiten (Website, Speisekarte, Admin, Druckversion) lesen diese Werte.
+
+   Schriften: aktuell Standard-Systemschriften (keine Downloads, DSGVO-sicher).
+   Neue Hausschrift einbauen:
+     1. .woff2-Dateien nach /assets/fonts/ legen
+     2. @font-face unten einkommentieren und anpassen
+     3. Namen vorne in --font-display / --font-body eintragen
+   ===================================================================== */
+
+/*
+@font-face { font-family: "Hausschrift Display"; src: url("../fonts/display.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Hausschrift Text";    src: url("../fonts/text.woff2")    format("woff2"); font-weight: 400; font-display: swap; }
+*/
+
+:root {
+  /* Schriften */
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Farben */
+  --c-night: #15100d;      /* Grund dunkel (Ofen, Hero, Footer) */
+  --c-night-2: #211914;    /* Fläche auf dunkel */
+  --c-paper: #f5eee4;      /* Grund hell (Speisekarte, Inhalte) */
+  --c-paper-2: #ebe1d3;    /* Fläche auf hell */
+  --c-ink: #1d1713;        /* Text auf hell */
+  --c-ink-soft: #5d5149;   /* Nebentext auf hell */
+  --c-cream: #f3ebe0;      /* Text auf dunkel */
+  --c-cream-soft: #b9ab9c; /* Nebentext auf dunkel */
+  --c-wine: #8b1c2b;       /* Akzent: Adriano-Rot (Fassade, Karte) */
+  --c-wine-bright: #c23a3f;/* Akzent auf dunklem Grund */
+  --c-gold: #a9844b;       /* Illustrationen */
+  --c-olive: #5b6a37;      /* vegetarisch / hausgemacht */
+  --c-ember: #f08a3c;      /* nur Feuer-Akzente */
+}

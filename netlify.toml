@@ -1,0 +1,61 @@
+[build]
+  publish = "."
+  command = ""
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  included_files = ["data/menu.json"]
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+# Alte WordPress-Adressen auf die neuen Seiten umleiten
+[[redirects]]
+  from = "/speisen/*"
+  to = "/speisekarte/"
+  status = 301
+[[redirects]]
+  from = "/saisonale-speisen-kuerbiswochen/*"
+  to = "/speisekarte/#saison"
+  status = 301
+[[redirects]]
+  from = "/das-lokal/*"
+  to = "/#lokal"
+  status = 301
+[[redirects]]
+  from = "/ueber-uns/*"
+  to = "/#lokal"
+  status = 301
+[[redirects]]
+  from = "/anfahrt/*"
+  to = "/#besuch"
+  status = 301
+[[redirects]]
+  from = "/anfrageformular/*"
+  to = "/#feiern"
+  status = 301
+[[redirects]]
+  from = "/impressum/datenschutzerklaerung/*"
+  to = "/datenschutz/"
+  status = 301
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/admin/"
+  status = 301

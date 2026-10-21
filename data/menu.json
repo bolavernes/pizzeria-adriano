@@ -1,0 +1,1132 @@
+{
+ "schema": 1,
+ "updatedAt": "2026-10-21T18:00:00Z",
+ "footer": "Alle Preise in Euro inkl. MwSt.",
+ "allergens": {
+  "A": "Gluten",
+  "B": "Krebstiere",
+  "C": "Ei",
+  "D": "Fisch",
+  "E": "Erdnüsse",
+  "F": "Soja",
+  "G": "Milch/Laktose",
+  "H": "Schalenfrüchte",
+  "L": "Sellerie",
+  "M": "Senf",
+  "N": "Sesam",
+  "O": "Sulfite",
+  "P": "Lupinen",
+  "R": "Weichtiere"
+ },
+ "allergensLong": {
+  "A": "Glutenhaltiges Getreide",
+  "B": "Krebstiere",
+  "C": "Eier von Geflügel",
+  "D": "Fisch (außer Fischgelatine)",
+  "E": "Erdnüsse",
+  "F": "Sojabohnen",
+  "G": "Milch und Milcherzeugnisse (inkl. Laktose)",
+  "H": "Schalenfrüchte",
+  "L": "Sellerie",
+  "M": "Senf",
+  "N": "Sesamsamen",
+  "O": "Schwefeldioxid und Sulfite",
+  "P": "Lupinen",
+  "R": "Weichtiere wie Schnecken, Muscheln, Tintenfische"
+ },
+ "print": {
+  "targetPages": 4
+ },
+ "sections": [
+  {
+   "id": "saison",
+   "title": "Kürbis & Sturm",
+   "subtitle": "Nur zur Saison",
+   "style": "season",
+   "icon": "pumpkin",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "kurbiscremesuppe",
+       "name": "Kürbiscremesuppe",
+       "price": 5.8,
+       "desc": "mit Obershaube, Kürbiskernen und Kernöl verfeinert",
+       "allergens": ""
+      },
+      {
+       "id": "pizza-con-zucca",
+       "name": "Pizza con zucca",
+       "price": 15.5,
+       "desc": "mit Kürbis, Zucchini, Lauch, Speckwürfeln",
+       "allergens": ""
+      },
+      {
+       "id": "kurbis-lasagne",
+       "name": "Kürbis-Lasagne",
+       "price": 15.5,
+       "allergens": ""
+      },
+      {
+       "id": "kurbis-curry-penne",
+       "name": "Kürbis-Curry-Penne",
+       "price": 15,
+       "desc": "mit Speck",
+       "allergens": ""
+      },
+      {
+       "id": "gebratene-huhnerfilets-auf-kurbisrisotto",
+       "name": "Gebratene Hühnerfilets auf Kürbisrisotto",
+       "price": 18.9,
+       "allergens": ""
+      },
+      {
+       "id": "kurbispalatschinken",
+       "name": "Kürbispalatschinken",
+       "price": 15.9,
+       "desc": "mit Gorgonzolasauce im Holzofen überbacken",
+       "allergens": ""
+      },
+      {
+       "id": "kurbisrisotto",
+       "name": "Kürbisrisotto",
+       "price": 15.5,
+       "allergens": ""
+      },
+      {
+       "id": "sturm",
+       "name": "Sturm",
+       "price": 3.9,
+       "desc": "das Viertel – frisch und nur für kurze Zeit",
+       "allergens": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "antipasti",
+   "title": "Antipasti",
+   "subtitle": "Vorspeisen",
+   "icon": "olive",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "antipasto-alla-toscana",
+       "name": "Antipasto alla toscana",
+       "price": 13.5,
+       "desc": "gemischter Vorspeisenteller",
+       "allergens": "DG"
+      },
+      {
+       "id": "carpaccio-di-manzo",
+       "name": "Carpaccio di manzo",
+       "price": 13.9,
+       "desc": "dünn geschnittenes Rinderfilet mit Rucola, Parmesan, Oliven und Kapern",
+       "allergens": "G"
+      },
+      {
+       "id": "prosciutto-con-melone",
+       "name": "Prosciutto con melone",
+       "price": 11.7,
+       "desc": "Parmaschinken mit Melone",
+       "allergens": ""
+      },
+      {
+       "id": "mozzarella-caprese",
+       "name": "Mozzarella caprese",
+       "price": 10.5,
+       "desc": "Tomaten mit Mozzarella, Basilikumblättern und -pesto",
+       "allergens": "G",
+       "vegetarian": true
+      },
+      {
+       "id": "cozze-gratinate-piccola",
+       "name": "Cozze gratinate – piccola",
+       "price": 9.5,
+       "desc": "kleine Portion Miesmuscheln mit Knoblauch-Kräuterbutter, mit Parmesan überbacken, dazu überbackenes Brot",
+       "allergens": "AGMR"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "minestre",
+   "title": "Minestre",
+   "subtitle": "Suppen",
+   "icon": "bowl",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "zuppa-di-pesce",
+       "name": "Zuppa di pesce",
+       "price": 9.5,
+       "desc": "italienische Fischsuppe mit Lachs, Shrimps, Calamari, Miesmuscheln, Petersilie",
+       "allergens": "BDLR"
+      },
+      {
+       "id": "zuppa-pavese",
+       "name": "Zuppa pavese",
+       "price": 5.5,
+       "desc": "Rindsuppe, überbackene Weißbrotscheibe mit Parmesan und Ei",
+       "allergens": "ACG"
+      },
+      {
+       "id": "minestrone",
+       "name": "Minestrone",
+       "price": 5.5,
+       "desc": "italienische Gemüsesuppe",
+       "allergens": "L",
+       "vegetarian": true
+      },
+      {
+       "id": "zuppa-di-aglio",
+       "name": "Zuppa di aglio",
+       "price": 5.5,
+       "desc": "Knoblauchcremesuppe mit Croutons",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "zuppa-di-pomodoro",
+       "name": "Zuppa di pomodoro",
+       "price": 5.5,
+       "desc": "Tomatencremesuppe mit Obershaube",
+       "allergens": "G",
+       "vegetarian": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "insalate",
+   "title": "Insalate",
+   "subtitle": "Salate",
+   "icon": "leaf",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "insalata-con-scampi",
+       "name": "Insalata con scampi",
+       "price": 19.9,
+       "desc": "gemischter Salat mit 8 Stk. ausgelösten und gegrillten Garnelen",
+       "allergens": "AB"
+      },
+      {
+       "id": "insalata-alla-casalinga",
+       "name": "Insalata alla casalinga",
+       "price": 11.9,
+       "desc": "Salat nach „Hausmannsart“: grüner Salat, Zwiebel, Thunfisch, Fisolen, Ei, Zucchini, Champignons, Tomaten, Kartoffeln, Artischocken, Zitronensaft, Olivenöl",
+       "allergens": "CDH"
+      },
+      {
+       "id": "salatteller-mit-huhnerfiletstreifen",
+       "name": "Salatteller mit Hühnerfiletstreifen",
+       "price": 13.9,
+       "desc": "gegrillt oder gebacken",
+       "allergens": "AC"
+      },
+      {
+       "id": "insalata-con-calamari",
+       "name": "Insalata con calamari",
+       "price": 17.9,
+       "desc": "gemischter Salat mit 8 Stk. gegrillten Tintenfischen",
+       "allergens": "AR"
+      },
+      {
+       "id": "rucolasalat",
+       "name": "Rucolasalat",
+       "price": 9.6,
+       "desc": "mit Parmesan und Tomatenscheiben, Olivenöl und Balsamicoessig",
+       "allergens": "G"
+      },
+      {
+       "id": "thunfischsalat",
+       "name": "Thunfischsalat",
+       "price": 10.7,
+       "desc": "gemischter Salat mit Thunfisch",
+       "allergens": "D"
+      },
+      {
+       "id": "schafskasesalat",
+       "name": "Schafskäsesalat",
+       "price": 10.7,
+       "desc": "gemischter Salat mit Schafskäse",
+       "allergens": "G"
+      },
+      {
+       "id": "groer-gemischter-salat",
+       "name": "Großer gemischter Salat",
+       "price": 8.9,
+       "allergens": ""
+      },
+      {
+       "id": "gemischter-beilagensalat",
+       "name": "Gemischter Beilagensalat",
+       "price": 5.3,
+       "allergens": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "paste",
+   "title": "Paste & Gnocchi",
+   "subtitle": "Nudelgerichte & Nockerln",
+   "icon": "pasta",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "tris-della-casa",
+       "name": "Tris della casa",
+       "price": 17.5,
+       "desc": "Variation aus Trenette al pesto, Tortellini con broccoli e prosciutto und Penne all’arrabbiata – drei Klassiker auf einem Teller",
+       "allergens": "AG",
+       "highlight": "Specialità della casa"
+      },
+      {
+       "id": "spaghetti-alla-carbonara",
+       "name": "Spaghetti alla carbonara",
+       "price": 12.9,
+       "desc": "mit Schinken-Oberssauce, Speck und Ei",
+       "allergens": "ACG"
+      },
+      {
+       "id": "spaghetti-al-pomodoro-e-basilico",
+       "name": "Spaghetti al pomodoro e basilico",
+       "price": 10.9,
+       "desc": "mit würziger Tomatensauce und frischem Basilikum",
+       "allergens": "A",
+       "vegetarian": true
+      },
+      {
+       "id": "tortellini-con-broccoli-e-prosciutto",
+       "name": "Tortellini con broccoli e prosciutto",
+       "price": 13.9,
+       "desc": "fleischgefüllte Teigtaschen mit Broccoli in Schinken-Oberssauce",
+       "allergens": "AG"
+      },
+      {
+       "id": "spaghetti-alla-bolognese",
+       "name": "Spaghetti alla bolognese",
+       "price": 12.9,
+       "desc": "mit Fleischsauce",
+       "allergens": "AL"
+      },
+      {
+       "id": "spaghetti-alfredo",
+       "name": "Spaghetti Alfredo",
+       "price": 14.9,
+       "desc": "mit Hühnerfiletstücken, Champignon-Oberssauce und Ei",
+       "allergens": "ACG"
+      },
+      {
+       "id": "lasagne-verde-al-forno",
+       "name": "Lasagne verde al forno",
+       "price": 13.9,
+       "desc": "grüne Teigblätter, abwechselnd geschichtet mit Fleischragout und Béchamelsauce, mit Käse überbacken",
+       "allergens": "AGL"
+      },
+      {
+       "id": "penne-ai-funghi",
+       "name": "Penne ai funghi",
+       "price": 12.9,
+       "desc": "mit Champignon-Oberssauce und Ei",
+       "allergens": "ACG"
+      },
+      {
+       "id": "spaghetti-allaglio-e-olio",
+       "name": "Spaghetti all’aglio e olio",
+       "price": 11.5,
+       "desc": "mit Knoblauchscheiben, Petersilie, Peperoncini",
+       "allergens": "A",
+       "vegetarian": true,
+       "spicy": true
+      },
+      {
+       "id": "tortellini-alla-panna",
+       "name": "Tortellini alla panna",
+       "price": 13.5,
+       "desc": "käsegefüllte Teigtaschen mit Schinken-Oberssauce",
+       "allergens": "ACG"
+      },
+      {
+       "id": "penne-allarrabbiata",
+       "name": "Penne all’arrabbiata",
+       "price": 12.5,
+       "desc": "Röhrennudeln in scharfer Tomatensauce mit Zwiebel und Speck",
+       "allergens": "A"
+      }
+     ]
+    },
+    {
+     "title": "Gnocchi",
+     "items": [
+      {
+       "id": "gnocchi-di-spinaci",
+       "name": "Gnocchi di spinaci",
+       "price": 13.5,
+       "desc": "Spinatnockerln mit Schinken-Kräuter-Oberssauce",
+       "allergens": "ACG",
+       "badge": "hausgemacht"
+      },
+      {
+       "id": "gnocchi-alla-gorgonzola",
+       "name": "Gnocchi alla gorgonzola",
+       "price": 13.5,
+       "desc": "Kartoffelnockerln mit Gorgonzola-Rahmsauce",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "gnocchi-di-farina",
+       "name": "Gnocchi di farina",
+       "price": 13.5,
+       "desc": "Kräuternockerln mit geröstetem Speck, Zwiebel, Petersilie, Gorgonzola",
+       "allergens": "ACG",
+       "badge": "hausgemacht"
+      },
+      {
+       "id": "gnocchi-alla-bolognese",
+       "name": "Gnocchi alla bolognese",
+       "price": 13.3,
+       "desc": "Kartoffelnockerln mit Fleischragout, mit Käse überbacken",
+       "allergens": "AGL"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "senza-carne",
+   "title": "Piatti senza carne",
+   "subtitle": "Fleischlose Gerichte",
+   "icon": "tomato",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "trenette-al-pesto-genovese",
+       "name": "Trenette al pesto genovese",
+       "price": 12.7,
+       "desc": "Bandnudeln mit Basilikumpesto, Knoblauch, Parmesan, frischem Basilikum",
+       "allergens": "AG",
+       "badge": "Pesto hausgemacht"
+      },
+      {
+       "id": "penne-rigate-pasticciate",
+       "name": "Penne rigate pasticciate",
+       "price": 15,
+       "desc": "Röhrennudeln mit Tomaten-Rucola-Sauce auf gebratenen Melanzani, mit Käse überbacken",
+       "allergens": "AG"
+      },
+      {
+       "id": "melanzane-alla-parmigiana",
+       "name": "Melanzane alla parmigiana",
+       "price": 13.5,
+       "desc": "Melanzaniauflauf mit Gemüsesugo, mit Käse überbacken",
+       "allergens": "ACG"
+      },
+      {
+       "id": "tortiglioni-alla-siracusana",
+       "name": "Tortiglioni alla siracusana",
+       "price": 13.5,
+       "desc": "Röhrennudeln mit Melanzani-, Zucchini- und Paprikawürfeln in Tomatensauce",
+       "allergens": "A"
+      },
+      {
+       "id": "verdura-mista-con-mozzarella",
+       "name": "Verdura mista con mozzarella",
+       "price": 13.9,
+       "desc": "gebratene Zucchini- und Melanzanischeiben, Austernpilze, Paprikaschoten, Gemüsesugo, Basilikumpesto, Mozzarella, mit Käse überbacken",
+       "allergens": "G"
+      },
+      {
+       "id": "cannelloni-di-spinaci",
+       "name": "Cannelloni di spinaci",
+       "price": 13.5,
+       "desc": "Teigrollen mit Spinat-Mozzarella-Fülle, mit Käse überbacken",
+       "allergens": "AG"
+      },
+      {
+       "id": "strangozzi-allacciuga-e-peperone",
+       "name": "Strangozzi all’acciuga e peperone",
+       "price": 13.7,
+       "desc": "Bandnudeln mit Knoblauch, Sardellen, Paprika, Artischocken, Petersilie, Peperoncini, Kapern, getrockneten Tomaten",
+       "allergens": "AD",
+       "spicy": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pizza",
+   "title": "Holzofenpizzen",
+   "subtitle": "Aus dem Holzofen",
+   "icon": "oven",
+   "compact": true,
+   "note": "Mit Tomatensauce, Käse und Oregano – im Holzofen gebacken. Jede kleine Pizza kostet 1 € weniger.",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "adriano",
+       "name": "Adriano",
+       "price": 16.7,
+       "desc": "mit Mozzarella, Schinken, Champignons, Artischocken, Oliven, Kapern, Speck, Knoblauchwurst, frischem Rucola, Basilikumpesto",
+       "allergens": "AG",
+       "highlight": "Pizza des Hauses"
+      }
+     ]
+    },
+    {
+     "title": "Fleischlos",
+     "items": [
+      {
+       "id": "margherita",
+       "name": "Margherita",
+       "price": 9.9,
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "quattro-formaggi",
+       "name": "Quattro formaggi",
+       "price": 13.5,
+       "desc": "mit Gorgonzola, Schafskäse, Mozzarella",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "funghi",
+       "name": "Funghi",
+       "price": 11.3,
+       "desc": "mit Champignons",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "aldo",
+       "name": "Aldo",
+       "price": 14.9,
+       "desc": "mit Artischocken, Zwiebel, Schafskäse, Kapern, Oliven, frischem Rucola, Basilikumpesto",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "marinara",
+       "name": "Marinara",
+       "price": 8.5,
+       "desc": "ohne Käse",
+       "allergens": "A",
+       "vegan": true,
+       "vegetarian": true
+      },
+      {
+       "id": "vegetariana",
+       "name": "Vegetariana",
+       "price": 12.9,
+       "desc": "mit Mozzarella, Tomatenscheiben, Melanzani, Basilikumpesto, frischem Basilikum",
+       "allergens": "ACG",
+       "vegetarian": true
+      },
+      {
+       "id": "spinaci",
+       "name": "Spinaci",
+       "price": 12.8,
+       "desc": "mit Spinat, Gorgonzola, Zwiebel",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "mozzarella",
+       "name": "Mozzarella",
+       "price": 13.5,
+       "desc": "mit Mozzarella, Tomatenscheiben, frischen Basilikumblättern, Basilikumpesto",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "margherita-mit-mais",
+       "name": "Margherita mit Mais",
+       "price": 10.9,
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "carciofi",
+       "name": "Carciofi",
+       "price": 12.2,
+       "desc": "mit Artischocken, Oliven",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "verdura",
+       "name": "Verdura",
+       "price": 12.8,
+       "desc": "mit Zucchini, Melanzani, Broccoli",
+       "allergens": "ACG",
+       "vegetarian": true
+      },
+      {
+       "id": "cipolla",
+       "name": "Cipolla",
+       "price": 10.9,
+       "desc": "mit Zwiebel",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "fagioli",
+       "name": "Fagioli",
+       "price": 12.7,
+       "desc": "mit Bohnen, Zwiebel, Paprika",
+       "allergens": "AG",
+       "vegetarian": true
+      },
+      {
+       "id": "napolitana",
+       "name": "Napolitana",
+       "price": 12.2,
+       "desc": "mit Sardellen, Kapern, Oliven",
+       "allergens": "ADG",
+       "vegetarian": true
+      }
+     ],
+     "note": "Alle fleischlosen Pizzen auf Wunsch auch vegan – ohne Käse und Milchprodukte."
+    },
+    {
+     "title": "Mit Fisch",
+     "items": [
+      {
+       "id": "frutti-di-mare",
+       "name": "Frutti di mare",
+       "price": 16.5,
+       "desc": "mit Shrimps, Thunfisch, Sardellen, Tintenfisch, Lachs, Miesmuscheln",
+       "allergens": "ABDGR"
+      },
+      {
+       "id": "salmone",
+       "name": "Salmone",
+       "price": 14.7,
+       "desc": "mit Lachs, frischem Rucola, Oliven",
+       "allergens": "ADG"
+      },
+      {
+       "id": "tonno",
+       "name": "Tonno",
+       "price": 13.5,
+       "desc": "mit Thunfisch, Zwiebel, Oliven",
+       "allergens": "ADG"
+      },
+      {
+       "id": "pescatore",
+       "name": "Pescatore",
+       "price": 14.7,
+       "desc": "mit Shrimps, Miesmuscheln",
+       "allergens": "ABGR"
+      }
+     ]
+    },
+    {
+     "title": "Mit Fleisch",
+     "items": [
+      {
+       "id": "cardinale",
+       "name": "Cardinale",
+       "price": 12.2,
+       "desc": "mit Schinken",
+       "allergens": "AG"
+      },
+      {
+       "id": "valentino",
+       "name": "Valentino",
+       "price": 15.5,
+       "desc": "mit Mozzarella, Gorgonzola, Speck, Knoblauchwurst, Prosciutto crudo",
+       "allergens": "AG"
+      },
+      {
+       "id": "diavolo",
+       "name": "Diavolo",
+       "price": 12.8,
+       "desc": "mit Schinken, milden Pfefferoni",
+       "allergens": "AG"
+      },
+      {
+       "id": "capricciosa",
+       "name": "Capricciosa",
+       "price": 13.9,
+       "desc": "mit Schinken, Champignons, Artischocken, Sardellen, Oliven",
+       "allergens": "ADG"
+      },
+      {
+       "id": "rucola",
+       "name": "Rucola",
+       "price": 15.5,
+       "desc": "mit Mozzarella, Tomatenscheiben, frischem Rucola, Prosciutto crudo, Parmesan, Oliven",
+       "allergens": "AG"
+      },
+      {
+       "id": "hawaii",
+       "name": "Hawaii",
+       "price": 12.8,
+       "desc": "mit Schinken, Ananas",
+       "allergens": "AG"
+      },
+      {
+       "id": "quattro-stagioni",
+       "name": "Quattro stagioni",
+       "price": 13.5,
+       "desc": "mit Schinken, Champignons, Artischocken",
+       "allergens": "AG"
+      },
+      {
+       "id": "alla-gino",
+       "name": "Alla Gino",
+       "price": 15.5,
+       "desc": "mit Schinken, Champignons, Pfefferoni, Artischocken, Sardellen, Oliven, Knoblauchwurst, Zwiebel",
+       "allergens": "ADG"
+      },
+      {
+       "id": "piccante",
+       "name": "Piccante",
+       "price": 12.9,
+       "desc": "mit Salami",
+       "allergens": "AGM"
+      },
+      {
+       "id": "isabella",
+       "name": "Isabella",
+       "price": 12.8,
+       "desc": "mit Schinken, Champignons",
+       "allergens": "AG"
+      },
+      {
+       "id": "fiorentina",
+       "name": "Fiorentina",
+       "price": 13.9,
+       "desc": "mit Spinat, Speck, Zwiebel, Ei",
+       "allergens": "ACG"
+      },
+      {
+       "id": "anza-speciale",
+       "name": "Anza Speciale",
+       "price": 14.5,
+       "desc": "mit Schinken, Salami, Knoblauchwurst, Gorgonzola, Sardellen, milden Pfefferoni, Zwiebel",
+       "allergens": "ADG"
+      },
+      {
+       "id": "calzone",
+       "name": "Calzone",
+       "price": 12.9,
+       "desc": "zusammengeklappt, mit Schinken, Champignons",
+       "allergens": "AG"
+      },
+      {
+       "id": "mexicana",
+       "name": "Mexicana",
+       "price": 14.2,
+       "desc": "mit gegrillten Hühnerfiletstreifen, Paprika, Mais, Zwiebel",
+       "allergens": "AG"
+      },
+      {
+       "id": "salatpizza",
+       "name": "Salatpizza",
+       "price": 12.9,
+       "desc": "zusammengeklappt, mit grünem Salat, Gurken, Mais, Schinken, Knoblauch-Joghurt-Dressing, Tomatenscheiben",
+       "allergens": "AG"
+      },
+      {
+       "id": "pancetta",
+       "name": "Pancetta",
+       "price": 13.9,
+       "desc": "mit Knoblauchwurst, Speck, Paprika",
+       "allergens": "AG"
+      },
+      {
+       "id": "romana",
+       "name": "Romana",
+       "price": 13.5,
+       "desc": "mit Salami, Mais",
+       "allergens": "AGM"
+      },
+      {
+       "id": "nadina",
+       "name": "Nadina",
+       "price": 12.8,
+       "desc": "mit Schinken, Mais",
+       "allergens": "AG"
+      },
+      {
+       "id": "rusticana",
+       "name": "Rusticana",
+       "price": 13.9,
+       "desc": "mit Schinken, Champignons, Artischocken, Oliven, Ei",
+       "allergens": "ACG"
+      },
+      {
+       "id": "bolognese",
+       "name": "Bolognese",
+       "price": 12.9,
+       "desc": "mit Fleischragout",
+       "allergens": "AGL"
+      },
+      {
+       "id": "provinciale",
+       "name": "Provinciale",
+       "price": 13.9,
+       "desc": "mit Schinken, Speck, Pfefferoni, Mais",
+       "allergens": "AG"
+      },
+      {
+       "id": "disgraziata",
+       "name": "Disgraziata",
+       "price": 13.9,
+       "desc": "mit Knoblauchwurst, Pfefferoni, Ei",
+       "allergens": "AG"
+      },
+      {
+       "id": "fantasia",
+       "name": "Fantasia",
+       "price": 13.9,
+       "desc": "mit Schinken, Salami, Broccoli, Mais, Ei",
+       "allergens": "ACG"
+      }
+     ]
+    },
+    {
+     "title": "Zum Teilen vorab",
+     "items": [
+      {
+       "id": "knoblauchstangerln",
+       "name": "Knoblauchstangerln",
+       "price": 5.5,
+       "desc": "frisch aus dem Holzofen – ideal zum Teilen",
+       "allergens": ""
+      },
+      {
+       "id": "pizzastangerln",
+       "name": "Pizzastangerln",
+       "price": 5,
+       "desc": "ohne Knoblauch",
+       "allergens": ""
+      }
+     ]
+    },
+    {
+     "title": "Extra-Zutaten",
+     "items": [
+      {
+       "id": "gemuse-krauter",
+       "name": "Gemüse & Kräuter",
+       "price": 1.5,
+       "pricePrefix": "je",
+       "desc": "Ananas, Artischocken, Basilikum, Bohnen, Broccoli, Champignons, Kapern, Mais, Melanzani, Oliven, Pfefferoni, Rucola, Spinat, Tomatenscheiben, Zucchini, Zwiebel",
+       "allergens": ""
+      },
+      {
+       "id": "kase-ei",
+       "name": "Käse & Ei",
+       "price": 2,
+       "pricePrefix": "je",
+       "desc": "Ei, Gorgonzola, Mozzarella, Pizzakäse, Schafskäse",
+       "allergens": ""
+      },
+      {
+       "id": "fleisch-fisch-meeresfruchte",
+       "name": "Fleisch, Fisch & Meeresfrüchte",
+       "price": 2.5,
+       "pricePrefix": "je",
+       "desc": "Bolognesesauce, Calamari, Lachs, Miesmuscheln, Prosciutto crudo, Rindsprosciutto, Salami, Sardellen, Schinken, Shrimps, Speck, Thunfisch",
+       "allergens": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "carne",
+   "title": "Carne",
+   "subtitle": "Fleischgerichte",
+   "icon": "rosemary",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "costoletta-dagnello-alla-griglia",
+       "name": "Costoletta d’agnello alla griglia",
+       "price": 20.5,
+       "desc": "gegrillte Lammkoteletts mit Fisolen, Rosmarin und Kartoffeln",
+       "allergens": ""
+      },
+      {
+       "id": "filetti-di-maiale-con-spinaci",
+       "name": "Filetti di maiale con spinaci",
+       "price": 19.5,
+       "desc": "Schweinsfilet mit Gorgonzola überbacken, auf Blattspinat und Bandnudeln in Basilikumpesto",
+       "allergens": "AG"
+      },
+      {
+       "id": "risotto-con-carne-di-manzo",
+       "name": "Risotto con carne di manzo",
+       "price": 19.9,
+       "desc": "Reisgericht mit Rindsfiletstreifen, Zwiebel, roter Paprika, Champignons, Knoblauch",
+       "allergens": ""
+      },
+      {
+       "id": "piccata-alla-milanese",
+       "name": "Piccata alla milanese",
+       "price": 17.5,
+       "desc": "gebackener Schweinslungenbraten auf Bandnudeln in Tomaten-Gemüsesugo",
+       "allergens": "AC"
+      },
+      {
+       "id": "costoletta-di-maiale-alla-griglia",
+       "name": "Costoletta di maiale alla griglia",
+       "price": 17.5,
+       "desc": "gegrilltes Schweinskotelett mit Knoblauchbutter, Kartoffeln, Grillgemüse",
+       "allergens": "G"
+      },
+      {
+       "id": "medaglioni-di-pollo",
+       "name": "Medaglioni di pollo",
+       "price": 16.9,
+       "desc": "Hühnermedaillons mit Kartoffelkruste und Kräuter-Oberssauce",
+       "allergens": "G"
+      },
+      {
+       "id": "risotto-al-contadino",
+       "name": "Risotto al contadino",
+       "price": 14.9,
+       "desc": "Reisgericht mit Hühnerfiletstreifen, Zwiebel, Zucchini, Champignons, Mais, Karotten, Erbsen",
+       "allergens": "OH"
+      },
+      {
+       "id": "broccoli-al-forno",
+       "name": "Broccoli al forno",
+       "price": 12.9,
+       "desc": "Broccoli und Schinken in Oberssauce, mit Käse überbacken",
+       "allergens": "G"
+      }
+     ],
+     "tip": "Dazu passt ein gemischter Beilagensalat · 5,3"
+    }
+   ]
+  },
+  {
+   "id": "pesce",
+   "title": "Pesce & Crostacei",
+   "subtitle": "Fisch & Meeresfrüchte",
+   "icon": "fish",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "piatto-di-pesce-e-frutti-di-mare",
+       "name": "Piatto di pesce e frutti di mare",
+       "price": 69,
+       "desc": "gegrillter Branzino, Tintenfische, Garnelen und gratinierte Miesmuscheln, dazu Spinat-Kartoffeln",
+       "allergens": "ABDGOR",
+       "highlight": "Zum Teilen · für zwei Personen"
+      },
+      {
+       "id": "branzino-alla-griglia",
+       "name": "Branzino alla griglia",
+       "price": 23.9,
+       "desc": "gegrillter Wolfsbarsch mit Bratkartoffeln",
+       "allergens": "D"
+      },
+      {
+       "id": "scampi-alla-griglia",
+       "name": "Scampi alla griglia",
+       "price": 23.9,
+       "desc": "gegrillte Garnelen mit Knoblauch-Zwiebel-Weißweinsauce und Petersilie",
+       "allergens": "BO"
+      },
+      {
+       "id": "calamari-scampi-alla-griglia",
+       "name": "Calamari & scampi alla griglia",
+       "price": 23.9,
+       "desc": "gegrillte Tintenfische und Garnelen mit Knoblauch, Zwiebel, Weißwein, Bratkartoffeln",
+       "allergens": "BOR"
+      },
+      {
+       "id": "filetti-di-lucioperca",
+       "name": "Filetti di lucioperca",
+       "price": 21,
+       "desc": "gebratenes Zanderfilet auf roter Paprikasauce mit Knoblauchnudeln",
+       "allergens": "ADGO"
+      },
+      {
+       "id": "tagliolini-alla-pescatora",
+       "name": "Tagliolini alla pescatora",
+       "price": 20.5,
+       "desc": "dünne Bandnudeln mit Shrimps, Tintenfisch, Miesmuscheln, Paprika- und Tomatenwürfeln, Weißwein, Knoblauch, Peperoncini",
+       "allergens": "ABOR",
+       "spicy": true
+      },
+      {
+       "id": "spaghetti-con-frutti-di-mare",
+       "name": "Spaghetti con frutti di mare",
+       "price": 20.5,
+       "desc": "mit Shrimps, Tintenfisch, Miesmuscheln, Knoblauch, Weißwein, Tomatensauce",
+       "allergens": "ABOR"
+      },
+      {
+       "id": "risotto-con-frutti-di-mare",
+       "name": "Risotto con frutti di mare",
+       "price": 20.5,
+       "desc": "Reisgericht mit Shrimps, Muscheln, Tintenfisch, Knoblauch, Tomatensauce",
+       "allergens": "BOR"
+      },
+      {
+       "id": "calamari-alla-griglia",
+       "name": "Calamari alla griglia",
+       "price": 20.5,
+       "desc": "gegrillte Tintenfische mit Knoblauch, Zwiebel, Weißwein, Bratkartoffeln",
+       "allergens": "OR"
+      },
+      {
+       "id": "scampi-aglio-e-olio",
+       "name": "Scampi aglio e olio",
+       "price": 23.9,
+       "desc": "Garnelen in Zitronen-Knoblauch-Öl mit Peperoncini und Petersilie",
+       "allergens": "B",
+       "spicy": true
+      },
+      {
+       "id": "cozze-gratinate-grande",
+       "name": "Cozze gratinate – grande",
+       "price": 15.5,
+       "desc": "Miesmuscheln mit Knoblauch-Kräuterbutter, mit Parmesan überbacken, dazu überbackenes Brot",
+       "allergens": "AGMR"
+      },
+      {
+       "id": "cozze-alla-marinara",
+       "name": "Cozze alla marinara",
+       "price": 15.5,
+       "desc": "Miesmuscheln nach „Matrosenart“: Tomatensauce mit Zwiebel, Knoblauch, Weißwein",
+       "allergens": "LOR"
+      },
+      {
+       "id": "cozze-alla-crema",
+       "name": "Cozze alla crema",
+       "price": 15.9,
+       "desc": "Miesmuscheln in Oberssauce mit Lauch, Estragon, Weißwein",
+       "allergens": "GMOR"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "beilagen",
+   "title": "Beilagen",
+   "subtitle": "",
+   "icon": "wheat",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "bratkartoffeln-reis-pommes",
+       "name": "Bratkartoffeln · Reis · Pommes",
+       "price": 3.9,
+       "pricePrefix": "je",
+       "allergens": ""
+      },
+      {
+       "id": "spinat-kartoffeln",
+       "name": "Spinat-Kartoffeln",
+       "price": 3.9,
+       "desc": "bei Wechsel der Beilage Aufpreis 1,5",
+       "allergens": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dolci",
+   "title": "Dolci",
+   "subtitle": "Desserts",
+   "icon": "espresso",
+   "groups": [
+    {
+     "title": null,
+     "items": [
+      {
+       "id": "tris-di-dolci",
+       "name": "Tris di dolci",
+       "price": 12.5,
+       "desc": "Dreierlei aus Tiramisu, warmem Schokokuchen mit Vanilleeis und feinster Schokoladenmousse mit heißen Beeren, Schokosauce und Schlagobers",
+       "allergens": "ACFG",
+       "highlight": "Für Unentschlossene"
+      },
+      {
+       "id": "tiramisu",
+       "name": "Tiramisu",
+       "price": 5.9,
+       "desc": "in Kaffee getränktes Biskuit mit Mascarponecreme",
+       "allergens": "ACG",
+       "badge": "hausgemacht"
+      },
+      {
+       "id": "warmer-schokokuchen",
+       "name": "Warmer Schokokuchen",
+       "price": 5.9,
+       "desc": "Schokoladekuchen mit Vanilleeis und Schlagobers",
+       "allergens": "ACG"
+      },
+      {
+       "id": "mousse-al-cioccolato",
+       "name": "Mousse al cioccolato",
+       "price": 5.9,
+       "desc": "Schokoladenmousse mit heißen Beeren und Schlagobers",
+       "allergens": "CFG"
+      },
+      {
+       "id": "crespelle-con-nutella",
+       "name": "Crespelle con Nutella",
+       "price": 6.5,
+       "desc": "Palatschinken mit Nutella, geriebenen Walnüssen und Schlagobers",
+       "allergens": "ACFGH"
+      },
+      {
+       "id": "crespelle-con-marmellata",
+       "name": "Crespelle con marmellata",
+       "price": 5.9,
+       "desc": "Palatschinken, gefüllt mit Marillenmarmelade",
+       "allergens": "ACG"
+      },
+      {
+       "id": "kugel-vanilleeis",
+       "name": "Kugel Vanilleeis",
+       "price": 2,
+       "pricePrefix": "je",
+       "allergens": "G"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

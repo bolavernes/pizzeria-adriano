@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speisekarte – Pizzeria Adriano, 1200 Wien</title>
+<meta name="description" content="Speisekarte der Pizzeria Adriano: über 40 Holzofenpizzen, Pasta, Fisch, Fleisch und Desserts – mit Allergenen und Filtern für fleischlos, vegan und scharf.">
+<link rel="canonical" href="https://www.pizzeria-adriano.at/speisekarte/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Speisekarte – Pizzeria Adriano">
+<meta property="og:description" content="Holzofenpizzen, Pasta, Fisch und Desserts – mit Allergenen und Filtern.">
+<meta property="og:image" content="https://www.pizzeria-adriano.at/assets/img/og-adriano.jpg">
+<meta property="og:url" content="https://www.pizzeria-adriano.at/speisekarte/">
+<meta name="theme-color" content="#15100d">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/brand.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/menu.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Menu","name":"Speisekarte Pizzeria Adriano","url":"https://www.pizzeria-adriano.at/speisekarte/","inLanguage":"de"}</script>
+</head>
+<body class="menu-page">
+<a class="skip" href="#karte">Zur Speisekarte springen</a>
+<header class="site-head is-solid" id="kopf">
+  <div class="wrap">
+    <a class="brand" href="../">Adriano</a>
+    <nav class="nav" id="nav" aria-label="Hauptnavigation">
+      <a href="./" aria-current="page">Speisekarte</a>
+      <a href="../#lokal">Das Lokal</a>
+      <a href="../#feiern">Feiern &amp; Gutscheine</a>
+      <a href="../#besuch">Besuch</a>
+    </nav>
+    <a class="head-call" href="tel:+4313327351">01 33 27 351</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menü</button>
+  </div>
+</header>
+
+<main id="karte">
+  <div class="mk-intro">
+    <div class="wrap">
+      <h1>Speisekarte</h1>
+      <p class="mk-lead">Alles frisch zubereitet, die Pizzen aus dem Holzofen. Zum Bestellen und Reservieren: <a href="tel:+4313327351">01 33 27 351</a>.</p>
+      <p class="mk-meta" id="mk-updated"></p>
+    </div>
+  </div>
+
+  <div class="mk-bar" id="mk-bar">
+    <div class="wrap">
+      <nav class="mk-cats" id="mk-cats" aria-label="Kategorien"></nav>
+      <div class="mk-tools">
+        <label class="mk-search"><span class="sr-only">Gericht suchen</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input id="mk-q" type="search" placeholder="Suchen – z. B. Gorgonzola" autocomplete="off">
+        </label>
+        <button class="mk-filter-btn" id="mk-filter-btn" aria-expanded="false" aria-controls="mk-filters">Filter <span id="mk-fcount"></span></button>
+      </div>
+    </div>
+    <div class="mk-filters" id="mk-filters" hidden>
+      <div class="wrap">
+        <fieldset><legend>Essgewohnheiten</legend>
+          <label class="tg"><input type="checkbox" data-f="veg" aria-label="Nur fleischlose Gerichte"> Fleischlos</label>
+          <label class="tg"><input type="checkbox" data-f="vegan" aria-label="Nur vegan mögliche Gerichte"> Vegan möglich</label>
+          <label class="tg"><input type="checkbox" data-f="spicy" aria-label="Nur scharfe Gerichte"> Scharf</label>
+        </fieldset>
+        <fieldset><legend>Ohne Allergen</legend><div id="mk-al"></div></fieldset>
+        <p class="mk-note">Bei Gerichten ohne Allergenangabe fragen Sie bitte unser Service-Team.</p>
+        <button class="link mk-reset" id="mk-reset" type="button">Filter zurücksetzen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap mk-body">
+    <p class="mk-empty" id="mk-empty" hidden>Kein Gericht passt zu Ihrer Auswahl. <button class="link" type="button" id="mk-reset2">Filter zurücksetzen</button></p>
+    <div id="mk-sections" aria-live="polite"></div>
+    <section class="mk-legend" id="mk-legend" aria-label="Allergeninformation"></section>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div><a class="brand" href="../">Adriano</a><p>Ristorante – Pizzeria<br>Wallensteinstraße 54, 1200 Wien</p></div>
+    <ul><li><a href="tel:+4313327351">01 33 27 351</a></li><li><a href="mailto:info@pizzeria-adriano.at">info@pizzeria-adriano.at</a></li></ul>
+    <ul><li>Mo – So 11:00 – 24:00</li><li>Warme Küche bis 22:30</li></ul>
+    <div class="legal"><span>© Pizzeria Adriano</span><a href="../impressum/">Impressum</a><a href="../datenschutz/">Datenschutz</a></div>
+  </div>
+</footer>
+<script type="module" src="../assets/js/speisekarte.js"></script>
+</body>
+</html>
