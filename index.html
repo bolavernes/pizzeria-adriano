@@ -15,7 +15,9 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/brand.css">
 <link rel="stylesheet" href="assets/css/site.css">
+<script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
 <link rel="modulepreload" href="assets/vendor/three.module.min.js">
+<link rel="preload" href="assets/models/pizzaofen.glb" as="fetch" crossorigin>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Pizzeria Adriano","servesCuisine":["Italienisch","Pizza"],"url":"https://www.pizzeria-adriano.at/","telephone":"+43 1 3327351","email":"info@pizzeria-adriano.at","menu":"https://www.pizzeria-adriano.at/speisekarte/","address":{"@type":"PostalAddress","streetAddress":"Wallensteinstraße 54","postalCode":"1200","addressLocality":"Wien","addressCountry":"AT"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"11:00","closes":"24:00"}],"image":"https://www.pizzeria-adriano.at/assets/img/og-adriano.jpg"}
 </script>
@@ -42,7 +44,7 @@
   <section class="hero" id="ofen" aria-label="Der Holzofen">
     <div class="hero-stage">
       <img class="hero-fallback" src="assets/img/ofen-1600.webp" alt="" width="1600" height="1066">
-      <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht unseres Holzofens. Zum Drehen ziehen oder Pfeiltasten verwenden."></canvas>
+      <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht in unseren Holzofen mit brennendem Feuer. Zum Schwenken ziehen oder Pfeiltasten verwenden."></canvas>
       <div class="hero-copy">
         <div class="wrap">
           <div class="hero-step is-on" data-from="0" data-to="0.3">
@@ -64,7 +66,7 @@
           </div>
         </div>
       </div>
-      <div class="hero-hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v13M6 12l6 6 6-6"/></svg>Scrollen – oder den Ofen mit der Maus drehen</div>
+      <div class="hero-hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v13M6 12l6 6 6-6"/></svg>Scrollen – der Blick wandert durch den Ofen</div>
       <div class="hero-progress" aria-hidden="true"><i id="prog"></i></div>
     </div>
   </section>

@@ -3,6 +3,8 @@
 // roten Ziegeln, gemauerter Ziegelbogen um die Öffnung, Relief-Medaillon, Holzlager im Sockel.
 // Scroll dreht den Ofen und fährt die Kamera an die Öffnung; Ziehen dreht frei.
 import * as THREE from '../vendor/three.module.min.js';
+import { GLTFLoader } from '../vendor/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from '../vendor/addons/libs/meshopt_decoder.module.js';
 
 const TAU = Math.PI * 2;
 const rand = mulberry32(54); // feste Saat: der Ofen sieht bei jedem Laden gleich aus
@@ -117,7 +119,8 @@ function buildOven(opts) {
   const grain = grainTexture();
   const HEARTH_Y = 1.05;            // Oberkante Herdplatte
   const A = 1.12, B = 1.0;          // Kuppel-Radien (horizontal, vertikal)
-  const ARCH = { inner: 0.36, outer: 0.58, spring: 0.22, face: 1.17, depth: 0.52 };
+  const ARCH = Object.assign({ inner: 0.36, outer: 0.58, spring: 0.22, face: 1.17, depth: 0.52 }, opts.arch || {});
+  const dome = opts.dome !== false;
 
   const inMouth = (x, yRel, z, margin = 0) =>
     z > 0.25 && Math.abs(x) < ARCH.outer - margin && yRel < ARCH.spring + ARCH.outer - margin &&
@@ -168,6 +171,7 @@ function buildOven(opts) {
   const slab = addBox(W + 0.2, 0.1, D + 0.2, 0, HEARTH_Y - 0.05, 0, new THREE.MeshStandardMaterial({ color: 0xcdbb9e, map: grain, roughness: 0.7 }));
   slab.receiveShadow = true;
 
+  if (dome) {
   /* Kuppel: Mörtelschale mit Öffnung */
   const shellGeo = holedHemisphere(A - 0.035, B - 0.035, (x, y, z) => inMouth(x, y, z, 0.07));
   const shell = new THREE.Mesh(shellGeo, new THREE.MeshStandardMaterial({ color: 0xcdbb9c, roughness: 1, map: grain }));
@@ -246,14 +250,16 @@ function buildOven(opts) {
     arch.setMatrixAt(ai, dummy.matrix); arch.setColorAt(ai, col.set(pick(brickColors))); ai++;
   }
   arch.count = ai; arch.instanceMatrix.needsUpdate = true; arch.instanceColor.needsUpdate = true; oven.add(arch);
+  }
+
   /* Feuer: Glut, Scheite, Flammen, Pizza */
-  const fire = new THREE.Group(); fire.position.set(-0.12, HEARTH_Y, -0.42); oven.add(fire);
+  const fire = new THREE.Group(); fire.position.copy(opts.fireAt || new THREE.Vector3(-0.12, HEARTH_Y, -0.42)); oven.add(fire);
   const ember = emberMaterial();
   for (let i = 0; i < 4; i++) {
-    const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.75, 10), ember);
+    const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, opts.logLen || 0.75, 10), ember);
     lg.rotation.set(Math.PI / 2, 0, (i - 1.5) * 0.5 + r(-.1, .1)); lg.position.set((i - 1.5) * 0.1, 0.07 + (i % 2) * 0.06, r(-.05, .05)); fire.add(lg);
   }
-  const coals = new THREE.Mesh(new THREE.CircleGeometry(0.42, 24), ember); coals.rotation.x = -Math.PI / 2; coals.position.y = 0.01; coals.scale.set(1, 0.7, 1); fire.add(coals);
+  const coals = new THREE.Mesh(new THREE.CircleGeometry(opts.logLen ? 0.3 : 0.42, 24), ember); coals.rotation.x = -Math.PI / 2; coals.position.y = 0.01; coals.scale.set(1, 0.7, 1); fire.add(coals);
   const flames = [];
   const flameSet = opts.lowPower ? 4 : 7;
   for (let i = 0; i < flameSet; i++) {
@@ -265,14 +271,15 @@ function buildOven(opts) {
     f.userData.base = f.position.clone(); flames.push(f); fire.add(f);
   }
   const pizza = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.025, 36), [new THREE.MeshStandardMaterial({ color: 0xc98a45, roughness: .8 }), new THREE.MeshStandardMaterial({ map: pizzaTexture(), roughness: .7 }), new THREE.MeshStandardMaterial({ color: 0xc98a45 })]);
-  pizza.position.set(0.22, HEARTH_Y + 0.015, 0.25); oven.add(pizza);
+  pizza.position.copy(opts.pizzaAt || new THREE.Vector3(0.22, HEARTH_Y + 0.015, 0.25)); if (!opts.noPizza) oven.add(pizza);
 
   // Licht vom Feuer
-  const fireLight = new THREE.PointLight(0xff7a2a, 6, 3.2, 1.6); fireLight.position.set(-0.1, HEARTH_Y + 0.35, -0.3); oven.add(fireLight);
-  const mouthLight = new THREE.PointLight(0xff8a3a, 1.1, 3.2, 2); mouthLight.position.set(0, HEARTH_Y + 0.35, ARCH.face + 0.25); oven.add(mouthLight);
+  const fireLight = new THREE.PointLight(0xff7a2a, 6, 3.2, 1.6); fireLight.position.copy(fire.position).add(new THREE.Vector3(0.02, 0.35, 0.12)); oven.add(fireLight);
+  const mouthLight = new THREE.PointLight(0xff8a3a, 1.1, 3.2, 2); mouthLight.position.set(0, fire.position.y + 0.35, ARCH.face + 0.25); oven.add(mouthLight);
   // Glühen vor der Öffnung
   const glow = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), new THREE.MeshBasicMaterial({ map: glowTexture('rgba(255,140,60,.55)', 'rgba(255,80,20,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
-  glow.position.set(0, HEARTH_Y + 0.32, ARCH.face + 0.02); oven.add(glow);
+  if (dome) glow.position.set(0, HEARTH_Y + 0.32, ARCH.face + 0.02); else { glow.position.copy(fire.position).add(new THREE.Vector3(0, 0.3, -0.05)); glow.scale.setScalar(0.8); }
+  oven.add(glow);
 
   // Funkenflug
   const N = opts.lowPower ? 40 : 90;
@@ -280,7 +287,7 @@ function buildOven(opts) {
   const pos = new Float32Array(N * 3), life = new Float32Array(N), vel = [];
   for (let i = 0; i < N; i++) { resetSpark(i, true); }
   function resetSpark(i, initial) {
-    pos[i * 3] = fire.position.x + r(-.2, .2); pos[i * 3 + 1] = HEARTH_Y + r(.05, .3); pos[i * 3 + 2] = fire.position.z + r(-.1, .2);
+    pos[i * 3] = fire.position.x + r(-.2, .2); pos[i * 3 + 1] = fire.position.y + r(.05, .3); pos[i * 3 + 2] = fire.position.z + r(-.1, .2);
     vel[i] = new THREE.Vector3(r(-.05, .05), r(.25, .55), r(.35, .7));
     life[i] = initial ? rand() : 0;
   }
@@ -337,7 +344,7 @@ function holedHemisphere(a, b, cut) {
 }
 
 /* ---------- Szene ---------- */
-export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false, onReady, shiftX = () => 0, shiftY = () => 0 } = {}) {
+export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false, onReady, shiftX = () => 0, shiftY = () => 0, modelUrl = null } = {}) {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
@@ -362,8 +369,30 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   const pool = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.MeshBasicMaterial({ map: glowTexture('rgba(255,140,60,.28)', 'rgba(255,90,30,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   pool.rotation.x = -Math.PI / 2; pool.position.set(0, 0.01, 2.2); scene.add(pool);
 
-  const oven = buildOven({ lowPower });
-  const stage = new THREE.Group(); stage.add(oven); scene.add(stage);
+  const stage = new THREE.Group(); scene.add(stage);
+  let oven = null, mode = 'glb';
+  const KEY = {
+    // Innenansicht: Kamera bleibt vor dem offenen Ofen, schwenkt sanft und fährt näher ans Feuer
+    glb: { interior: true, sweep: 0.21, start: { d: 4.7, dp: 7.4, h: 2.5, ty: 1.62, tz: -0.1 }, end: { d: 3.0, dp: 4.9, h: 1.95, ty: 1.48, tz: -0.32 } },
+    proc: { rot0: -0.85, start: { d: 8.2, dp: 13.5, h: 2.9, ty: 1.15, tz: 0 }, end: { d: 3.9, dp: 6.2, h: 1.55, ty: 1.28, tz: 0.9 } }
+  };
+  function useProcedural() { mode = 'proc'; oven = buildOven({ lowPower }); stage.add(oven); onReady && onReady(); }
+  if (modelUrl) {
+    const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
+    loader.load(modelUrl, (gltf) => {
+      // Modell: aufgeschnittener Ofen, Öffnung zeigt nach +z. Breite 1,155 -> 2,3 Einheiten
+      const HEARTH_Y = 1.05, S = 2.3 / 1.155;
+      const model = gltf.scene; model.scale.setScalar(S); model.position.set(0, HEARTH_Y + 0.425 * S, 0);
+      const floorY = HEARTH_Y + (0.425 - 0.318) * S;
+      oven = buildOven({
+        lowPower, dome: false,
+        fireAt: new THREE.Vector3(-0.08 * S, floorY, -0.17 * S), logLen: 0.44,
+        noPizza: true,
+        arch: { face: 0.97, spring: 0.62, inner: 0.5 }
+      });
+      oven.add(model); stage.add(oven); onReady && onReady();
+    }, undefined, () => useProcedural());
+  } else useProcedural();
 
   // Ziegelbogen im Hintergrund – wie die Bögen im Gastraum
   scene.add(backArch());
@@ -386,7 +415,8 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   }
   new ResizeObserver(resize).observe(canvas); resize();
 
-  let visible = true, running = true, t = 0, last = performance.now(), smooth = 0;
+  let visible = true, running = true, t = 0, last = performance.now(), smooth = 0, px = 0, pointerX = 0;
+  addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') pointerX = (e.clientX / innerWidth) * 2 - 1; }, { passive: true });
   new IntersectionObserver(([en]) => { visible = en.isIntersecting; }, { threshold: 0 }).observe(canvas);
   document.addEventListener('visibilitychange', () => { running = !document.hidden; last = performance.now(); });
 
@@ -401,23 +431,33 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
     if (!dragging) { dragVel *= Math.pow(0.04, dt); drag += dragVel; }
     const idle = reducedMotion ? 0 : t * 0.05;
     // Eine volle Drehung über den Hero, Ende frontal
-    const rot = -0.85 + smooth * (TAU + 0.85) + drag + (smooth < 0.02 ? idle : idle * (1 - smooth));
+    const K = KEY[mode];
+    let rot;
+    if (K.interior) {
+      // leichtes Schwenken: Scroll von links nach rechts, Maus kippt mit, in Ruhe pendelt es langsam
+      drag = Math.max(-0.3, Math.min(0.3, drag));
+      px += (pointerX - px) * Math.min(1, dt * 2.5);
+      rot = (smooth - 0.5) * 2 * K.sweep + (reducedMotion ? 0 : Math.sin(t * 0.32) * 0.035) + drag + px * 0.07;
+    } else {
+      // Drehung über den Hero: von hinten bis die Öffnung frontal zeigt
+      rot = K.rot0 + smooth * (TAU - K.rot0) + drag + idle * (1 - smooth);
+    }
     stage.rotation.y = rot;
     // Kamera: Totale -> an die Ofenöffnung
-    const k = ease(Math.min(1, Math.max(0, (smooth - 0.55) / 0.45)));
+    const k = KEY[mode].interior ? ease(smooth) : ease(Math.min(1, Math.max(0, (smooth - 0.55) / 0.45)));
     const portrait = camera.aspect < 0.9;
-    const dist = THREE.MathUtils.lerp(portrait ? 13.5 : 8.2, portrait ? 6.2 : 3.9, k);
-    const height = THREE.MathUtils.lerp(2.9, 1.55, k);
-    target.set(0, THREE.MathUtils.lerp(1.15, 1.28, k), THREE.MathUtils.lerp(0, 0.9, k));
+    const a = K.start, b = K.end, L = THREE.MathUtils.lerp;
+    const dist = L(portrait ? a.dp : a.d, portrait ? b.dp : b.d, k);
+    const height = L(a.h, b.h, k);
+    target.set(0, L(a.ty, b.ty, k), L(a.tz, b.tz, k));
     camPos.set(0, height, dist);
     camera.position.copy(camPos); camera.lookAt(target);
     const f = 1 - k; // Versatz löst sich bei der Fahrt in die Öffnung auf
     if (view.sx || view.sy) camera.setViewOffset(view.w, view.h, -view.w * view.sx * f, view.h * view.sy * f, view.w, view.h);
-    oven.userData.update(t, dt, camera, stage.rotation.y);
+    if (oven) oven.userData.update(t, dt, camera, stage.rotation.y);
     renderer.render(scene, camera);
   }
   requestAnimationFrame(frame);
-  onReady && onReady();
   return { renderer, scene };
 }
 

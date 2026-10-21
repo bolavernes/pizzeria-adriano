@@ -41,10 +41,12 @@ p { margin: 0 0 1em; }
 .link:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Hero mit Ofen ---------- */
-.hero { position: relative; height: 320vh; background: var(--c-night); color: var(--c-cream); }
+.hero { position: relative; height: 260vh; background: var(--c-night); color: var(--c-cream); }
 .hero-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .oven-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; outline: none; }
 .oven-canvas.is-dragging { cursor: grabbing; }
+.oven-canvas { transition: opacity 1.2s ease; }
+.oven-canvas.is-loading { opacity: 0; }
 .hero-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; display: none; }
 .no-webgl .hero-fallback { display: block; }
 .hero-copy { position: absolute; inset: 0; pointer-events: none; display: flex; align-items: center; }
@@ -52,6 +54,7 @@ p { margin: 0 0 1em; }
 .hero-step { position: absolute; left: 0; top: 50%; transform: translateY(-40%); width: min(560px, 100%); opacity: 0; transition: opacity .6s, transform .8s; pointer-events: none; }
 .hero-step.is-on { opacity: 1; transform: translateY(-50%); pointer-events: auto; }
 .hero h1 { font-size: clamp(3rem, 7.4vw, 6.4rem); }
+.hero-step h1, .hero-step h2, .hero-step .lead { text-shadow: 0 2px 24px rgba(10, 6, 4, .75), 0 1px 3px rgba(10, 6, 4, .6); }
 .hero .lead { font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: var(--c-cream-soft); max-width: 30em; margin: 22px 0 32px; }
 .hero h2 { font-size: clamp(2.3rem, 5vw, 4.2rem); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; }

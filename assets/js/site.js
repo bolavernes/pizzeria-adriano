@@ -35,8 +35,11 @@ if (!reduced) { addEventListener('scroll', updateHero, { passive: true }); updat
 const canvas = document.getElementById('oven');
 function hasWebGL() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } }
 if (canvas && hasWebGL()) {
+  canvas.classList.add('is-loading');
   import('./oven.js').then(({ mountOven }) => mountOven(canvas, {
     getProgress: progress, reducedMotion: reduced,
+    modelUrl: new URL('../models/pizzaofen.glb', import.meta.url).href,
+    onReady: () => canvas.classList.remove('is-loading'),
     shiftX: (w, h) => (w / h > 1.15 ? 0.2 : 0),
     shiftY: (w, h) => (w / h < 0.9 ? 0.2 : 0)
   })).catch(() => document.documentElement.classList.add('no-webgl'));
