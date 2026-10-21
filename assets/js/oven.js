@@ -5,6 +5,10 @@
 import * as THREE from '../vendor/three.module.min.js';
 import { GLTFLoader } from '../vendor/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from '../vendor/addons/libs/meshopt_decoder.module.js';
+import { EffectComposer } from '../vendor/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from '../vendor/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from '../vendor/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from '../vendor/addons/postprocessing/OutputPass.js';
 
 const TAU = Math.PI * 2;
 const rand = mulberry32(54); // feste Saat: der Ofen sieht bei jedem Laden gleich aus
@@ -91,7 +95,7 @@ function flameMaterial(seed, speed = 1) {
         vec3 hot  = vec3(1.0, 0.86, 0.52);
         vec3 col = mix(deep, mid, smoothstep(0.05, 0.55, m));
         col = mix(col, hot, smoothstep(0.62, 1.0, m) * (1.0 - uv.y*0.6));
-        gl_FragColor = vec4(col * (0.6 + m*1.5), m);
+        gl_FragColor = vec4(col * (0.55 + m*1.05), m * 0.92);
       }`,
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
   });
@@ -282,19 +286,27 @@ function buildOven(opts) {
   oven.add(glow);
 
   // Funkenflug
-  const N = opts.lowPower ? 40 : 90;
+  const N = opts.lowPower ? 80 : 170;
   const sparkGeo = new THREE.BufferGeometry();
   const pos = new Float32Array(N * 3), life = new Float32Array(N), vel = [];
   for (let i = 0; i < N; i++) { resetSpark(i, true); }
   function resetSpark(i, initial) {
     pos[i * 3] = fire.position.x + r(-.2, .2); pos[i * 3 + 1] = fire.position.y + r(.05, .3); pos[i * 3 + 2] = fire.position.z + r(-.1, .2);
-    vel[i] = new THREE.Vector3(r(-.05, .05), r(.25, .55), r(.35, .7));
+    vel[i] = new THREE.Vector3(r(-.12, .12), r(.3, .75), r(.4, .95));
     life[i] = initial ? rand() : 0;
   }
   sparkGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: 0.035, map: glowTexture('rgba(255,220,150,1)', 'rgba(255,120,30,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xffb060 }));
+  const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: 0.05, map: glowTexture('rgba(255,220,150,1)', 'rgba(255,120,30,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xffb060 }));
   oven.add(sparks);
 
+  const smokeTex = glowTexture('rgba(190,175,160,.55)', 'rgba(120,110,100,0)');
+  const smoke = [];
+  const SN = opts.lowPower ? 8 : 16;
+  for (let i = 0; i < SN; i++) {
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, transparent: true, depthWrite: false, opacity: 0 }));
+    sp.userData.t = i / SN; sp.userData.x = r(-.15, .15); sp.userData.rot = r(-.4, .4); oven.add(sp); smoke.push(sp);
+  }
+  const smokeTop = opts.smokeTop || (HEARTH_Y + 1.0);
   oven.userData = {
     HEARTH_Y, ARCH, flames, ember, fireLight, mouthLight, glow,
     update(t, dt, camera, stageRot = 0) {
@@ -306,11 +318,11 @@ function buildOven(opts) {
         f.rotation.y = Math.atan2(camera.position.x - wp.x, camera.position.z - wp.z) - stageRot;
       }
       const flick = 0.78 + 0.22 * Math.sin(t * 11.3) * Math.sin(t * 7.1 + 1.3) + 0.08 * Math.sin(t * 23.0);
-      fireLight.intensity = 6 * flick; mouthLight.intensity = 1.1 * (0.85 + 0.15 * flick);
+      fireLight.intensity = 6.5 * flick; mouthLight.intensity = 1.1 * (0.85 + 0.15 * flick);
       glow.material.opacity = 0.75 + 0.25 * flick;
       for (let i = 0; i < N; i++) {
-        life[i] += dt * 0.55;
-        if (life[i] > 1 || pos[i * 3 + 2] > ARCH.face + 1.2) resetSpark(i);
+        life[i] += dt * 0.38;
+        if (life[i] > 1 || pos[i * 3 + 2] > ARCH.face + 2.6) resetSpark(i);
         // Funken steigen, werden zur Öffnung gesogen, verlöschen
         const ins = pos[i * 3 + 2] < ARCH.face;
         pos[i * 3] += vel[i].x * dt;
@@ -320,6 +332,17 @@ function buildOven(opts) {
         if (pos[i * 3 + 1] > yMax) pos[i * 3 + 1] = yMax;
       }
       sparkGeo.attributes.position.needsUpdate = true;
+      for (const sp of smoke) {
+        const u = (sp.userData.t += dt * 0.09) % 1;
+        // steigt bis unter das Gewölbe, zieht dann nach vorne aus der Öffnung
+        const rise = Math.min(1, u * 1.6), out = Math.max(0, u * 1.6 - 1) / 0.6;
+        sp.position.set(fire.position.x + sp.userData.x + Math.sin(t * .6 + sp.userData.rot * 9) * .06,
+          THREE.MathUtils.lerp(fire.position.y + .35, smokeTop, rise) + out * .55,
+          fire.position.z + out * (ARCH.face - fire.position.z + .9));
+        const sc = 0.35 + u * 1.1; sp.scale.set(sc, sc, 1);
+        sp.material.opacity = Math.sin(Math.PI * u) * 0.16;
+        sp.material.rotation += dt * sp.userData.rot * 0.3;
+      }
     }
   };
   return oven;
@@ -354,12 +377,19 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
 
+  let composer = null, bloom = null;
   const css = getComputedStyle(document.documentElement);
   const night = new THREE.Color(css.getPropertyValue('--c-night').trim() || '#14100d');
   const scene = new THREE.Scene(); scene.background = night; scene.fog = new THREE.Fog(night, 9, 18);
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
 
-  scene.add(new THREE.HemisphereLight(0xffe6cc, 0x140c08, 0.55));
+  try {
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), lowPower ? 0.42 : 0.5, 0.45, 0.92);
+    composer.addPass(bloom); composer.addPass(new OutputPass());
+  } catch (e) { composer = null; }
+  scene.add(new THREE.HemisphereLight(0xffe6cc, 0x140c08, 0.45));
   const key = new THREE.DirectionalLight(0xfff1de, 1.55); key.position.set(-3.5, 6, 4); scene.add(key);
   const rim = new THREE.DirectionalLight(0x9fb3d6, 0.55); rim.position.set(4, 3, -5); scene.add(rim);
 
@@ -373,7 +403,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   let oven = null, mode = 'glb';
   const KEY = {
     // Innenansicht: Kamera bleibt vor dem offenen Ofen, schwenkt sanft und fährt näher ans Feuer
-    glb: { interior: true, sweep: 0.21, start: { d: 4.7, dp: 7.4, h: 2.5, ty: 1.62, tz: -0.1 }, end: { d: 3.0, dp: 4.9, h: 1.95, ty: 1.48, tz: -0.32 } },
+    glb: { interior: true, sweep: 0.24, start: { d: 3.9, dp: 6.1, h: 2.3, ty: 1.6, tz: -0.12 }, end: { d: 2.55, dp: 4.2, h: 1.85, ty: 1.46, tz: -0.36 } },
     proc: { rot0: -0.85, start: { d: 8.2, dp: 13.5, h: 2.9, ty: 1.15, tz: 0 }, end: { d: 3.9, dp: 6.2, h: 1.55, ty: 1.28, tz: 0.9 } }
   };
   function useProcedural() { mode = 'proc'; oven = buildOven({ lowPower }); stage.add(oven); onReady && onReady(); }
@@ -388,7 +418,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
         lowPower, dome: false,
         fireAt: new THREE.Vector3(-0.08 * S, floorY, -0.17 * S), logLen: 0.44,
         noPizza: true,
-        arch: { face: 0.97, spring: 0.62, inner: 0.5 }
+        arch: { face: 0.97, spring: 0.62, inner: 0.5 }, smokeTop: HEARTH_Y + (0.425 + 0.15) * S
       });
       oven.add(model); stage.add(oven); onReady && onReady();
     }, undefined, () => useProcedural());
@@ -411,6 +441,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
     const w = canvas.clientWidth, h = canvas.clientHeight;
     if (!w || !h) return;
     renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    if (composer) { composer.setPixelRatio(renderer.getPixelRatio()); composer.setSize(w, h); }
     view.w = w; view.h = h; view.sx = shiftX(w, h); view.sy = shiftY(w, h);
   }
   new ResizeObserver(resize).observe(canvas); resize();
@@ -455,7 +486,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
     const f = 1 - k; // Versatz löst sich bei der Fahrt in die Öffnung auf
     if (view.sx || view.sy) camera.setViewOffset(view.w, view.h, -view.w * view.sx * f, view.h * view.sy * f, view.w, view.h);
     if (oven) oven.userData.update(t, dt, camera, stage.rotation.y);
-    renderer.render(scene, camera);
+    if (composer) composer.render(); else renderer.render(scene, camera);
   }
   requestAnimationFrame(frame);
   return { renderer, scene };

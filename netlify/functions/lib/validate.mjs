@@ -16,6 +16,7 @@ export function cleanMenu(input, base) {
     note: str(s.note, 400),
     style: s.style === 'season' ? 'season' : undefined,
     icon: str(s.icon, 20),
+    photo: /^[a-z0-9-]{1,40}$/.test(String(s.photo || '')) ? s.photo : undefined,
     compact: s.compact ? true : undefined,
     hidden: s.hidden ? true : undefined,
     newPage: s.newPage ? true : undefined,

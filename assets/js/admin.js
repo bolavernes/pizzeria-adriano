@@ -3,6 +3,7 @@ import { esc, formatPrice, parsePrice, formatDate } from './menu-core.js';
 
 const $ = (id) => document.getElementById(id);
 const AL = 'ABCDEFGHLMNOPR'.split('');
+const PHOTOS = { '': '– kein Foto –', 'pizza-im-ofen': 'Pizza im Holzofen', 'pizza-rucola': 'Pizza Rucola', 'spaghetti-muscheln': 'Spaghetti mit Muscheln', 'pasta-pesto': 'Pasta mit Pesto', 'salat-scampi': 'Salat mit Scampi', 'tiramisu': 'Tiramisu', 'tafel': 'Gedeckte Tafel', 'teig': 'Teig ausziehen', 'pizzaiolo': 'Pizzakoch', 'gast-pizza': 'Gast mit Pizza', 'gastraum-neu': 'Gastraum', 'speisekarte-hand': 'Speisekarte in der Hand' };
 const ICONS = { pumpkin: 'Kürbis', olive: 'Olivenzweig', bowl: 'Suppe', leaf: 'Salatblatt', pasta: 'Pasta', tomato: 'Tomaten', oven: 'Holzofen', rosemary: 'Rosmarin', fish: 'Fisch', wheat: 'Ähre', espresso: 'Espresso', '': '– keine –' };
 const svg = {
   eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>',
@@ -138,6 +139,7 @@ function renderMain() {
         <label class="f">Untertitel <input data-sf="subtitle" value="${esc(s.subtitle || '')}"></label>
         <label class="f full">Hinweistext (optional) <input data-sf="note" value="${esc(s.note || '')}"></label>
         <label class="f">Illustration <select data-sf="icon">${Object.entries(ICONS).map(([k, v]) => `<option value="${k}" ${(s.icon || '') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+        <label class="f">Foto auf der Website <select data-sf="photo">${Object.entries(PHOTOS).map(([k, v]) => `<option value="${k}" ${(s.photo || '') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
         <div class="checks">
           <label><input type="checkbox" data-sf="hidden" ${s.hidden ? 'checked' : ''}> Kategorie ausblenden</label>
           <label><input type="checkbox" data-sf="season" ${s.style === 'season' ? 'checked' : ''}> Als Saison-Kasten zeigen</label>

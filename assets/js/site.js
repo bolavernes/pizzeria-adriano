@@ -40,7 +40,7 @@ if (canvas && hasWebGL()) {
     getProgress: progress, reducedMotion: reduced,
     modelUrl: new URL('../models/pizzaofen.glb', import.meta.url).href,
     onReady: () => canvas.classList.remove('is-loading'),
-    shiftX: (w, h) => (w / h > 1.15 ? 0.2 : 0),
+    shiftX: (w, h) => (w / h > 1.15 ? 0.15 : 0),
     shiftY: (w, h) => (w / h < 0.9 ? 0.2 : 0)
   })).catch(() => document.documentElement.classList.add('no-webgl'));
 } else document.documentElement.classList.add('no-webgl');
@@ -51,6 +51,7 @@ loadMenu().then(({ menu }) => {
   const list = document.getElementById('cat-list');
   if (list) list.innerHTML = secs.filter((s) => s.style !== 'season').map((s) => `
     <li><a href="speisekarte/#${esc(s.id)}">${ILL[s.icon] || ''}<span class="t">${esc(s.title)}</span><span class="s">${esc(s.subtitle || '')}</span></a></li>`).join('');
+  hoverPreview(secs);
   const season = secs.find((s) => s.style === 'season');
   const box = document.getElementById('season');
   if (season && box) {
@@ -67,9 +68,45 @@ loadMenu().then(({ menu }) => {
   }
 });
 
-/* Galerie: Pfeile scrollen um ein Foto */
-const gal = document.getElementById('gallery');
-document.querySelectorAll('.gbtn').forEach((b) => b.addEventListener('click', () => {
-  const step = gal.querySelector('.g-item')?.getBoundingClientRect().width || 300;
-  gal.scrollBy({ left: +b.dataset.dir * (step + 20), behavior: reduced ? 'auto' : 'smooth' });
-}));
+/* Galerie: Reihen gleiten gegenläufig, gekoppelt an den Scroll */
+const gsec = document.getElementById('kueche');
+const rowsEl = [...document.querySelectorAll('.g-row')];
+let gTick = false;
+function moveRows() {
+  gTick = false;
+  const r = gsec.getBoundingClientRect();
+  const p = (innerHeight - r.top) / (innerHeight + r.height); // 0 … 1, während die Galerie durchs Bild läuft
+  rowsEl.forEach((row) => {
+    const half = row.scrollWidth / 2, dir = +row.dataset.dir;
+    const x = dir < 0 ? -p * half * 0.55 : -half * 0.55 + p * half * 0.55;
+    row.style.transform = `translate3d(${x}px,0,0)`;
+  });
+}
+if (gsec && !reduced) { addEventListener('scroll', () => { if (!gTick) { gTick = true; requestAnimationFrame(moveRows); } }, { passive: true }); addEventListener('resize', moveRows); moveRows(); }
+
+/* Lightbox */
+const lb = document.getElementById('lightbox');
+const shots = JSON.parse(document.getElementById('gallery-data')?.textContent || '[]');
+let cur = 0;
+function show(i) { cur = (i + shots.length) % shots.length; const sh = shots[cur]; const img = document.getElementById('lb-img'); img.src = sh.src; img.alt = sh.alt; document.getElementById('lb-cap').textContent = sh.cap; }
+document.getElementById('gallery')?.addEventListener('click', (e) => { const b = e.target.closest('.g-item'); if (!b) return; show(+b.dataset.i); lb.showModal(); });
+lb?.addEventListener('click', (e) => { const b = e.target.closest('[data-lb]'); if (b) show(cur + +b.dataset.lb); else if (e.target === lb || e.target.tagName === 'FIGURE') lb.close(); });
+lb?.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
+
+/* Kategorien: Foto folgt dem Mauszeiger */
+function hoverPreview(secs) {
+  const list = document.getElementById('cat-list'); if (!list || !matchMedia('(hover: hover)').matches) return;
+  const fig = document.createElement('div'); fig.className = 'cat-preview'; fig.innerHTML = '<img alt="">'; document.body.append(fig);
+  const img = fig.firstChild; let x = 0, y = 0, tx = 0, ty = 0, on = false, raf;
+  const photo = Object.fromEntries(secs.map((s) => [s.id, s.photo]));
+  const loop = () => { x += (tx - x) * 0.18; y += (ty - y) * 0.18; fig.style.transform = `translate3d(${x}px,${y}px,0) rotate(${(tx - x) * 0.03}deg)`; raf = requestAnimationFrame(loop); };
+  list.addEventListener('mousemove', (e) => { tx = e.clientX + 24; ty = e.clientY - 120; });
+  list.addEventListener('mouseover', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    const id = a.getAttribute('href').split('#')[1]; const ph = photo[id];
+    if (!ph) { fig.classList.remove('is-on'); return; }
+    img.src = new URL(`../img/foto/${ph}-800.webp`, import.meta.url).href; fig.classList.add('is-on');
+    if (!on) { on = true; x = tx; y = ty; loop(); }
+  });
+  list.addEventListener('mouseleave', () => { fig.classList.remove('is-on'); on = false; cancelAnimationFrame(raf); });
+}

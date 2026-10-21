@@ -1,5 +1,7 @@
 import { loadMenu, visibleSections, formatPrice, formatDate, esc } from './menu-core.js';
 import { ILL } from './ills.js';
+const IMG = (n, w) => new URL(`../img/foto/${n}-${w}.webp`, import.meta.url).href;
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* Kopfzeile (mobil) */
 const btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
@@ -35,7 +37,7 @@ function dish(i, s, compact) {
   ].join('');
   const price = `<span class="price">${esc(formatPrice(i.price, i.pricePrefix))}</span>`;
   const cls = ['dish', i.highlight ? 'is-highlight' : '', q && norm(i.name).includes(q) ? 'is-hit' : '', (state.noAl.size && !al.length) ? 'no-al-info' : ''].join(' ');
-  return `<article class="${cls}" id="g-${esc(i.id)}">
+  return `<article class="${cls}" id="g-${esc(i.id)}" style="--d:${(dish.n = (dish.n || 0) + 1) % 6}">
     ${i.highlight ? `<span class="hl">${esc(i.highlight)}</span>` : ''}
     <div class="dish-head"><h3>${hl(i.name, q)}</h3>${flags}${!i.desc ? price : ''}</div>
     ${i.desc ? `<p class="dish-desc">${hl(i.desc, q)}${price}</p>` : ''}
@@ -56,9 +58,11 @@ function render() {
     if (!groups) return '';
     return `<section class="mk-sec ${s.style === 'season' ? 'mk-season' : ''} ${compact ? 'compact' : ''}" id="${esc(s.id)}" aria-labelledby="h-${esc(s.id)}">
       <div class="mk-sec-head">${ILL[s.icon] || ''}<h2 id="h-${esc(s.id)}">${esc(s.title)}</h2>${s.subtitle ? `<span class="sub">${esc(s.subtitle)}</span>` : ''}</div>
+      ${s.photo ? `<figure class="mk-photo"><img src="${IMG(s.photo, 1400)}" srcset="${IMG(s.photo, 800)} 800w, ${IMG(s.photo, 1400)} 1400w" sizes="(max-width: 760px) 100vw, 1200px" alt="" loading="lazy" decoding="async"></figure>` : ''}
       ${s.note ? `<p class="mk-sec-note">${esc(s.note)}</p>` : ''}${groups}</section>`;
   }).join('');
   $('mk-sections').innerHTML = html;
+  animate();
   $('mk-empty').hidden = shown > 0;
   const n = (state.veg + state.vegan + state.spicy) + state.noAl.size;
   $('mk-fcount').textContent = n ? n : '';
@@ -69,6 +73,34 @@ function renderCats() {
   $('mk-cats').innerHTML = SECS.filter((s) => present.includes(s.id)).map((s) => `<a href="#${esc(s.id)}" data-id="${esc(s.id)}">${esc(s.title)}</a>`).join('');
   spy();
 }
+/* Bewegung: Illustrationen zeichnen sich, Gerichte gleiten herein, Fotos mit Parallaxe */
+let inObs;
+function animate() {
+  if (reduced) return;
+  document.querySelectorAll('.mk-sec-head .ill').forEach((svg) => svg.querySelectorAll('path, ellipse, circle, line').forEach((el) => {
+    try { const L = el.getTotalLength(); el.style.strokeDasharray = L; el.style.strokeDashoffset = L; } catch { }
+  }));
+  inObs?.disconnect();
+  inObs = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); inObs.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.mk-sec-head, .dish, .mk-photo').forEach((el) => { el.classList.add('will-in'); inObs.observe(el); });
+}
+let pTick = false;
+function parallax() {
+  pTick = false;
+  document.querySelectorAll('.mk-photo img').forEach((img) => {
+    const r = img.parentElement.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+    img.style.transform = `translate3d(0, ${p * -60}px, 0) scale(1.12)`;
+  });
+}
+if (!reduced) addEventListener('scroll', () => { if (!pTick) { pTick = true; requestAnimationFrame(parallax); } }, { passive: true });
+function moveIndicator(a) {
+  const bar = $('mk-cats'); let ind = bar.querySelector('.mk-ind');
+  if (!ind) { ind = document.createElement('span'); ind.className = 'mk-ind'; bar.prepend(ind); }
+  if (!a) { ind.style.opacity = 0; return; }
+  ind.style.opacity = 1; ind.style.width = a.offsetWidth + 'px'; ind.style.transform = `translateX(${a.offsetLeft}px)`;
+}
 let spyObs;
 function spy() {
   spyObs?.disconnect();
@@ -77,6 +109,7 @@ function spy() {
       if (!e.isIntersecting) return;
       const a = $('mk-cats').querySelector(`[data-id="${e.target.id}"]`);
       $('mk-cats').querySelectorAll('a').forEach((x) => x.classList.toggle('is-active', x === a));
+      moveIndicator(a);
       a?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
     });
   }, { rootMargin: '-160px 0px -65% 0px' });

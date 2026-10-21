@@ -103,7 +103,8 @@
       }
      ]
     }
-   ]
+   ],
+   "photo": "pizza-im-ofen"
   },
   {
    "id": "antipasti",
@@ -277,7 +278,8 @@
       }
      ]
     }
-   ]
+   ],
+   "photo": "salat-scampi"
   },
   {
    "id": "paste",
@@ -407,7 +409,8 @@
       }
      ]
     }
-   ]
+   ],
+   "photo": "spaghetti-muscheln"
   },
   {
    "id": "senza-carne",
@@ -471,7 +474,8 @@
       }
      ]
     }
-   ]
+   ],
+   "photo": "pasta-pesto"
   },
   {
    "id": "pizza",
@@ -858,7 +862,8 @@
       }
      ]
     }
-   ]
+   ],
+   "photo": "pizza-rucola"
   },
   {
    "id": "carne",
@@ -928,7 +933,8 @@
      ],
      "tip": "Dazu passt ein gemischter Beilagensalat · 5,3"
     }
-   ]
+   ],
+   "photo": "tafel"
   },
   {
    "id": "pesce",
@@ -1126,7 +1132,8 @@
       }
      ]
     }
-   ]
+   ],
+   "photo": "tiramisu"
   }
  ]
 }
