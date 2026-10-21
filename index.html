@@ -30,6 +30,7 @@
     <a class="brand" href="./">Adriano</a>
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
       <a href="speisekarte/">Speisekarte</a>
+      <a href="#kueche">Küche</a>
       <a href="#lokal">Das Lokal</a>
       <a href="#feiern">Feiern &amp; Gutscheine</a>
       <a href="#besuch">Besuch</a>
@@ -43,7 +44,7 @@
   <!-- Hero: der Ofen dreht sich beim Scrollen -->
   <section class="hero" id="ofen" aria-label="Der Holzofen">
     <div class="hero-stage">
-      <img class="hero-fallback" src="assets/img/ofen-1600.webp" alt="" width="1600" height="1066">
+      <img class="hero-fallback" src="assets/img/foto/pizza-im-ofen-1400.webp" alt="" width="1120" height="1400">
       <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht in unseren Holzofen mit brennendem Feuer. Zum Schwenken ziehen oder Pfeiltasten verwenden."></canvas>
       <div class="hero-copy">
         <div class="wrap">
@@ -80,10 +81,31 @@
       </div>
       <div class="menu-teaser">
         <ul class="cat-list reveal" id="cat-list" aria-label="Kategorien der Speisekarte"></ul>
-        <aside class="season reveal" id="season" hidden></aside>
+        <div class="teaser-side">
+          <figure class="teaser-photo reveal"><img src="assets/img/foto/speisekarte-hand-800.webp" srcset="assets/img/foto/speisekarte-hand-800.webp 800w, assets/img/foto/speisekarte-hand-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 40vw" alt="Ein Gast blättert in der roten Adriano-Speisekarte" width="800" height="1000" loading="lazy"></figure>
+          <aside class="season reveal" id="season" hidden></aside>
+        </div>
       </div>
       <p class="reveal" style="margin-top:40px"><a class="btn" href="speisekarte/">Ganze Speisekarte öffnen</a></p>
     </div>
+  </section>
+
+  <!-- Galerie -->
+  <section class="section gallery-sec dark" id="kueche" aria-labelledby="h-kueche">
+    <div class="wrap">
+      <div class="section-head reveal"><h2 id="h-kueche">Aus der Küche</h2><p>Frisch zubereitet, vieles hausgemacht – und alles, was aus dem Ofen kommt, mit echtem Holzfeuer.</p></div>
+    </div>
+    <div class="gallery" id="gallery" tabindex="0" aria-label="Fotogalerie – seitlich scrollen">
+        <figure class="g-item"><img src="assets/img/foto/pizza-im-ofen-800.webp" srcset="assets/img/foto/pizza-im-ofen-800.webp 800w, assets/img/foto/pizza-im-ofen-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Pizza auf der Schaufel im Holzofen" width="800" height="1000" loading="lazy"><figcaption>Aus dem Holzofen</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/pizza-rucola-800.webp" srcset="assets/img/foto/pizza-rucola-800.webp 800w, assets/img/foto/pizza-rucola-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Pizza mit frischem Rucola auf rot-weiß kariertem Tischtuch" width="800" height="1000" loading="lazy"><figcaption>Pizza Rucola</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/teig-800.webp" srcset="assets/img/foto/teig-800.webp 800w, assets/img/foto/teig-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Hände ziehen Pizzateig auf der bemehlten Arbeitsfläche aus" width="800" height="1000" loading="lazy"><figcaption>Der Teig, von Hand gezogen</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/spaghetti-muscheln-800.webp" srcset="assets/img/foto/spaghetti-muscheln-800.webp 800w, assets/img/foto/spaghetti-muscheln-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Teller Spaghetti mit Miesmuscheln und Tomatensauce" width="800" height="1000" loading="lazy"><figcaption>Spaghetti con frutti di mare</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/pasta-pesto-800.webp" srcset="assets/img/foto/pasta-pesto-800.webp 800w, assets/img/foto/pasta-pesto-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Grüne Pasta mit Basilikumpesto" width="800" height="1000" loading="lazy"><figcaption>Pasta mit hausgemachtem Pesto</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/salat-scampi-800.webp" srcset="assets/img/foto/salat-scampi-800.webp 800w, assets/img/foto/salat-scampi-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Gemischter Salat mit gegrillten Garnelen" width="800" height="1000" loading="lazy"><figcaption>Insalata con scampi</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/tiramisu-800.webp" srcset="assets/img/foto/tiramisu-800.webp 800w, assets/img/foto/tiramisu-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Ein Stück Tiramisu mit Kakao" width="800" height="1000" loading="lazy"><figcaption>Tiramisu, hausgemacht</figcaption></figure>
+        <figure class="g-item"><img src="assets/img/foto/gast-pizza-800.webp" srcset="assets/img/foto/gast-pizza-800.webp 800w, assets/img/foto/gast-pizza-1400.webp 1120w" sizes="(max-width: 860px) 75vw, 28vw" alt="Ein Gast isst lachend ein Stück Pizza" width="800" height="1000" loading="lazy"><figcaption>Im Adriano</figcaption></figure>
+    </div>
+    <div class="wrap gallery-nav"><button class="gbtn" data-dir="-1" aria-label="Vorheriges Foto">←</button><button class="gbtn" data-dir="1" aria-label="Nächstes Foto">→</button></div>
   </section>
 
   <!-- Lokal -->
@@ -94,14 +116,14 @@
       </div>
       <div class="lokal">
         <figure class="big reveal">
-          <img src="assets/img/ofen-1600.webp" srcset="assets/img/ofen-900.webp 900w, assets/img/ofen-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 66vw" alt="Der Holzofen der Pizzeria Adriano mit Ziegelbogen und Holzlager, daneben die Pizza-Station" width="1600" height="1066" loading="lazy">
+          <img src="assets/img/foto/pizzaiolo-800.webp" srcset="assets/img/foto/pizzaiolo-800.webp 800w, assets/img/foto/pizzaiolo-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 45vw" alt="Der Pizzakoch zieht den Teig auf der Arbeitsfläche aus" width="800" height="1000" loading="lazy">
         </figure>
         <div class="txt reveal">
           <p>Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
           <p>Die beiden Räume sind offen verbunden. In den warmen Monaten sitzen Sie auch draußen im Schanigarten.</p>
         </div>
         <figure class="small reveal">
-          <img src="assets/img/gastraum-1600.webp" srcset="assets/img/gastraum-900.webp 900w, assets/img/gastraum-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 42vw" alt="Gastraum mit Holztischen, roten Servietten und Ziegelbogen" width="1600" height="1066" loading="lazy">
+          <img src="assets/img/foto/gastraum-neu-800.webp" srcset="assets/img/foto/gastraum-neu-800.webp 800w, assets/img/foto/gastraum-neu-1400.webp 1400w" sizes="(max-width: 860px) 100vw, 45vw" alt="Gastraum des Adriano mit Holztischen und Blick zur Fensterfront" width="800" height="533" loading="lazy">
         </figure>
         <div class="facts reveal">
           <div class="fact"><div class="v">40</div><div class="l">Plätze in zwei Räumen</div></div>
@@ -120,6 +142,7 @@
         <h2>Feiern im Adriano</h2>
         <p>Geburtstag, Firmenessen oder Taufe: Für geschlossene Gesellschaften stellen wir Ihnen das ganze Lokal mit 40 Plätzen zur Verfügung.</p>
       </div>
+      <figure class="feiern-photo reveal"><img src="assets/img/foto/tafel-1400.webp" srcset="assets/img/foto/tafel-800.webp 800w, assets/img/foto/tafel-1400.webp 1400w" sizes="(max-width: 1200px) 100vw, 1200px" alt="Gedeckte Tafel mit Pasta, Fisch, Fleisch und Beilagen auf rot-weiß kariertem Tischtuch" width="1400" height="933" loading="lazy"></figure>
       <div class="feiern">
         <div class="reveal">
           <h3>Anfrage für Ihre Feier</h3>

@@ -94,7 +94,7 @@ p { margin: 0 0 1em; }
 .cat-list .t { font-family: var(--font-display); font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 600; }
 .cat-list .s { color: var(--c-ink-soft); font-size: .95rem; margin-left: auto; text-align: right; }
 .cat-list .ill { width: 46px; height: 26px; color: var(--c-gold); flex: none; align-self: center; }
-.season { background: var(--c-night); color: var(--c-cream); padding: clamp(28px, 4vw, 44px); border-radius: 4px; position: sticky; top: 100px; }
+.season { background: var(--c-night); color: var(--c-cream); padding: clamp(28px, 4vw, 44px); border-radius: 4px; }
 .season h3 { font-size: 2rem; display: flex; align-items: center; gap: 14px; }
 .season h3 .ill { width: 44px; color: var(--c-ember); }
 .season .when { color: var(--c-ember); font-size: .95rem; margin: 6px 0 22px; }
@@ -106,22 +106,47 @@ p { margin: 0 0 1em; }
 @media (max-width: 860px) { .menu-teaser { grid-template-columns: 1fr; } .season { position: static; } }
 
 /* Lokal */
-.lokal { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(20px, 3vw, 40px); align-items: end; }
+.lokal { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
 .lokal figure { margin: 0; }
-.lokal .big { grid-column: 1 / 9; }
-.lokal .big img { aspect-ratio: 3 / 2; object-fit: cover; width: 100%; border-radius: 3px; }
-.lokal .txt { grid-column: 9 / 13; padding-bottom: 8px; }
+.lokal img { width: 100%; object-fit: cover; border-radius: 3px; }
+.lokal .big { grid-column: 1 / 7; grid-row: 1 / 3; }
+.lokal .big img { aspect-ratio: 4 / 5; }
+.lokal .txt { grid-column: 8 / 13; align-self: end; }
 .lokal .txt p { font-size: 1.08rem; }
-.lokal .small { grid-column: 3 / 8; margin-top: clamp(10px, 4vw, 50px); }
-.lokal .small img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; border-radius: 3px; }
-.lokal .facts { grid-column: 8 / 13; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-self: center; }
+.lokal .small { grid-column: 8 / 13; }
+.lokal .small img { aspect-ratio: 3 / 2; }
+.lokal .facts { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: clamp(20px, 4vw, 50px); }
 .fact .v { font-family: var(--font-display); font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 600; line-height: 1; color: var(--c-wine); }
 .fact .l { font-size: .95rem; color: var(--c-ink-soft); margin-top: 6px; }
 figcaption { font-size: .85rem; color: var(--c-ink-soft); margin-top: 10px; }
 @media (max-width: 860px) {
   .lokal { grid-template-columns: 1fr; }
-  .lokal .big, .lokal .txt, .lokal .small, .lokal .facts { grid-column: 1; }
+  .lokal .big, .lokal .txt, .lokal .small, .lokal .facts { grid-column: 1; grid-row: auto; }
+  .lokal .facts { grid-template-columns: 1fr 1fr; }
 }
+
+/* Karte: Foto neben den Kategorien */
+.teaser-side { display: grid; gap: 24px; align-content: start; }
+.teaser-photo { margin: 0; }
+.teaser-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 3px; }
+
+/* Galerie */
+.gallery-sec { padding-bottom: clamp(70px, 9vw, 120px); }
+.gallery { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(240px, 27vw, 380px); gap: clamp(14px, 2vw, 24px); overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 10px; scroll-padding-inline: var(--gutter); scrollbar-width: none; overscroll-behavior-x: contain; }
+.gallery::-webkit-scrollbar { display: none; }
+.g-item { margin: 0; scroll-snap-align: start; }
+.g-item img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 3px; transition: transform .6s ease; }
+.g-item:hover img { transform: scale(1.015); }
+.g-item figcaption { font-family: var(--font-display); font-size: 1.15rem; color: var(--c-cream); margin-top: 12px; }
+.gallery-nav { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+.gbtn { width: 46px; height: 46px; border-radius: 50%; border: 1px solid #ffffff33; background: transparent; color: var(--c-cream); font-size: 1.1rem; cursor: pointer; transition: background .2s; }
+.gbtn:hover { background: #ffffff14; }
+@media (max-width: 860px) { .gallery { grid-auto-columns: 74vw; } }
+
+/* Feiern-Foto */
+.feiern-photo { margin: 0 0 clamp(40px, 6vw, 70px); }
+.feiern-photo img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; border-radius: 3px; }
+@media (max-width: 860px) { .feiern-photo img { aspect-ratio: 3 / 2; } }
 
 /* Feiern & Gutscheine */
 .feiern { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 110px); }

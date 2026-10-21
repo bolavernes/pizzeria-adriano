@@ -66,3 +66,10 @@ loadMenu().then(({ menu }) => {
     document.querySelectorAll('[data-count="pizza"]').forEach((el) => el.textContent = n);
   }
 });
+
+/* Galerie: Pfeile scrollen um ein Foto */
+const gal = document.getElementById('gallery');
+document.querySelectorAll('.gbtn').forEach((b) => b.addEventListener('click', () => {
+  const step = gal.querySelector('.g-item')?.getBoundingClientRect().width || 300;
+  gal.scrollBy({ left: +b.dataset.dir * (step + 20), behavior: reduced ? 'auto' : 'smooth' });
+}));
