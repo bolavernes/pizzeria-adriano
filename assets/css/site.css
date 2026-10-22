@@ -461,3 +461,7 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .map-link { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); transition: text-decoration-color .2s; }
 .map-link:hover { text-decoration-color: currentColor; }
 .hero-meta .map-link { pointer-events: auto; }
+
+/* Adresse deutlich als Link */
+.map-link { text-decoration-color: currentColor; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.map-link:hover { text-decoration-thickness: 2px; }

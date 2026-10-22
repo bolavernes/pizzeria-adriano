@@ -15,6 +15,8 @@
 @font-face { font-family: "ITC Kabel"; src: url("../fonts/kabel-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "ITC Kabel"; src: url("../fonts/kabel-demi.woff2") format("woff2"); font-weight: 600; font-display: swap; }
 */
+/* Überschriften: ITC Newtext – die Schrift der Logo-Unterzeile „Ristorante – Pizzeria“. Ein Schnitt deckt alle Gewichte ab (kein künstliches Fett). */
+@font-face { font-family: "ITC Newtext"; src: url("../fonts/itc-newtext-regular.woff2") format("woff2"); font-weight: 300 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Jost"; src: url("../fonts/jost-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Jost"; src: url("../fonts/jost-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
 @font-face { font-family: "Jost"; src: url("../fonts/jost-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
@@ -22,8 +24,8 @@
 
 :root {
   /* Schriften */
-  /* Überschriften & Bedienelemente in Kabel, Fließtext in der Antiqua */
-  --font-head: "ITC Kabel", "ITC Kabel Std", Kabel, Jost, Futura, "Century Gothic", system-ui, sans-serif;
+  /* Überschriften & Bedienelemente in ITC Newtext, Fließtext in der Antiqua */
+  --font-head: "ITC Newtext", "ITC Kabel", Jost, Futura, "Century Gothic", system-ui, sans-serif;
   --font-text: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --font-display: var(--font-head);
   --font-body: var(--font-text);
