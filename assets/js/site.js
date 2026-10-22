@@ -59,6 +59,8 @@ if (canvas && hasWebGL()) {
 
 /* Karte: Kategorien & Saison aus den echten Daten */
 loadMenu().then(({ menu }) => {
+  const rad = document.getElementById('pizzarad');
+  if (rad) import('./pizzarad.js?v=20261022').then(({ mountPizzaRad }) => mountPizzaRad({ root: rad, menu, getProgress: progress, reduced }));
   const secs = visibleSections(menu);
   const list = document.getElementById('cat-list');
   if (list) {

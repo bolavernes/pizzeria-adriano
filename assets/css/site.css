@@ -491,3 +491,35 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .map-pin svg { width: 40px; height: 40px; color: var(--c-wine); }
 .map-ph p { margin: 0; }
 .map-note { font-size: .8rem; color: var(--c-ink-soft); max-width: 34em; }
+
+/* Pizza-Drehrad */
+.pizzarad { position: absolute; inset: 0; z-index: 1; pointer-events: none; --S: min(100vh, 64vw); }
+.pizzarad[hidden] { display: none; }
+.pr-wheel { position: absolute; width: var(--S); height: var(--S); left: calc(100% - var(--S) * .55); top: calc(50% - var(--S) / 2); border-radius: 50%; pointer-events: auto; cursor: grab; touch-action: none; outline: none;
+  opacity: 0; transform-origin: 50% 50%; transition: opacity .7s ease, translate .9s cubic-bezier(.2,.8,.2,1); translate: 30% 0; }
+.pizzarad.is-on .pr-wheel { opacity: 1; translate: 0 0; }
+.pizzarad.is-drag .pr-wheel { cursor: grabbing; }
+.pr-wheel::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; border: 1px dashed rgba(241, 220, 61, .25); }
+.pr-slot { position: absolute; left: 50%; top: 50%; width: calc(var(--S) * .25); aspect-ratio: 1; margin: calc(var(--S) * -.125) 0 0 calc(var(--S) * -.125);
+  transform: rotate(var(--a)) translateX(calc(var(--S) * .37)) scale(calc(.78 + var(--near, 0) * .34)); transition: filter .4s; filter: brightness(calc(.55 + var(--near, 0) * .45)) drop-shadow(0 14px 22px rgba(0, 0, 0, .55)); }
+.pr-slot img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.pr-info { position: absolute; right: calc(var(--S) * .58 + 24px); top: 50%; width: min(220px, 18vw); transform: translateY(-50%); text-align: right; color: var(--c-cream); opacity: 0; transition: opacity .5s; pointer-events: auto; text-shadow: 0 1px 12px rgba(10, 6, 4, .9); }
+.pizzarad.is-on .pr-info { opacity: 1; }
+.pr-label { font-family: var(--font-head); font-size: .78rem; letter-spacing: .05em; color: var(--c-sign); }
+.pr-name { font-size: clamp(1.4rem, 2.2vw, 2rem); margin: 4px 0 6px; }
+.pr-desc { font-size: .88rem; color: var(--c-cream-soft); margin: 0 0 6px; }
+.pr-price { font-family: var(--font-head); font-size: .9rem; color: var(--c-cream); margin-right: 10px; }
+.pr-link { font-family: var(--font-head); font-size: .85rem; color: var(--c-cream); text-underline-offset: 3px; }
+.pr-ctrl { position: absolute; right: calc(var(--S) * .42 - 49px); top: calc(50% + var(--S) * .17 + 10px); display: flex; gap: 10px; opacity: 0; transition: opacity .5s; pointer-events: auto; }
+.pizzarad.is-on .pr-ctrl { opacity: 1; }
+.pr-ctrl button { width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(251, 248, 242, .14); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.pr-ctrl button:hover { background: rgba(251, 248, 242, .26); }
+@media (max-aspect-ratio: 9/10) {
+  .pizzarad { --S: 128vw; }
+  .pr-wheel { left: calc(50% - var(--S) / 2); top: calc(var(--S) * -.42); translate: 0 -20%; }
+  .pr-info { right: auto; left: 50%; top: calc(var(--S) * .61 + 10px); width: 84vw; transform: translateX(-50%); text-align: center; }
+  .pr-desc { display: none; }
+  .pr-ctrl { right: auto; left: 50%; transform: translateX(-50%); top: calc(var(--S) * .45 - 22px); width: calc(var(--S) * .31 + 110px); justify-content: space-between; }
+}
+
+@media (min-aspect-ratio: 9/10) { .hero-step:not(.hero-intro) { width: min(480px, 36vw); } }
