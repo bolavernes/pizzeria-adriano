@@ -150,7 +150,8 @@ function spy() {
       const a = $('mk-cats').querySelector(`[data-id="${e.target.id}"]`);
       $('mk-cats').querySelectorAll('a').forEach((x) => x.classList.toggle('is-active', x === a));
       moveIndicator(a);
-      a?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      // nur die Leiste seitlich nachführen – scrollIntoView würde auf dem Handy den Seiten-Sprung abbrechen
+      if (a) { const bar = $('mk-cats'); bar.scrollTo({ left: a.offsetLeft - bar.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' }); }
     });
   }, { rootMargin: '-160px 0px -65% 0px' });
   document.querySelectorAll('#mk-sections .mk-sec').forEach((s) => spyObs.observe(s));
@@ -186,7 +187,13 @@ $('mk-reset').addEventListener('click', reset); $('mk-reset2').addEventListener(
 /* Kategorie „Saison“ in der Leiste öffnet das Fenster */
 $('mk-cats').addEventListener('click', (e) => {
   const a = e.target.closest('a'); if (!a) return;
-  if (document.getElementById(a.dataset.id)?.classList.contains('mk-season-mini')) { e.preventDefault(); openSeason(); }
+  const t = document.getElementById(a.dataset.id); if (!t) return;
+  e.preventDefault();
+  if (t.classList.contains('mk-season-mini')) { openSeason(); return; }
+  // Sprung selbst rechnen: Kopfzeile + Kategorienleiste abziehen
+  const off = ($('kopf')?.offsetHeight || 72) + ($('mk-bar')?.offsetHeight || 60) + 8;
+  window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - off, behavior: reduced ? 'auto' : 'smooth' });
+  history.replaceState(null, '', '#' + t.id);
 });
 
 document.addEventListener('click', (e) => {

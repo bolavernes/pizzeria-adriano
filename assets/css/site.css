@@ -316,7 +316,7 @@ html:has(.season-dlg[open]) { overflow: hidden; }
    v4: Logo vom Schild, Kabel-Überschriften, Hero mit Logo, leichtere Karte
    ===================================================================== */
 h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
-.logo { display: block; aspect-ratio: 685.9 / 100.25; background: currentColor; -webkit-mask: url(../img/logo-adriano.svg) no-repeat center / contain; mask: url(../img/logo-adriano.svg) no-repeat center / contain; }
+.logo { display: block; aspect-ratio: 684.21 / 100; background: currentColor; -webkit-mask: url(../img/logo-adriano.svg) no-repeat center / contain; mask: url(../img/logo-adriano.svg) no-repeat center / contain; }
 .brand { display: flex; align-items: center; }
 .brand .logo { width: clamp(118px, 11vw, 148px); }
 .site-head .brand, .site-foot .brand { color: #fff; }
@@ -338,7 +338,7 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .hero-intro.is-on { transform: translate(-50%, -50%); }
 .hero-intro::before { inset: -18% -12%; background: radial-gradient(closest-side, rgba(10, 6, 4, .62), rgba(10, 6, 4, 0)); }
 .hero-logo { margin: 0; color: #fff; filter: drop-shadow(0 6px 34px rgba(10, 6, 4, .9)) drop-shadow(0 1px 2px rgba(10, 6, 4, .9)); }
-.hero-logo .logo { width: 100%; aspect-ratio: 686.7 / 152.1; -webkit-mask-image: url(../img/logo-adriano-lockup.svg); mask-image: url(../img/logo-adriano-lockup.svg); }
+.hero-logo .logo { width: 100%; aspect-ratio: 686.67 / 151.85; -webkit-mask-image: url(../img/logo-adriano-lockup.svg); mask-image: url(../img/logo-adriano-lockup.svg); }
 .hero-meta { font-family: var(--font-head); font-size: clamp(.92rem, 1.25vw, 1.08rem); letter-spacing: .02em; color: var(--c-cream); margin: clamp(18px, 2.4vw, 30px) auto 0; max-width: 34em; text-shadow: 0 1px 14px rgba(10, 6, 4, .95), 0 0 2px rgba(10, 6, 4, .8); }
 .hero-copy::before { transition: opacity .8s; }
 .hero-stage:has(.hero-intro.is-on) .hero-copy::before { opacity: 0; }
@@ -413,3 +413,29 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .season-media video, .season-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .season-dlg .season { padding-top: clamp(20px, 3vw, 28px); }
 .season-dlg .season > .season-media { margin-top: 30px; }
+
+/* Galerie: seitlich wischbar */
+.g-track { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
+.g-track::-webkit-scrollbar { display: none; }
+.g-track.is-drag { cursor: grabbing; user-select: none; }
+.g-track .g-row { transform: none !important; will-change: auto; padding-inline: var(--gutter); }
+
+/* Standbild vom Ofen sofort zeigen, bis die 3D-Szene geladen ist */
+.hero-poster, .hero-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-poster { transition: opacity 1.2s ease; }
+
+/* Knöpfe: Pillenform, gefüllt, ohne Doppelrahmen */
+.btn, .head-call, .fab-menu, .season-toggle { border-radius: 999px; outline: 0; }
+.btn { border: 0; outline: 0; margin: 0; background: var(--c-wine); color: #fff; padding: 14px 24px; }
+.btn:hover { background: var(--c-wine-bright); color: #fff; }
+.hero .btn { outline: 0; }
+.rosso .btn { background: var(--c-paper); color: var(--c-wine); }
+.rosso .btn:hover { background: #fff; color: var(--c-wine); }
+.head-call { padding: 9px 18px; }
+.season-toggle, .karte-actions .season-toggle { outline: 0; }
+.karte-actions .season-toggle { padding: 9px 14px 9px 16px; }
+.karte-actions .btn { margin: 0; }
+/* Register auf der Startseite: dichter */
+.karte-index a { padding: 9px 0 8px; gap: 0 14px; }
+.karte-index .t { font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
+.karte-index .s { font-size: .88rem; line-height: 1.3; }

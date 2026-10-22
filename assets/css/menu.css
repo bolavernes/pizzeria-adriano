@@ -243,3 +243,8 @@
   .pick { scroll-snap-align: start; }
 }
 .season-dlg .mk-photo.season-media { height: clamp(180px, 30vh, 280px); margin-bottom: 22px; }
+
+/* Bedienelemente ohne Rahmenlinien */
+.mk-filter-btn { border: 0; background: var(--c-paper-2); color: var(--c-ink); }
+.mk-filter-btn[aria-expanded="true"] { background: var(--c-wine); color: #fff; }
+.mk-season-mini .season-toggle { outline: 0; }

@@ -77,21 +77,34 @@ loadMenu().then(({ menu }) => {
   }
 });
 
-/* Galerie: Reihen gleiten gegenläufig, gekoppelt an den Scroll */
+/* Galerie: Reihen gleiten beim Runterscrollen gegenläufig weiter – und lassen sich seitlich wischen/ziehen */
 const gsec = document.getElementById('kueche');
-const rowsEl = [...document.querySelectorAll('.g-row')];
+const tracks = [...document.querySelectorAll('.g-track')].map((el) => ({ el, row: el.firstElementChild, user: 0, auto: 0, ours: -1 }));
 let gTick = false;
 function moveRows() {
   gTick = false;
   const r = gsec.getBoundingClientRect();
-  const p = (innerHeight - r.top) / (innerHeight + r.height); // 0 … 1, während die Galerie durchs Bild läuft
-  rowsEl.forEach((row) => {
-    const half = row.scrollWidth / 2, dir = +row.dataset.dir;
-    const x = dir < 0 ? -p * half * 0.55 : -half * 0.55 + p * half * 0.55;
-    row.style.transform = `translate3d(${x}px,0,0)`;
+  const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+  tracks.forEach((t) => {
+    const max = t.el.scrollWidth - t.el.clientWidth; if (max <= 0) return;
+    const span = Math.min(max, t.row.scrollWidth * 0.3), dir = +t.row.dataset.dir;
+    t.auto = reduced ? 0 : dir < 0 ? p * span : (1 - p) * span;
+    const x = Math.round(Math.min(max, Math.max(0, t.auto + t.user)));
+    if (Math.abs(t.el.scrollLeft - x) > 1) { t.ours = x; t.el.scrollLeft = x; }
   });
 }
-if (gsec && !reduced) { addEventListener('scroll', () => { if (!gTick) { gTick = true; requestAnimationFrame(moveRows); } }, { passive: true }); addEventListener('resize', moveRows); moveRows(); }
+tracks.forEach((t) => {
+  // eigenes Wischen merken, damit der Scroll-Lauf danach von dort weitergeht
+  t.el.addEventListener('scroll', () => { if (Math.abs(t.el.scrollLeft - t.ours) <= 1) return; t.user = t.el.scrollLeft - t.auto; }, { passive: true });
+  // Ziehen mit der Maus (Touch und Trackpad scrollen nativ)
+  let down = false, sx = 0, sl = 0, moved = 0;
+  t.el.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = 0; sx = e.clientX; sl = t.el.scrollLeft; t.el.classList.add('is-drag'); });
+  addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; moved = Math.max(moved, Math.abs(dx)); t.el.scrollLeft = sl - dx; });
+  addEventListener('pointerup', () => { if (!down) return; down = false; t.el.classList.remove('is-drag'); });
+  t.el.addEventListener('click', (e) => { if (moved > 6) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
+  t.el.addEventListener('dragstart', (e) => e.preventDefault());
+});
+if (gsec) { addEventListener('scroll', () => { if (!gTick) { gTick = true; requestAnimationFrame(moveRows); } }, { passive: true }); addEventListener('resize', moveRows); moveRows(); }
 
 /* Lightbox */
 const lb = document.getElementById('lightbox');
