@@ -39,10 +39,10 @@
   --c-ink-soft: #625850;   /* Nebentext auf hell */
   --c-cream: #f3ebe0;      /* Text auf dunkel */
   --c-cream-soft: #b9ab9c; /* Nebentext auf dunkel */
-  --c-wine: #cc3a36;       /* Akzent: Tomatenrot (Tischtuch, Karte) */
-  --c-wine-bright: #e2554f;/* Akzent auf dunklem Grund / Hover */
+  --c-wine: #7e232a;       /* Akzent: Weinrot vom Logo (Schild, Instagram) */
+  --c-wine-bright: #a5333b;/* Hover / Akzent auf dunklem Grund */
   --c-gold: #9a7442;       /* Illustrationen */
   --c-olive: #5b6a37;      /* vegetarisch / hausgemacht */
   --c-ember: #f08a3c;      /* nur Feuer-Akzente */
-  --c-sign: #f1d88e;       /* Schriftzug-Gelb vom Schild */
+  --c-sign: #f1dc3d;       /* Schriftzug-Gelb vom Logo */
 }
