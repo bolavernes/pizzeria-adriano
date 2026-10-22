@@ -1,5 +1,5 @@
 // Admin: Speisekarte bearbeiten
-import { esc, formatPrice, parsePrice, formatDate } from './menu-core.js';
+import { esc, formatPrice, parsePrice, formatDate } from './menu-core.js?v=20261022';
 
 const $ = (id) => document.getElementById(id);
 const AL = 'ABCDEFGHLMNOPR'.split('');

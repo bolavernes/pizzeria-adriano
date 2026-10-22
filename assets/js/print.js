@@ -1,6 +1,6 @@
 // Druckversion: setzt die Karte automatisch auf A4-Seiten
-import { loadMenu, visibleSections, formatPrice, esc, formatDate } from './menu-core.js';
-import { ILL } from './ills.js';
+import { loadMenu, visibleSections, formatPrice, esc, formatDate } from './menu-core.js?v=20261022';
+import { ILL } from './ills.js?v=20261022';
 
 const $ = (id) => document.getElementById(id);
 let MENU, scale = 1, target = 4, manual = false;

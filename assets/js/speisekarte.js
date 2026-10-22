@@ -1,6 +1,6 @@
-import { loadMenu, visibleSections, formatPrice, formatDate, esc } from './menu-core.js';
-import { ILL } from './ills.js';
-import { toggleHTML, wireDialog } from './season.js';
+import { loadMenu, visibleSections, formatPrice, formatDate, esc } from './menu-core.js?v=20261022';
+import { ILL } from './ills.js?v=20261022';
+import { toggleHTML, wireDialog } from './season.js?v=20261022';
 const IMG = (n, w) => new URL(`../img/foto/${n}-${w}.webp`, import.meta.url).href;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 

@@ -1,6 +1,6 @@
-import { loadMenu, visibleSections, formatPrice, esc } from './menu-core.js';
-import { toggleHTML, wireDialog } from './season.js';
-import { ILL } from './ills.js';
+import { loadMenu, visibleSections, formatPrice, esc } from './menu-core.js?v=20261022';
+import { toggleHTML, wireDialog } from './season.js?v=20261022';
+import { ILL } from './ills.js?v=20261022';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -37,9 +37,9 @@ const canvas = document.getElementById('oven');
 function hasWebGL() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } }
 if (canvas && hasWebGL()) {
   canvas.classList.add('is-loading');
-  import('./oven.js').then(({ mountOven }) => mountOven(canvas, {
+  import('./oven.js?v=20261022').then(({ mountOven }) => mountOven(canvas, {
     getProgress: progress, reducedMotion: reduced,
-    modelUrl: new URL('../models/pizzaofen.glb', import.meta.url).href,
+    modelUrl: new URL('../models/pizzaofen.glb?v=20261022', import.meta.url).href,
     onReady: () => canvas.classList.remove('is-loading'),
     shiftX: (w, h) => (w / h > 1.15 ? 0.15 : 0),
     shiftY: (w, h) => (w / h < 0.9 ? 0.2 * Math.min(1, (0.9 - w / h) / 0.3) : 0)

@@ -1,6 +1,6 @@
 /* Saison-Angebot: zugeklappt als Knopf, öffnet als Fenster über der unscharfen Seite */
-import { esc } from './menu-core.js';
-import { ILL } from './ills.js';
+import { esc } from './menu-core.js?v=20261022';
+import { ILL } from './ills.js?v=20261022';
 
 export function toggleHTML(s, count) {
   return `${ILL[s.icon] || ''}<span class="st-t"><b>${esc(s.title)}</b><small>${esc(s.subtitle || 'Saison')}${count ? ` · ${count} Gerichte` : ''}</small></span><span class="st-plus" aria-hidden="true">+</span>`;

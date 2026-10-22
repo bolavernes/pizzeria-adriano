@@ -51,3 +51,7 @@ Ohne Backend, etwa als reine Dateivorschau, läuft der Admin im **Demo-Modus**. 
 - Die Datenschutzerklärung rechtlich prüfen lassen.
 - Die Fotos stammen von der bisherigen Website. Neue Fotos und Reels sollen ersetzt werden.
 - Die Allergenangaben in der Karte von der Küche bestätigen lassen.
+
+## Cache nach Deploys
+
+Skripte, Styles und das Modell werden bei jedem Aufruf per ETag kurz geprüft (`netlify.toml`), deshalb gilt nach einem Deploy sofort die neue Version. Die Endung `?v=20261022` an den Dateiverweisen hat einmalig alte Kopien aus der früheren Wochen-Cache-Einstellung abgelöst und muss nicht weiter gepflegt werden.

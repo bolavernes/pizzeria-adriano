@@ -16,9 +16,10 @@
     X-Frame-Options = "SAMEORIGIN"
 
 [[headers]]
+  # Skripte, Styles und Modell werden bei jedem Aufruf kurz geprüft (ETag), damit nach einem Deploy sofort die neue Version gilt
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/admin/*"
