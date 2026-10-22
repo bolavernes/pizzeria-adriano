@@ -81,24 +81,48 @@ function flameMaterial(seed, speed = 1) {
       void main(){
         vec2 uv = vUv;
         float t = uTime*uSpeed;
-        float n  = fbm(vec2(uv.x*3.2 + uSeed, uv.y*2.4 - t*1.9));
-        float n2 = fbm(vec2(uv.x*6.0 - uSeed, uv.y*4.0 - t*3.1));
-        float sway = (noise(vec2(t*0.7+uSeed, uv.y*1.5)) - 0.5) * 0.22 * uv.y;
-        float width = mix(0.42, 0.04, pow(uv.y, 0.9));
+        // Domain-Warp: unruhige Flammenzungen statt weicher Kleckse
+        vec2 q = vec2(fbm(vec2(uv.x*2.6 + uSeed, uv.y*2.0 - t*1.7)), fbm(vec2(uv.x*2.6 - uSeed + 5.2, uv.y*2.0 - t*1.7 + 1.3)));
+        float n  = fbm(vec2(uv.x*4.2, uv.y*3.2 - t*2.8) + q*1.7);
+        float sway = (noise(vec2(t*0.8 + uSeed, uv.y*1.2)) - 0.5) * 0.26 * uv.y;
+        float width = mix(0.38, 0.02, pow(uv.y, 0.75));
         float d = abs(uv.x - 0.5 - sway) / width;
-        float body = 1.0 - smoothstep(0.35, 1.05, d + (n - 0.5) * 0.9);
-        float top  = 1.0 - smoothstep(0.35, 0.98, uv.y + (n2 - 0.5) * 0.35);
-        float base = smoothstep(0.0, 0.08, uv.y);
-        float m = clamp(body * top * base * uPower, 0.0, 1.0);
-        vec3 deep = vec3(0.55, 0.06, 0.01);
-        vec3 mid  = vec3(1.0, 0.38, 0.04);
-        vec3 hot  = vec3(1.0, 0.86, 0.52);
-        vec3 col = mix(deep, mid, smoothstep(0.05, 0.55, m));
-        col = mix(col, hot, smoothstep(0.62, 1.0, m) * (1.0 - uv.y*0.6));
-        gl_FragColor = vec4(col * (0.55 + m*1.05), m * 0.92);
+        float shape = 1.0 - smoothstep(0.15, 1.0, d + (n - 0.5) * 1.15 + uv.y * 0.3);
+        float fade = smoothstep(0.0, 0.07, uv.y) * (1.0 - smoothstep(0.5, 1.0, uv.y + (n - 0.5) * 0.55));
+        float m = clamp(shape * fade * uPower, 0.0, 1.0);
+        // Temperatur: unten heiß und hell, oben rot auslaufend
+        float temp = m * (1.08 - uv.y * 0.8);
+        vec3 col = mix(vec3(0.42, 0.04, 0.0), vec3(1.0, 0.30, 0.03), smoothstep(0.04, 0.42, temp));
+        col = mix(col, vec3(1.0, 0.62, 0.16), smoothstep(0.42, 0.78, temp));
+        col = mix(col, vec3(1.0, 0.72, 0.32), smoothstep(0.82, 1.08, temp));
+        gl_FragColor = vec4(col * (0.32 + temp * 0.55), m * 0.78);
       }`,
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
   });
+}
+function charMaterial(time, heat = 1, coal = false) {
+  const m = new THREE.MeshStandardMaterial({ color: 0x1c140f, roughness: 0.85, metalness: 0 });
+  m.onBeforeCompile = (sh) => {
+    sh.uniforms.uTime = time; sh.uniforms.uHeat = { value: heat }; sh.uniforms.uCoal = { value: coal ? 1 : 0 };
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOP;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvOP = position;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uTime; uniform float uHeat; uniform float uCoal; varying vec3 vOP;\n' + NOISE)
+      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+        // Holzkohle: Voronoi-Schollen (typisches Rissbild verkohlten Holzes), in den Fugen Glut
+        vec2 cp = uCoal > 0.5 ? vOP.xz * 2.2 + vOP.y : vec2(atan(vOP.z, vOP.x) * 4.2, vOP.y * 19.0);
+        vec2 ci = floor(cp * vec2(1.0, 1.6)), cf = fract(cp * vec2(1.0, 1.6));
+        float f1 = 8.0, f2 = 8.0;
+        for (int yy = -1; yy <= 1; yy++) for (int xx = -1; xx <= 1; xx++) {
+          vec2 g = vec2(float(xx), float(yy)); vec2 o = vec2(hash(ci + g), hash(ci + g + 17.3));
+          float dd = length(g + o - cf); if (dd < f1) { f2 = f1; f1 = dd; } else if (dd < f2) f2 = dd;
+        }
+        float edge = 1.0 - smoothstep(0.015, 0.07, f2 - f1);
+        float heat = smoothstep(0.38, 0.8, fbm(cp * 0.45 + vec2(uTime * 0.05, uTime * 0.09)));
+        float pulse = 0.78 + 0.22 * sin(uTime * 1.7 + heat * 8.0 + f1 * 3.0);
+        float glowAmt = uCoal > 0.5 ? (0.35 + 0.65 * heat) * (0.5 + 0.5 * edge) : edge * (0.15 + 0.85 * heat);
+        diffuseColor.rgb *= (0.7 + 0.3 * hash(ci)) * (1.0 - edge * 0.6);
+        totalEmissiveRadiance += vec3(1.0, 0.2, 0.02) * glowAmt * pulse * 1.35 * uHeat;`);
+  };
+  return m;
 }
 function emberMaterial() {
   return new THREE.ShaderMaterial({
@@ -259,10 +283,29 @@ function buildOven(opts) {
   /* Feuer: Glut, Scheite, Flammen, Pizza */
   const fire = new THREE.Group(); fire.position.copy(opts.fireAt || new THREE.Vector3(-0.12, HEARTH_Y, -0.42)); oven.add(fire);
   const ember = emberMaterial();
+  const char = charMaterial(ember.uniforms.uTime), coalMat = charMaterial(ember.uniforms.uTime, 1.1, true);
+  const shadows = !!opts.shadows;
   for (let i = 0; i < 4; i++) {
-    const lg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.07, opts.logLen || 0.75, 10), ember);
+    // unregelmäßige Scheite: Zylinder mit verrauschter Oberfläche
+    const g = new THREE.CylinderGeometry(0.058, 0.07, opts.logLen || 0.75, 20, 8);
+    const pa = g.attributes.position, v = new THREE.Vector3();
+    for (let k = 0; k < pa.count; k++) {
+      v.fromBufferAttribute(pa, k); const rr = Math.hypot(v.x, v.z); if (rr < 1e-4) continue;
+      const a = Math.atan2(v.z, v.x), f = 1 + 0.09 * Math.sin(a * 3 + i * 2.1 + v.y * 9) + 0.05 * Math.sin(a * 7 + v.y * 23 + i) + r(-0.025, 0.025);
+      pa.setXYZ(k, v.x * f, v.y, v.z * f);
+    }
+    g.computeVertexNormals();
+    const lg = new THREE.Mesh(g, char); lg.castShadow = shadows; lg.receiveShadow = shadows;
     lg.rotation.set(Math.PI / 2, 0, (i - 1.5) * 0.5 + r(-.1, .1)); lg.position.set((i - 1.5) * 0.1, 0.07 + (i % 2) * 0.06, r(-.05, .05)); fire.add(lg);
   }
+  // Glutbett: kleine verkohlte Brocken
+  const chunkGeo = new THREE.IcosahedronGeometry(1, 3);
+  { const pa = chunkGeo.attributes.position, v = new THREE.Vector3(); for (let k = 0; k < pa.count; k++) { v.fromBufferAttribute(pa, k); v.multiplyScalar(0.85 + 0.12 * Math.sin(v.x * 7 + v.y * 5) + 0.08 * Math.sin(v.z * 11 - v.x * 3)); pa.setXYZ(k, v.x, v.y * 0.7, v.z); } chunkGeo.computeVertexNormals(); }
+  const CH = opts.lowPower ? 28 : 60, chunks = new THREE.InstancedMesh(chunkGeo, coalMat, CH);
+  { const d = new THREE.Object3D(); const R0 = opts.logLen ? 0.3 : 0.4;
+    for (let k = 0; k < CH; k++) { const a = rand() * TAU, rr = Math.sqrt(rand()) * R0; const sc = r(0.012, 0.032);
+      d.position.set(Math.cos(a) * rr, sc * 0.4, Math.sin(a) * rr * 0.7); d.rotation.set(r(0, TAU), r(0, TAU), r(0, TAU)); d.scale.set(sc * r(.8, 1.4), sc, sc * r(.8, 1.3)); d.updateMatrix(); chunks.setMatrixAt(k, d.matrix); } }
+  chunks.receiveShadow = shadows; fire.add(chunks);
   const coals = new THREE.Mesh(new THREE.CircleGeometry(opts.logLen ? 0.3 : 0.42, 24), ember); coals.rotation.x = -Math.PI / 2; coals.position.y = 0.01; coals.scale.set(1, 0.7, 1); fire.add(coals);
   const flames = [];
   const flameSet = opts.lowPower ? 4 : 7;
@@ -278,12 +321,19 @@ function buildOven(opts) {
   pizza.position.copy(opts.pizzaAt || new THREE.Vector3(0.22, HEARTH_Y + 0.015, 0.25)); if (!opts.noPizza) oven.add(pizza);
 
   // Licht vom Feuer
-  const fireLight = new THREE.PointLight(0xff7a2a, 6, 3.2, 1.6); fireLight.position.copy(fire.position).add(new THREE.Vector3(0.02, 0.35, 0.12)); oven.add(fireLight);
+  const fireLight = new THREE.PointLight(0xff7428, 6, 3.4, 1.7); fireLight.position.copy(fire.position).add(new THREE.Vector3(0.02, 0.35, 0.12)); oven.add(fireLight);
+  const fireBase = fireLight.position.clone();
+  if (shadows) {
+    fireLight.castShadow = true; fireLight.shadow.mapSize.set(1024, 1024);
+    fireLight.shadow.camera.near = 0.04; fireLight.shadow.camera.far = 3.4; fireLight.shadow.bias = -0.0015; fireLight.shadow.normalBias = 0.025; fireLight.shadow.radius = 4;
+  }
+  // tiefes Glutlicht direkt über dem Bett (färbt den Boden rot)
+  const coalLight = new THREE.PointLight(0xff4410, 2.2, 1.4, 2); coalLight.position.copy(fire.position).add(new THREE.Vector3(0, 0.06, 0.05)); oven.add(coalLight);
   const mouthLight = new THREE.PointLight(0xff8a3a, 1.1, 3.2, 2); mouthLight.position.set(0, fire.position.y + 0.35, ARCH.face + 0.25); oven.add(mouthLight);
   // Glühen vor der Öffnung
   const glow = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), new THREE.MeshBasicMaterial({ map: glowTexture('rgba(255,140,60,.55)', 'rgba(255,80,20,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   if (dome) glow.position.set(0, HEARTH_Y + 0.32, ARCH.face + 0.02); else { glow.position.copy(fire.position).add(new THREE.Vector3(0, 0.3, -0.05)); glow.scale.setScalar(0.8); }
-  oven.add(glow);
+  glow.visible = dome; oven.add(glow);
 
   // Funkenflug
   const N = opts.lowPower ? 80 : 170;
@@ -299,7 +349,7 @@ function buildOven(opts) {
   const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: 0.05, map: glowTexture('rgba(255,220,150,1)', 'rgba(255,120,30,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xffb060 }));
   oven.add(sparks);
 
-  const smokeTex = glowTexture('rgba(190,175,160,.55)', 'rgba(120,110,100,0)');
+  const smokeTex = glowTexture('rgba(120,108,98,.5)', 'rgba(70,62,56,0)');
   const smoke = [];
   const SN = opts.lowPower ? 8 : 16;
   for (let i = 0; i < SN; i++) {
@@ -308,7 +358,7 @@ function buildOven(opts) {
   }
   const smokeTop = opts.smokeTop || (HEARTH_Y + 1.0);
   oven.userData = {
-    HEARTH_Y, ARCH, flames, ember, fireLight, mouthLight, glow,
+    HEARTH_Y, ARCH, flames, ember, fireLight, mouthLight, glow, coalLight,
     update(t, dt, camera, stageRot = 0) {
       ember.uniforms.uTime.value = t;
       for (const f of flames) {
@@ -319,6 +369,9 @@ function buildOven(opts) {
       }
       const flick = 0.78 + 0.22 * Math.sin(t * 11.3) * Math.sin(t * 7.1 + 1.3) + 0.08 * Math.sin(t * 23.0);
       fireLight.intensity = 6.5 * flick; mouthLight.intensity = 1.1 * (0.85 + 0.15 * flick);
+      coalLight.intensity = 2.2 * (0.85 + 0.15 * Math.sin(t * 1.7) * Math.sin(t * 2.9 + 0.7));
+      // das Licht tanzt mit den Flammen: Schatten bewegen sich leicht
+      fireLight.position.set(fireBase.x + Math.sin(t * 5.3) * 0.025 + Math.sin(t * 12.1) * 0.01, fireBase.y + Math.sin(t * 7.7 + 1.0) * 0.03, fireBase.z + Math.sin(t * 4.1 + 2.0) * 0.02);
       glow.material.opacity = 0.75 + 0.25 * flick;
       for (let i = 0; i < N; i++) {
         life[i] += dt * 0.38;
@@ -337,10 +390,10 @@ function buildOven(opts) {
         // steigt bis unter das Gewölbe, zieht dann nach vorne aus der Öffnung
         const rise = Math.min(1, u * 1.6), out = Math.max(0, u * 1.6 - 1) / 0.6;
         sp.position.set(fire.position.x + sp.userData.x + Math.sin(t * .6 + sp.userData.rot * 9) * .06,
-          THREE.MathUtils.lerp(fire.position.y + .35, smokeTop, rise) + out * .55,
+          THREE.MathUtils.lerp(fire.position.y + .6, smokeTop, rise) + out * .55,
           fire.position.z + out * (ARCH.face - fire.position.z + .9));
         const sc = 0.35 + u * 1.1; sp.scale.set(sc, sc, 1);
-        sp.material.opacity = Math.sin(Math.PI * u) * 0.16;
+        sp.material.opacity = Math.sin(Math.PI * u) * 0.09;
         sp.material.rotation += dt * sp.userData.rot * 0.3;
       }
     }
@@ -373,9 +426,11 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
   } catch (e) { return null; }
   const lowPower = Math.min(window.innerWidth, window.innerHeight) < 600 || (navigator.hardwareConcurrency || 4) <= 4;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+  const shadows = !lowPower;
+  if (shadows) { renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; }
 
   let composer = null, bloom = null;
   const css = getComputedStyle(document.documentElement);
@@ -384,14 +439,18 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
 
   try {
-    composer = new EffectComposer(renderer);
+    // Kantenglättung: Multisampling im HDR-Puffer (WebGL2)
+    const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 2 : 4 });
+    composer = new EffectComposer(renderer, rt);
     composer.addPass(new RenderPass(scene, camera));
-    bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), lowPower ? 0.42 : 0.5, 0.45, 0.92);
+    bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), lowPower ? 0.32 : 0.38, 0.55, 0.95);
     composer.addPass(bloom); composer.addPass(new OutputPass());
   } catch (e) { composer = null; }
-  scene.add(new THREE.HemisphereLight(0xffe6cc, 0x140c08, 0.45));
-  const key = new THREE.DirectionalLight(0xfff1de, 1.55); key.position.set(-3.5, 6, 4); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x9fb3d6, 0.55); rim.position.set(4, 3, -5); scene.add(rim);
+  // Licht wie im Gastraum: warmes, gedämpftes Raumlicht; das Feuer dominiert
+  scene.environment = warmEnvironment(renderer); scene.environmentIntensity = 0.55;
+  scene.add(new THREE.HemisphereLight(0xffe2c4, 0x140c08, 0.12));
+  const key = new THREE.DirectionalLight(0xffe4c4, 0.7); key.position.set(-3.5, 6, 4); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x9fb3d6, 0.22); rim.position.set(4, 3, -5); scene.add(rim);
 
   // Boden mit warmem Lichtschein
   const floor = new THREE.Mesh(new THREE.CircleGeometry(12, 48), new THREE.MeshStandardMaterial({ color: 0x1b1511, roughness: 1 }));
@@ -414,8 +473,9 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
       const HEARTH_Y = 1.05, S = 2.3 / 1.155;
       const model = gltf.scene; model.scale.setScalar(S); model.position.set(0, HEARTH_Y + 0.425 * S, 0);
       const floorY = HEARTH_Y + (0.425 - 0.318) * S;
+      refineModel(model, renderer, new URL('pizzaofen-height.webp', modelUrl).href, shadows);
       oven = buildOven({
-        lowPower, dome: false,
+        lowPower, dome: false, shadows,
         fireAt: new THREE.Vector3(-0.08 * S, floorY, -0.17 * S), logLen: 0.44,
         noPizza: true,
         arch: { face: 0.97, spring: 0.62, inner: 0.5 }, smokeTop: HEARTH_Y + (0.425 + 0.15) * S
@@ -491,6 +551,33 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   }
   requestAnimationFrame(frame);
   return { renderer, scene };
+}
+
+// Umgebungslicht für Reflexe: dunkler Raum, Feuerschein von hinten, warme Deckenlampe vorne
+function warmEnvironment(renderer) {
+  const pm = new THREE.PMREMGenerator(renderer), s = new THREE.Scene();
+  s.background = new THREE.Color(0x0a0705);
+  const add = (c, i, w, h, p) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(i), side: THREE.DoubleSide })); m.position.set(...p); m.lookAt(0, 0, 0); s.add(m); };
+  add(0xff7a30, 4.0, 1.4, 0.9, [0, -0.3, -1.2]);
+  add(0xffd6a8, 1.2, 3, 1.4, [0.5, 2.6, 2.4]);
+  add(0x8ea2c4, 0.3, 3, 3, [-3.5, 1, 0.5]);
+  const tex = pm.fromScene(s, 0.04).texture; pm.dispose(); return tex;
+}
+// Modell veredeln: Relief (Bump) aus Höhenkarte, Fugen-Okklusion, scharfe Texturen unter flachem Winkel, Schatten
+function refineModel(model, renderer, heightUrl, shadows) {
+  const aniso = renderer.capabilities.getMaxAnisotropy();
+  const mats = [];
+  model.traverse((o) => {
+    if (!o.isMesh) return;
+    o.castShadow = shadows; o.receiveShadow = shadows;
+    const m = o.material; mats.push(m);
+    for (const k of ['map', 'roughnessMap', 'metalnessMap', 'aoMap']) if (m[k]) m[k].anisotropy = aniso;
+    m.aoMapIntensity = 1.0; m.envMapIntensity = 1.0;
+  });
+  new THREE.TextureLoader().load(heightUrl, (h) => {
+    h.flipY = false; h.colorSpace = THREE.NoColorSpace; h.anisotropy = aniso;
+    for (const m of mats) { m.bumpMap = h; m.bumpScale = 3.2; m.needsUpdate = true; }
+  });
 }
 
 function backArch() {

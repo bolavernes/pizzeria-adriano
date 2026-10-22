@@ -2,7 +2,7 @@
 
 Neue Website für die Pizzeria Adriano, Wallensteinstraße 54, 1200 Wien.
 
-- **Startseite** mit 3D-Holzofen (Three.js): Beim Scrollen dreht sich der Ofen, die Kamera fährt an die Öffnung. Mit Maus, Finger oder Pfeiltasten lässt er sich frei drehen. Die Flammen, die Glut und der Funkenflug sind animiert. Der Ofen ist dem echten Ofen im Lokal nachempfunden: Sandsteinkuppel, Ziegelbogen, Relief-Medaillon, Holzlager.
+- **Startseite** mit 3D-Holzofen (Three.js, Modell `assets/models/pizzaofen.glb`): Die Kamera blickt in den Ofen und schwenkt beim Scrollen sanft. Flammen, glühende Scheite, Glutbett, Funkenflug und flackerndes Feuerlicht mit weichen Schatten sind animiert. Relief kommt aus `pizzaofen-height.webp`, Kantenglättung per Multisampling. Auf schwachen Geräten laufen Schatten und Effekte reduziert.
 - **Interaktive Speisekarte** unter `/speisekarte/` mit Kategorienleiste, Suche, Filtern (fleischlos, vegan möglich, scharf, „ohne Allergen …“) und Allergenlegende. Die Seite ist für einen QR-Code am Tisch geeignet.
 - **Admin** unter `/admin/` mit Login. Der Kunde bearbeitet dort Gerichte, Preise, Allergene, Hinweise, Hervorhebungen, Reihenfolge und Sichtbarkeit („ausverkauft“). Dazu gehören ein Versionsverlauf mit Wiederherstellen, eine Rückgängig-Funktion und ein automatischer Entwurf im Browser.
 - **Druckversion** unter `/admin/druck/`: Die Karte wird automatisch auf A4 gesetzt, mit Seitenziel (Standard 4 Seiten) und automatischer Schriftanpassung. Speichern als PDF geht über den Druckdialog.
@@ -38,7 +38,7 @@ Ohne Backend, etwa als reine Dateivorschau, läuft der Admin im **Demo-Modus**. 
 | Pfad | Inhalt |
 |---|---|
 | `index.html`, `assets/js/site.js` | Startseite |
-| `assets/js/oven.js` | 3D-Ofen (prozedural, ohne Modelldatei) |
+| `assets/js/oven.js`, `assets/models/` | 3D-Ofen (Modell, Höhenkarte, Feuer, Licht) |
 | `speisekarte/`, `assets/js/speisekarte.js` | interaktive Karte |
 | `admin/`, `assets/js/admin.js` | Editor |
 | `admin/druck/`, `assets/js/print.js` | A4-Druck/PDF |
