@@ -316,10 +316,10 @@ html:has(.season-dlg[open]) { overflow: hidden; }
    v4: Logo vom Schild, Kabel-Überschriften, Hero mit Logo, leichtere Karte
    ===================================================================== */
 h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
-.logo { display: block; aspect-ratio: 686 / 100; background: currentColor; -webkit-mask: url(../img/logo-adriano.svg) no-repeat center / contain; mask: url(../img/logo-adriano.svg) no-repeat center / contain; }
+.logo { display: block; aspect-ratio: 685.9 / 100.25; background: currentColor; -webkit-mask: url(../img/logo-adriano.svg) no-repeat center / contain; mask: url(../img/logo-adriano.svg) no-repeat center / contain; }
 .brand { display: flex; align-items: center; }
 .brand .logo { width: clamp(118px, 11vw, 148px); }
-.site-head .brand, .site-foot .brand { color: var(--c-sign); }
+.site-head .brand, .site-foot .brand { color: #fff; }
 .site-head.is-solid .brand { color: var(--c-wine); }
 .site-foot .brand .logo { width: 170px; margin-bottom: 14px; }
 .nav a, .head-call, .btn, .link, .menu-btn { font-family: var(--font-head); }
@@ -337,8 +337,8 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .hero-intro { left: 50%; width: min(720px, 84vw); text-align: center; transform: translate(-50%, -42%); }
 .hero-intro.is-on { transform: translate(-50%, -50%); }
 .hero-intro::before { inset: -18% -12%; background: radial-gradient(closest-side, rgba(10, 6, 4, .62), rgba(10, 6, 4, 0)); }
-.hero-logo { margin: 0; color: var(--c-sign); filter: drop-shadow(0 6px 34px rgba(10, 6, 4, .9)) drop-shadow(0 1px 2px rgba(10, 6, 4, .9)); }
-.hero-logo .logo { width: 100%; aspect-ratio: 686 / 151.4; -webkit-mask-image: url(../img/logo-adriano-lockup.svg); mask-image: url(../img/logo-adriano-lockup.svg); }
+.hero-logo { margin: 0; color: #fff; filter: drop-shadow(0 6px 34px rgba(10, 6, 4, .9)) drop-shadow(0 1px 2px rgba(10, 6, 4, .9)); }
+.hero-logo .logo { width: 100%; aspect-ratio: 686.7 / 152.1; -webkit-mask-image: url(../img/logo-adriano-lockup.svg); mask-image: url(../img/logo-adriano-lockup.svg); }
 .hero-meta { font-family: var(--font-head); font-size: clamp(.92rem, 1.25vw, 1.08rem); letter-spacing: .02em; color: var(--c-cream); margin: clamp(18px, 2.4vw, 30px) auto 0; max-width: 34em; text-shadow: 0 1px 14px rgba(10, 6, 4, .95), 0 0 2px rgba(10, 6, 4, .8); }
 .hero-copy::before { transition: opacity .8s; }
 .hero-stage:has(.hero-intro.is-on) .hero-copy::before { opacity: 0; }
@@ -402,3 +402,14 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .stamp.will-stamp { opacity: 0; transform: rotate(-30deg) scale(1.6); }
 .stamp.is-stamped { opacity: .9; transform: rotate(-14deg) scale(1); transition: transform .5s cubic-bezier(.3,1.5,.5,1), opacity .15s; }
 @media (max-width: 860px) { .karte .stamp { left: auto; right: 12px; top: -38px; width: 112px; } }
+
+/* Reels in der Galerie */
+.g-item video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.g-badge { position: absolute; top: 12px; left: 12px; padding: 4px 10px 4px 9px; border-radius: 999px; background: rgba(15, 10, 8, .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: #fff; font-family: var(--font-head); font-size: .74rem; letter-spacing: .04em; pointer-events: none; }
+.lightbox video { max-width: 100%; max-height: calc(100vh - 160px); border-radius: 3px; background: #000; }
+
+/* Saison-Fenster mit Reel */
+.season-media { margin: 0 0 22px; height: clamp(180px, 34vh, 300px); overflow: hidden; border-radius: 2px; background: rgba(0, 0, 0, .2); }
+.season-media video, .season-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.season-dlg .season { padding-top: clamp(20px, 3vw, 28px); }
+.season-dlg .season > .season-media { margin-top: 30px; }

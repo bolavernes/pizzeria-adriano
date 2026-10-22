@@ -63,3 +63,20 @@ h3.gt { font-family: var(--font-display); font-style: italic; font-weight: 600; 
 .sig .sigk { font-size: 6.6pt; letter-spacing: .02em; font-style: italic; color: var(--c-wine); font-weight: 500; margin-bottom: .4mm; }
 .sig .nm { font-size: calc(12.5pt * var(--s)); }
 .season .it .nm { font-size: 10.5pt; } .season .it .ds { font-size: 7.4pt; }
+
+/* v5: weißes Papier (druckerfreundlich), Logo vom Schild, Tischtuch-Bordüren */
+:root { --paper: #fff; }
+.mast { margin: 0 0 3.5mm; }
+.mlogo { margin: 0 auto 2.2mm; width: 92mm; color: var(--c-wine); line-height: 0; }
+.mlogo svg { display: block; width: 100%; height: auto; }
+.mast .tl { font-size: 10pt; }
+.rh { margin-bottom: 3mm; }
+.rlogo { display: block; width: 34mm; margin: 0 auto 2mm; color: var(--c-wine); line-height: 0; }
+.rlogo svg { display: block; width: 100%; height: auto; }
+/* Karo wie das rot-weiße Tischtuch – schmal, damit es wenig Tinte braucht */
+.gh { height: 2.6mm; margin: 2.6mm 0 0; background-color: #fff;
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--c-wine) 45%, transparent) 50%, transparent 50%), linear-gradient(color-mix(in srgb, var(--c-wine) 45%, transparent) 50%, transparent 50%);
+  background-size: 2.6mm 2.6mm; }
+.ft { border-top: 0; padding-top: 0; }
+.ft .gh { margin: 0 0 2mm; }
+.page::before { border-color: color-mix(in srgb, var(--c-wine) 45%, transparent); }

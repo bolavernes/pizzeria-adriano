@@ -3,6 +3,12 @@ import { ILL } from './ills.js?v=20261022';
 import { toggleHTML, wireDialog } from './season.js?v=20261022';
 const IMG = (n, w) => new URL(`../img/foto/${n}-${w}.webp`, import.meta.url).href;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const VID = (n) => new URL(`../video/${n}`, import.meta.url).href;
+// Bewegtbild/Foto zu einzelnen Gerichten (Verkaufspsychologie: Appetit wecken, wo die Marge stimmt)
+const MEDIA = { 'adriano': { video: 'pizza-adriano' }, 'trenette-al-pesto-genovese': { photo: 'pasta-pesto' }, 'tiramisu': { photo: 'tiramisu' }, 'pizza-con-zucca': { video: 'pizza-zucca' } };
+const media = (m, cls = '') => !m ? '' : m.video
+  ? `<video class="${cls}" muted loop playsinline preload="none" poster="${VID(m.video + '.webp')}" data-src="${VID(m.video + '.mp4')}"></video>`
+  : `<img class="${cls}" src="${IMG(m.photo, 800)}" alt="" loading="lazy" decoding="async">`;
 
 /* Kopfzeile (mobil) */
 const btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
@@ -40,8 +46,8 @@ function dish(i, s, compact) {
   const cls = ['dish', i.highlight ? 'is-highlight' : '', q && norm(i.name).includes(q) ? 'is-hit' : '', (state.noAl.size && !al.length) ? 'no-al-info' : ''].join(' ');
   return `<article class="${cls}" id="g-${esc(i.id)}" style="--d:${(dish.n = (dish.n || 0) + 1) % 6}">
     ${i.highlight ? `<span class="hl">${esc(i.highlight)}</span>` : ''}
-    <div class="dish-head"><h3>${hl(i.name, q)}</h3>${flags}<span class="lead-dots" aria-hidden="true"></span>${price}</div>
-    ${i.desc ? `<p class="dish-desc">${hl(i.desc, q)}</p>` : ''}
+    <div class="dish-head"><h3>${hl(i.name, q)}</h3>${flags}${!i.desc ? price : ''}</div>
+    ${i.desc ? `<p class="dish-desc">${hl(i.desc, q)} ${price}</p>` : ''}
     <p class="dish-al">${al.map((a) => `<abbr title="${esc(MENU.allergensLong?.[a] || MENU.allergens?.[a] || a)}">${esc(a)}</abbr>`).join('')}</p>
   </article>`;
 }
@@ -50,7 +56,7 @@ function secHTML(s, groups, idp = '') {
   return `<section class="mk-sec ${s.style === 'season' ? 'mk-season' : ''} ${s.compact ? 'compact' : ''}" ${idp ? '' : `id="${esc(s.id)}"`} aria-labelledby="h-${idp}${esc(s.id)}">
       ${idp ? '<button class="sd-close" type="button" data-close aria-label="Schließen">×</button>' : ''}
       <div class="mk-sec-head">${ILL[s.icon] || ''}<h2 id="h-${idp}${esc(s.id)}">${s.style === 'season' ? '' : `<span class="mk-no">${String(SECS.filter((x) => x.style !== 'season').indexOf(s) + 1).padStart(2, '0')}</span>`}${esc(s.title)}</h2>${s.subtitle ? `<span class="sub">${esc(s.subtitle)}</span>` : ''}</div>
-      ${s.photo ? `<figure class="mk-photo"><img src="${IMG(s.photo, 1400)}" srcset="${IMG(s.photo, 800)} 800w, ${IMG(s.photo, 1400)} 1400w" sizes="(max-width: 760px) 100vw, 1200px" alt="" loading="lazy" decoding="async"></figure>` : ''}
+      ${idp && s.style === 'season' ? `<figure class="mk-photo season-media">${media({ video: 'pizza-zucca' })}</figure>` : s.photo ? `<figure class="mk-photo"><img src="${IMG(s.photo, 1400)}" srcset="${IMG(s.photo, 800)} 800w, ${IMG(s.photo, 1400)} 1400w" sizes="(max-width: 760px) 100vw, 1200px" alt="" loading="lazy" decoding="async"></figure>` : ''}
       ${s.note ? `<p class="mk-sec-note">${esc(s.note)}</p>` : ''}${groups}</section>`;
 }
 let openSeason = () => {};
@@ -77,12 +83,31 @@ function render() {
   $('mk-sections').innerHTML = html;
   $('season-dlg').innerHTML = seasonDlg;
   openSeason = wireDialog($('season-dlg'), [...document.querySelectorAll('[data-season]')]);
+  renderPicks();
   animate();
   $('mk-empty').hidden = shown > 0;
   const n = (state.veg + state.vegan + state.spicy) + state.noAl.size;
   $('mk-fcount').textContent = n ? n : '';
   renderCats();
 }
+/* Empfehlungen des Hauses: teuerstes Gericht zuerst (Anker), dann Signature-Gerichte mit Bild */
+function renderPicks() {
+  const box = $('mk-picks'); if (!box) return;
+  if (active()) { box.hidden = true; return; }
+  const all = SECS.filter((s) => s.style !== 'season').flatMap((s) => s.groups.flatMap((g) => g.items.map((i) => ({ i, s }))));
+  const hl = all.filter((x) => x.i.highlight && x.i.price).sort((a, b) => b.i.price - a.i.price);
+  const extra = all.filter((x) => !x.i.highlight && MEDIA[x.i.id]);
+  const picks = [...hl, ...extra].slice(0, 6);
+  if (!picks.length) { box.hidden = true; return; }
+  box.innerHTML = `<div class="picks-head"><h2 id="h-picks">Empfehlungen des Hauses</h2><p>Was unsere Gäste am häufigsten bestellen – und worauf wir besonders stolz sind.</p></div>
+    <div class="picks">${picks.map(({ i, s }) => `<a class="pick${MEDIA[i.id] ? ' has-media' : ''}" href="#g-${esc(i.id)}">
+      ${MEDIA[i.id] ? `<span class="pick-media">${media(MEDIA[i.id])}</span>` : `<span class="pick-ill">${ILL[s.icon] || ''}</span>`}
+      <span class="pick-body"><span class="pick-label">${esc(i.highlight || i.badge || s.title)}</span><span class="pick-name">${esc(i.name)}</span>${i.desc ? `<span class="pick-desc">${esc(i.desc)}</span>` : ''}<span class="pick-price">${esc(formatPrice(i.price, i.pricePrefix))}</span></span></a>`).join('')}</div>`;
+  box.hidden = false;
+  playVideos(box);
+}
+const vObs = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; if (!reduced) v.play().catch(() => {}); } else v.pause(); }), { rootMargin: '100px' });
+function playVideos(root) { root.querySelectorAll('video[data-src]').forEach((v) => vObs.observe(v)); }
 function renderCats() {
   const present = [...document.querySelectorAll('#mk-sections .mk-sec')].map((s) => s.id);
   $('mk-cats').innerHTML = SECS.filter((s) => present.includes(s.id)).map((s) => `<a href="#${esc(s.id)}" data-id="${esc(s.id)}">${esc(s.title)}</a>`).join('');
@@ -162,4 +187,11 @@ $('mk-reset').addEventListener('click', reset); $('mk-reset2').addEventListener(
 $('mk-cats').addEventListener('click', (e) => {
   const a = e.target.closest('a'); if (!a) return;
   if (document.getElementById(a.dataset.id)?.classList.contains('mk-season-mini')) { e.preventDefault(); openSeason(); }
+});
+
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('.pick'); if (!a) return;
+  const t = document.querySelector(a.getAttribute('href')); if (!t) return;
+  e.preventDefault(); t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+  t.classList.remove('is-flash'); void t.offsetWidth; t.classList.add('is-flash');
 });

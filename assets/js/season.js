@@ -8,13 +8,16 @@ export function toggleHTML(s, count) {
 
 export function wireDialog(dlg, openers) {
   if (!dlg) return () => {};
-  const open = () => { dlg._last = document.activeElement; if (!dlg.open) dlg.showModal(); };
+  const open = () => {
+    dlg._last = document.activeElement; if (!dlg.open) dlg.showModal();
+    dlg.querySelectorAll('video[data-src]').forEach((v) => { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); });
+  };
   openers.forEach((b) => b && b.addEventListener('click', (e) => { e.preventDefault(); open(); }));
   if (!dlg.dataset.wired) {
     dlg.dataset.wired = '1';
     // Klick auf den unscharfen Hintergrund oder auf × schließt
     dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
-    dlg.addEventListener('close', () => dlg._last?.focus?.());
+    dlg.addEventListener('close', () => { dlg.querySelectorAll('video').forEach((v) => v.pause()); dlg._last?.focus?.(); });
   }
   return open;
 }

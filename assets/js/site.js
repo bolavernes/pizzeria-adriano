@@ -61,7 +61,9 @@ loadMenu().then(({ menu }) => {
   if (season && box && sBtn && sDlg) {
     const items = season.groups.flatMap((g) => g.items);
     sBtn.innerHTML = toggleHTML(season, items.length);
+    const sv = new URL('../video/pizza-zucca', import.meta.url).href;
     box.innerHTML = `<button class="sd-close" type="button" data-close aria-label="Schließen">×</button>
+      <figure class="season-media"><video muted loop playsinline preload="none" poster="${sv}.webp" data-src="${sv}.mp4"></video></figure>
       <h3 id="season-h">${ILL[season.icon] || ''}${esc(season.title)}</h3><p class="when">${esc(season.subtitle || '')}</p>
       <ul>${items.map((i) => `<li><span class="n">${esc(i.name)}</span><span class="p">${esc(formatPrice(i.price, i.pricePrefix))}</span>${i.desc ? `<div class="d">${esc(i.desc)}</div>` : ''}</li>`).join('')}</ul>
       <a class="link" href="speisekarte/#${esc(season.id)}">In der Speisekarte ansehen</a>`;
@@ -95,7 +97,14 @@ if (gsec && !reduced) { addEventListener('scroll', () => { if (!gTick) { gTick =
 const lb = document.getElementById('lightbox');
 const shots = JSON.parse(document.getElementById('gallery-data')?.textContent || '[]');
 let cur = 0;
-function show(i) { cur = (i + shots.length) % shots.length; const sh = shots[cur]; const img = document.getElementById('lb-img'); img.src = sh.src; img.alt = sh.alt; document.getElementById('lb-cap').textContent = sh.cap; }
+function show(i) {
+  cur = (i + shots.length) % shots.length; const sh = shots[cur];
+  const img = document.getElementById('lb-img'), vid = document.getElementById('lb-vid');
+  if (sh.video) { img.hidden = true; vid.hidden = false; vid.poster = sh.src; vid.src = sh.video; vid.setAttribute('aria-label', sh.alt); vid.play().catch(() => {}); }
+  else { vid.pause(); vid.removeAttribute('src'); vid.hidden = true; img.hidden = false; img.src = sh.src; img.alt = sh.alt; }
+  document.getElementById('lb-cap').textContent = sh.cap;
+}
+lb?.addEventListener('close', () => { const v = document.getElementById('lb-vid'); v.pause(); });
 document.getElementById('gallery')?.addEventListener('click', (e) => { const b = e.target.closest('.g-item'); if (!b) return; show(+b.dataset.i); lb.showModal(); });
 lb?.addEventListener('click', (e) => { const b = e.target.closest('[data-lb]'); if (b) show(cur + +b.dataset.lb); else if (e.target === lb || e.target.tagName === 'FIGURE') lb.close(); });
 lb?.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
@@ -123,3 +132,11 @@ if (stamp && !reduced) {
   stamp.classList.add('will-stamp');
   new IntersectionObserver(([e], o) => { if (e.isIntersecting) { setTimeout(() => { stamp.classList.remove('will-stamp'); stamp.classList.add('is-stamped'); }, 350); o.disconnect(); } }, { threshold: 0.6 }).observe(stamp);
 }
+
+/* Reels in der Galerie: laufen stumm, sobald sie im Bild sind */
+const vidObs = new IntersectionObserver((es) => es.forEach((e) => {
+  const v = e.target;
+  if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; if (!reduced) v.play().catch(() => {}); }
+  else v.pause();
+}), { rootMargin: '120px' });
+document.querySelectorAll('video[data-src]').forEach((v) => vidObs.observe(v));
