@@ -9,8 +9,8 @@ const head = document.getElementById('kopf');
 const onScroll = () => head.classList.toggle('is-solid', scrollY > innerHeight * 0.6 || !document.getElementById('ofen'));
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 const btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
-btn?.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Schließen' : 'Menü'; });
-nav?.addEventListener('click', (e) => { if (e.target.tagName === 'A') { nav.classList.remove('is-open'); btn.setAttribute('aria-expanded', false); btn.textContent = 'Menü'; } });
+btn?.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'Navigation schließen' : 'Navigation öffnen'); });
+nav?.addEventListener('click', (e) => { if (e.target.tagName === 'A') { nav.classList.remove('is-open'); btn.setAttribute('aria-expanded', false); btn.setAttribute('aria-label', 'Navigation öffnen'); } });
 
 /* Einblenden */
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });

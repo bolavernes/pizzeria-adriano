@@ -439,3 +439,13 @@ h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
 .karte-index a { padding: 9px 0 8px; gap: 0 14px; }
 .karte-index .t { font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
 .karte-index .s { font-size: .88rem; line-height: 1.3; }
+
+/* Burger-Menü (Handy) */
+.menu-btn { width: 44px; height: 44px; padding: 0; display: none; place-items: center; margin-right: -8px; }
+@media (max-width: 860px) { .menu-btn { display: grid; } }
+.burger { position: relative; width: 22px; height: 14px; display: block; }
+.burger i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .2s, top .3s; }
+.burger i:nth-child(1) { top: 0; } .burger i:nth-child(2) { top: 6px; } .burger i:nth-child(3) { top: 12px; }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(3) { top: 6px; transform: rotate(-45deg); }

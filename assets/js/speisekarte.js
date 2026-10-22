@@ -12,7 +12,7 @@ const media = (m, cls = '') => !m ? '' : m.video
 
 /* Kopfzeile (mobil) */
 const btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
-btn?.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Schließen' : 'Menü'; });
+btn?.addEventListener('click', () => { const o = nav.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'Navigation schließen' : 'Navigation öffnen'); });
 
 const $ = (id) => document.getElementById(id);
 const state = { q: '', veg: false, vegan: false, spicy: false, noAl: new Set() };
