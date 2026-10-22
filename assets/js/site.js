@@ -25,8 +25,19 @@ function progress() {
   const total = hero.offsetHeight - innerHeight;
   return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
 }
+/* Pic-Dump: beim „42 Pizzen“-Schritt fallen Pizzafotos nacheinander auf einen Stapel */
+const dump = [...document.querySelectorAll('#picdump .pd')];
+// [x %, y %, Drehung °, Breite vw] – Querformat (Ofen rechts) und Hochformat
+const DUMP_L = [[50, 12, -8, 17], [72, 6, 6, 13], [60, 40, 4, 12], [82, 34, -7, 12], [46, 58, 7, 17], [68, 62, -5, 12], [86, 66, 9, 11], [56, 18, 11, 12], [76, 42, -3, 17], [44, 34, -12, 11], [64, 24, -6, 13], [88, 12, 5, 11]];
+const DUMP_P = [[4, 9, -8, 46], [52, 7, 7, 38], [26, 18, 4, 34], [60, 26, -7, 34], [6, 34, 6, 44], [40, 38, -4, 34], [68, 44, 9, 28], [16, 12, 11, 30], [48, 20, -3, 46], [2, 24, -12, 30], [30, 30, -6, 36], [62, 10, 5, 30]];
+function placeDump() {
+  const P = innerWidth / innerHeight < 0.9 ? DUMP_P : DUMP_L;
+  dump.forEach((f, i) => { const [x, y, r, w] = P[i % P.length]; f.style.setProperty('--x', x + '%'); f.style.setProperty('--y', y + '%'); f.style.setProperty('--r', r + 'deg'); f.style.setProperty('--w', w + 'vw'); });
+}
+if (dump.length) { placeDump(); addEventListener('resize', placeDump); }
 function updateHero() {
   const p = progress();
+  dump.forEach((f, i) => f.classList.toggle('is-in', p >= 0.72 + i * 0.019));
   steps.forEach((s) => s.classList.toggle('is-on', p >= +s.dataset.from && p < +s.dataset.to));
   if (prog) prog.style.height = (p * 100) + '%';
   if (hint) hint.style.opacity = p > 0.04 ? 0 : 1;
@@ -153,3 +164,9 @@ const vidObs = new IntersectionObserver((es) => es.forEach((e) => {
   else v.pause();
 }), { rootMargin: '120px' });
 document.querySelectorAll('video[data-src]').forEach((v) => vidObs.observe(v));
+
+/* Karte erst nach Klick laden (Datenschutz) */
+document.getElementById('map-load')?.addEventListener('click', () => {
+  const box = document.getElementById('map-box');
+  box.innerHTML = '<iframe title="Pizzeria Adriano auf Google Maps" src="https://www.google.com/maps?q=Pizzeria+Adriano,+Wallensteinstra%C3%9Fe+54,+1200+Wien&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>';
+});
