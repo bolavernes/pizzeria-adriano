@@ -300,8 +300,14 @@ async function startEditor() {
 }
 $('login-form').addEventListener('submit', async (e) => {
   e.preventDefault(); $('login-err').textContent = '';
-  try { await api.login($('pw').value); $('pw').value = ''; await startEditor(); }
-  catch (er) { $('login-err').textContent = er.message; }
+  const btn = e.target.querySelector('button[type="submit"]'); btn.disabled = true; btn.textContent = 'Anmelden …';
+  try {
+    await api.login($('pw').value); $('pw').value = '';
+    try { await startEditor(); }
+    catch (er) { showLogin(); $('login-err').textContent = er.status === 401 ? 'Anmeldung wurde nicht gespeichert. Bitte Cookies für diese Seite erlauben und erneut versuchen.' : 'Die Karte konnte nicht geladen werden: ' + er.message; }
+  }
+  catch (er) { $('login-err').textContent = er.message || 'Anmeldung fehlgeschlagen. Bitte erneut versuchen.'; }
+  finally { btn.disabled = false; btn.textContent = 'Anmelden'; }
 });
 $('logout').addEventListener('click', async () => { if (isDirty() && !await confirmDlg('Es gibt ungespeicherte Änderungen. Trotzdem abmelden? (Der Entwurf bleibt in diesem Browser erhalten.)')) return; await api.logout(); showLogin(); });
 $('save').addEventListener('click', save);
