@@ -151,3 +151,59 @@
 .season-dlg.mk-dlg { width: min(860px, calc(100vw - 32px)); }
 .season-dlg .mk-season { margin: 0; position: relative; outline: 1px solid color-mix(in srgb, var(--c-paper) 45%, transparent); outline-offset: -8px; }
 .season-dlg .mk-season .dish.will-in { opacity: 1; transform: none; }
+
+/* =====================================================================
+   v4: leichtere Karte – Register-Typo, Preislinien, kein schwerer Rahmen
+   ===================================================================== */
+.menu-page { background: var(--c-paper); }
+.mk-intro { padding: 140px 0 40px; text-align: left; }
+.mk-intro h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1; color: var(--c-ink); font-weight: 500; }
+.mk-intro h1::before { content: "Pizzeria Adriano"; display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font-size: .95rem; letter-spacing: .06em; color: var(--c-wine); font-weight: 500; }
+.mk-lead { margin-inline: 0; font-style: normal; max-width: 34em; }
+.mk-meta { font-size: .85rem; }
+.mk-bar { border-bottom: 1px solid rgba(43, 38, 34, .14); background: color-mix(in srgb, var(--c-paper) 94%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.mk-cats a { font-size: .95rem; letter-spacing: .01em; padding: 8px 12px; color: var(--c-ink-soft); }
+.mk-cats a.is-active { color: var(--c-wine); }
+.mk-ind { top: auto; bottom: 6px; height: 2px; background: var(--c-wine); border-radius: 0; }
+.mk-filter-btn { border-radius: 999px; padding: 9px 16px; }
+.mk-search { border-radius: 999px; }
+.mk-body { background: transparent; border: 0; outline: 0; margin-top: 0; margin-bottom: 40px; padding: 10px 0 60px; }
+.mk-sec { padding-top: clamp(56px, 7vw, 96px); }
+.mk-sec-head { grid-template-columns: 1fr auto; gap: 6px 22px; align-items: end; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid rgba(43, 38, 34, .9); }
+.mk-sec-head .ill { grid-row: 1 / 3; grid-column: 2; width: 70px; height: 42px; color: var(--c-wine); opacity: .8; }
+.mk-sec-head h2 { color: var(--c-ink); font-size: clamp(1.9rem, 3.6vw, 2.8rem); font-weight: 500; display: flex; align-items: baseline; gap: 16px; }
+.mk-sec-head h2::before { content: none; }
+.mk-no { font-size: .42em; color: var(--c-wine); font-variant-numeric: tabular-nums; letter-spacing: .04em; transform: translateY(-.55em); }
+.mk-sec-head .sub { font-size: 1.05rem; }
+.mk-sec-note { margin-top: 0; }
+.mk-photo { height: clamp(170px, 24vw, 300px); outline: 0; border-radius: 2px; margin: 0 0 26px; }
+.mk-group-title { color: var(--c-wine); font-size: 1.25rem; font-weight: 400; margin: 30px 0 4px; }
+.mk-grid { gap: 0 clamp(36px, 5vw, 72px); }
+.dish { padding: 14px 0 15px; border-bottom: 1px solid rgba(43, 38, 34, .1); }
+.dish-head { flex-wrap: nowrap; gap: 8px; align-items: baseline; }
+.dish h3 { font-size: 1.12rem; font-weight: 500; letter-spacing: 0; color: var(--c-ink); flex: 0 1 auto; min-width: 0; }
+.dish:hover h3 { color: var(--c-wine); }
+.lead-dots { flex: 1 1 24px; min-width: 18px; border-bottom: 1px dotted rgba(43, 38, 34, .35); transform: translateY(-4px); }
+.price { font-family: var(--font-head); font-size: .98rem; font-weight: 500; color: var(--c-ink); margin-left: 0; flex: none; font-variant-numeric: tabular-nums; }
+.flag { font-family: var(--font-head); font-size: .74rem; letter-spacing: .02em; flex: none; }
+.dish-desc { font-size: .93rem; margin-top: 3px; max-width: 34em; }
+.dish-al { margin-top: 5px; }
+.dish-al abbr { font-family: var(--font-head); font-size: .66rem; border: 0; padding: 0 2px; color: var(--c-ink-soft); background: color-mix(in srgb, var(--c-ink) 6%, transparent); border-radius: 2px; }
+.dish:not(.is-highlight):hover { background: transparent; padding-left: 0; padding-right: 0; margin-inline: 0; }
+.dish.is-highlight { background: transparent; border: 0; border-top: 1px solid var(--c-wine); border-bottom: 1px solid var(--c-wine); outline: 0; border-radius: 0; padding: 18px 0; margin: 10px 0 12px; }
+.dish.is-highlight .hl { font-family: var(--font-head); font-weight: 500; letter-spacing: .04em; font-size: .78rem; }
+.dish.is-highlight h3 { font-size: 1.35rem; }
+.compact .dish h3 { display: block; font-size: 1.05rem; }
+.compact .dish-desc { display: block; margin-left: 0; }
+.mk-legend h2 { color: var(--c-ink); font-size: 1.4rem; }
+.mk-legend dt { color: var(--c-wine); font-family: var(--font-head); }
+/* Saison im Fenster: rot, aber gleiche ruhige Typografie */
+.mk-season .mk-sec-head { border-bottom-color: rgba(255, 255, 255, .55); }
+.mk-season .mk-sec-head h2, .mk-season .dish h3, .mk-season .price { color: var(--c-paper); }
+.mk-season .lead-dots { border-bottom-color: rgba(255, 255, 255, .45); }
+.mk-season .dish { border-color: rgba(255, 255, 255, .18); }
+.mk-season .dish-al abbr { color: var(--c-paper); background: rgba(255, 255, 255, .14); }
+@media (max-width: 760px) {
+  .mk-intro { padding-top: 116px; }
+  .mk-sec-head .ill { display: none; }
+}

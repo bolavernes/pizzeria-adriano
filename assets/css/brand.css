@@ -3,25 +3,31 @@
    Hier und nur hier werden Schriften und Farben festgelegt.
    Alle Seiten (Website, Speisekarte, Admin, Druckversion) lesen diese Werte.
 
-   Schriften: aktuell Standard-Systemschriften (keine Downloads, DSGVO-sicher).
+   Schriften liegen im Projekt (keine Google-Fonts-Abfrage, DSGVO-sicher).
    Neue Hausschrift einbauen:
      1. .woff2-Dateien nach /assets/fonts/ legen
      2. @font-face unten einkommentieren und anpassen
-     3. Namen vorne in --font-text eintragen (gilt dann überall)
+     3. Überschriften: --font-head, Fließtext: --font-text
    ===================================================================== */
 
-/*
-@font-face { font-family: "Hausschrift Display"; src: url("../fonts/display.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "Hausschrift Text";    src: url("../fonts/text.woff2")    format("woff2"); font-weight: 400; font-display: swap; }
+/* Überschriften: ITC Kabel (Lizenz nötig). Bis die .woff2-Dateien da sind, springt Jost ein (frei, OFL, selbst gehostet).
+   Kabel einbauen: kabel-medium.woff2 / kabel-demi.woff2 nach /assets/fonts/ legen und die zwei Zeilen unten aktivieren.
+@font-face { font-family: "ITC Kabel"; src: url("../fonts/kabel-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "ITC Kabel"; src: url("../fonts/kabel-demi.woff2") format("woff2"); font-weight: 600; font-display: swap; }
 */
+@font-face { font-family: "Jost"; src: url("../fonts/jost-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("../fonts/jost-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("../fonts/jost-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+/* Logo: Schriftzug vom Schild als Vektor (assets/img/logo-adriano.svg) */
 
 :root {
   /* Schriften */
-  /* Eine Schriftfamilie für die ganze Website; Hierarchie nur über Größe und Gewicht */
+  /* Überschriften & Bedienelemente in Kabel, Fließtext in der Antiqua */
+  --font-head: "ITC Kabel", "ITC Kabel Std", Kabel, Jost, Futura, "Century Gothic", system-ui, sans-serif;
   --font-text: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-  --font-display: var(--font-text);
+  --font-display: var(--font-head);
   --font-body: var(--font-text);
-  --font-ui: var(--font-text);
+  --font-ui: var(--font-head);
   --font-admin: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* nur Admin-Oberfläche */
 
   /* Farben */
@@ -33,9 +39,10 @@
   --c-ink-soft: #625850;   /* Nebentext auf hell */
   --c-cream: #f3ebe0;      /* Text auf dunkel */
   --c-cream-soft: #b9ab9c; /* Nebentext auf dunkel */
-  --c-wine: #cc3a36;       /* Akzent: Tomatenrot (Tischtuch, Karte) */
-  --c-wine-bright: #e2554f;/* Akzent auf dunklem Grund / Hover */
+  --c-wine: #7e232a;       /* Akzent: Weinrot vom Logo (Schild, Instagram) */
+  --c-wine-bright: #a5333b;/* Hover / Akzent auf dunklem Grund */
   --c-gold: #9a7442;       /* Illustrationen */
   --c-olive: #5b6a37;      /* vegetarisch / hausgemacht */
   --c-ember: #f08a3c;      /* nur Feuer-Akzente */
+  --c-sign: #f1dc3d;       /* Schriftzug-Gelb vom Logo */
 }

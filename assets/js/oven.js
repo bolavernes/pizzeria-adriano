@@ -335,18 +335,52 @@ function buildOven(opts) {
   if (dome) glow.position.set(0, HEARTH_Y + 0.32, ARCH.face + 0.02); else { glow.position.copy(fire.position).add(new THREE.Vector3(0, 0.3, -0.05)); glow.scale.setScalar(0.8); }
   glow.visible = dome; oven.add(glow);
 
-  // Funkenflug
-  const N = opts.lowPower ? 80 : 170;
+  // Funkenflug: viele winzige, wenige große; schießen schnell los, werden von der Luft gebremst, kühlen ab
+  const N = opts.lowPower ? 140 : 300;
   const sparkGeo = new THREE.BufferGeometry();
-  const pos = new Float32Array(N * 3), life = new Float32Array(N), vel = [];
-  for (let i = 0; i < N; i++) { resetSpark(i, true); }
+  const pos = new Float32Array(N * 3), age = new Float32Array(N), size = new Float32Array(N), seed = new Float32Array(N);
+  const life = new Float32Array(N), drag = new Float32Array(N), vel = new Float32Array(N * 3);
   function resetSpark(i, initial) {
-    pos[i * 3] = fire.position.x + r(-.2, .2); pos[i * 3 + 1] = fire.position.y + r(.05, .3); pos[i * 3 + 2] = fire.position.z + r(-.1, .2);
-    vel[i] = new THREE.Vector3(r(-.12, .12), r(.3, .75), r(.4, .95));
-    life[i] = initial ? rand() : 0;
+    const tiny = Math.pow(rand(), 2.6);                 // 0 = winzig (häufig) … 1 = groß (selten)
+    size[i] = 0.005 + tiny * 0.024;
+    seed[i] = rand();
+    pos[i * 3] = fire.position.x + r(-.18, .18); pos[i * 3 + 1] = fire.position.y + r(.04, .22); pos[i * 3 + 2] = fire.position.z + r(-.1, .15);
+    const sp = (1 - tiny) * r(1.4, 2.8) + tiny * r(0.5, 1.1);  // kleine Funken sind schneller
+    const a = r(-0.5, 0.5);
+    vel[i * 3] = Math.sin(a) * sp * 0.45; vel[i * 3 + 1] = sp * r(0.75, 1.0); vel[i * 3 + 2] = sp * r(0.15, 0.45);
+    drag[i] = (1 - tiny) * r(2.6, 4.2) + tiny * r(0.9, 1.6); // kleine bremsen stärker ab
+    life[i] = (1 - tiny) * r(0.7, 1.6) + tiny * r(1.6, 2.8);
+    age[i] = initial ? rand() * life[i] : 0;
   }
+  for (let i = 0; i < N; i++) resetSpark(i, true);
   sparkGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: 0.05, map: glowTexture('rgba(255,220,150,1)', 'rgba(255,120,30,0)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xffb060 }));
+  const ageAttr = new THREE.BufferAttribute(new Float32Array(N), 1); sparkGeo.setAttribute('aAge', ageAttr);
+  sparkGeo.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+  sparkGeo.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
+  const sparkMat = new THREE.ShaderMaterial({
+    uniforms: { uTime: ember.uniforms.uTime, uScale: { value: 600 } },
+    vertexShader: /* glsl */`
+      attribute float aAge, aSize, aSeed; uniform float uTime, uScale; varying float vA, vHeat;
+      void main(){
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        float twinkle = 0.65 + 0.35 * sin(uTime * (18.0 + aSeed * 30.0) + aSeed * 40.0);
+        vHeat = 1.0 - aAge;
+        vA = smoothstep(0.0, 0.05, aAge) * (1.0 - smoothstep(0.55, 1.0, aAge)) * twinkle;
+        gl_PointSize = max(1.0, aSize * uScale / -mv.z * (0.55 + 0.45 * vHeat));
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: /* glsl */`
+      varying float vA, vHeat;
+      void main(){
+        vec2 c = gl_PointCoord - 0.5; float d = dot(c, c) * 4.0;
+        float core = exp(-d * 6.0), halo = exp(-d * 1.6) * 0.35;
+        vec3 hot = vec3(1.0, 0.92, 0.7), warm = vec3(1.0, 0.5, 0.12), cold = vec3(0.7, 0.14, 0.02);
+        vec3 col = mix(cold, warm, smoothstep(0.0, 0.5, vHeat)); col = mix(col, hot, smoothstep(0.55, 1.0, vHeat));
+        gl_FragColor = vec4(col * (core * 1.6 + halo), (core + halo) * vA);
+      }`,
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+  });
+  const sparks = new THREE.Points(sparkGeo, sparkMat); sparks.frustumCulled = false;
   oven.add(sparks);
 
   const smokeTex = glowTexture('rgba(120,108,98,.5)', 'rgba(70,62,56,0)');
@@ -359,6 +393,7 @@ function buildOven(opts) {
   const smokeTop = opts.smokeTop || (HEARTH_Y + 1.0);
   oven.userData = {
     HEARTH_Y, ARCH, flames, ember, fireLight, mouthLight, glow, coalLight,
+    setPointScale(h) { sparkMat.uniforms.uScale.value = h; },
     update(t, dt, camera, stageRot = 0) {
       ember.uniforms.uTime.value = t;
       for (const f of flames) {
@@ -373,17 +408,24 @@ function buildOven(opts) {
       // das Licht tanzt mit den Flammen: Schatten bewegen sich leicht
       fireLight.position.set(fireBase.x + Math.sin(t * 5.3) * 0.025 + Math.sin(t * 12.1) * 0.01, fireBase.y + Math.sin(t * 7.7 + 1.0) * 0.03, fireBase.z + Math.sin(t * 4.1 + 2.0) * 0.02);
       glow.material.opacity = 0.75 + 0.25 * flick;
+      const yIn = HEARTH_Y + ARCH.spring + ARCH.inner - 0.08;
       for (let i = 0; i < N; i++) {
-        life[i] += dt * 0.38;
-        if (life[i] > 1 || pos[i * 3 + 2] > ARCH.face + 2.6) resetSpark(i);
-        // Funken steigen, werden zur Öffnung gesogen, verlöschen
-        const ins = pos[i * 3 + 2] < ARCH.face;
-        pos[i * 3] += vel[i].x * dt;
-        pos[i * 3 + 1] += vel[i].y * dt * (ins ? 0.45 : 1.0);
-        pos[i * 3 + 2] += vel[i].z * dt;
-        const yMax = HEARTH_Y + (ins ? ARCH.spring + ARCH.inner - 0.06 : 3.0);
-        if (pos[i * 3 + 1] > yMax) pos[i * 3 + 1] = yMax;
+        age[i] += dt;
+        const i3 = i * 3;
+        if (age[i] > life[i] || pos[i3 + 2] > ARCH.face + 2.4) { resetSpark(i); continue; }
+        const k = Math.exp(-drag[i] * dt);
+        // Auftrieb und Luftwirbel, Luft bremst die Geschwindigkeit
+        vel[i3] = vel[i3] * k + Math.sin(t * 3.1 + seed[i] * 50 + pos[i3 + 1] * 6) * 0.35 * dt;
+        vel[i3 + 1] = vel[i3 + 1] * k + 0.55 * dt;
+        vel[i3 + 2] = vel[i3 + 2] * k + Math.cos(t * 2.3 + seed[i] * 31) * 0.18 * dt;
+        const ins = pos[i3 + 2] < ARCH.face;
+        // unter dem Gewölbe: Zug zur Öffnung
+        if (ins && pos[i3 + 1] > yIn - 0.15) vel[i3 + 2] += 0.9 * dt;
+        pos[i3] += vel[i3] * dt; pos[i3 + 1] += vel[i3 + 1] * dt; pos[i3 + 2] += vel[i3 + 2] * dt;
+        if (ins && pos[i3 + 1] > yIn) { pos[i3 + 1] = yIn; vel[i3 + 1] *= -0.2; }
+        ageAttr.array[i] = age[i] / life[i];
       }
+      ageAttr.needsUpdate = true;
       sparkGeo.attributes.position.needsUpdate = true;
       for (const sp of smoke) {
         const u = (sp.userData.t += dt * 0.09) % 1;
@@ -429,8 +471,11 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+  const isSafari = /^((?!chrome|chromium|crios|fxios|android).)*safari/i.test(navigator.userAgent);
   const shadows = !lowPower;
-  if (shadows) { renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; }
+  if (shadows) { renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.shadowMap.autoUpdate = false; }
+  // Safari rendert WebGL langsamer: etwas geringere Auflösung von Anfang an
+  if (isSafari) renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 
   let composer = null, bloom = null;
   const css = getComputedStyle(document.documentElement);
@@ -462,7 +507,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
   let oven = null, mode = 'glb';
   const KEY = {
     // Innenansicht: Kamera bleibt vor dem offenen Ofen, schwenkt sanft und fährt näher ans Feuer
-    glb: { interior: true, sweep: 0.24, start: { d: 3.9, dp: 4.6, h: 2.3, ty: 1.6, tz: -0.12 }, end: { d: 2.55, dp: 3.2, h: 1.85, ty: 1.46, tz: -0.36 } },
+    glb: { interior: true, sweep: 0.2, start: { d: 1.45, dp: 1.75, h: 1.6, ty: 1.48, tz: -0.36 }, end: { d: 3.9, dp: 4.6, h: 2.3, ty: 1.6, tz: -0.12 } },
     proc: { rot0: -0.85, start: { d: 8.2, dp: 13.5, h: 2.9, ty: 1.15, tz: 0 }, end: { d: 3.9, dp: 6.2, h: 1.55, ty: 1.28, tz: 0.9 } }
   };
   function useProcedural() { mode = 'proc'; oven = buildOven({ lowPower }); stage.add(oven); onReady && onReady(); }
@@ -528,7 +573,7 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
       // leichtes Schwenken: Scroll von links nach rechts, Maus kippt mit, in Ruhe pendelt es langsam
       drag = Math.max(-0.3, Math.min(0.3, drag));
       px += (pointerX - px) * Math.min(1, dt * 2.5);
-      rot = (smooth - 0.5) * 2 * K.sweep + (reducedMotion ? 0 : Math.sin(t * 0.32) * 0.035) + drag + px * 0.07;
+      rot = smooth * K.sweep + (reducedMotion ? 0 : Math.sin(t * 0.32) * 0.03) + drag + px * (0.03 + 0.05 * smooth);
     } else {
       // Drehung über den Hero: von hinten bis die Öffnung frontal zeigt
       rot = K.rot0 + smooth * (TAU - K.rot0) + drag + idle * (1 - smooth);
@@ -544,10 +589,31 @@ export function mountOven(canvas, { getProgress = () => 0, reducedMotion = false
     target.set(0, L(a.ty, b.ty, k), L(a.tz, b.tz, k));
     camPos.set(0, height, dist);
     camera.position.copy(camPos); camera.lookAt(target);
-    const f = 1 - k; // Versatz löst sich bei der Fahrt in die Öffnung auf
+    const f = K.interior ? k : 1 - k; // Innen: Logo mittig, beim Rausfahren rückt der Ofen zur Seite
     if (view.sx || view.sy) camera.setViewOffset(view.w, view.h, -view.w * view.sx * f, view.h * view.sy * f, view.w, view.h);
-    if (oven) oven.userData.update(t, dt, camera, stage.rotation.y);
+    if (oven) { oven.userData.update(t, dt, camera, stage.rotation.y); oven.userData.setPointScale?.(renderer.domElement.height / 0.611); }
+    // Schatten nicht jedes Bild neu berechnen (Feuerlicht bewegt sich nur wenig)
+    if (renderer.shadowMap.enabled && (++frameNo % (isSafari ? 3 : 2) === 0)) renderer.shadowMap.needsUpdate = true;
     if (composer) composer.render(); else renderer.render(scene, camera);
+    adapt(now);
+  }
+  // Adaptive Qualität: wenn es ruckelt, Schritt für Schritt Auflösung und Schatten reduzieren
+  let frameNo = 0, q = 0, qAcc = 0, qN = 0, qLast = 0, qStart = 0;
+  const setDPR = (v) => { renderer.setPixelRatio(v); resize(); };
+  function adapt(now) {
+    if (!qStart) qStart = now;
+    const ft = qLast ? now - qLast : 16; qLast = now;
+    if (now - qStart < 2500 || ft > 250) return;          // Ladephase und Tab-Wechsel ignorieren
+    qAcc += ft; qN++;
+    if (qN < 40) return;
+    const avg = qAcc / qN; qAcc = 0; qN = 0;
+    if (avg < 24 || q >= 4) return;                        // ~42 fps oder besser: passt
+    q++;
+    const dpr = renderer.getPixelRatio();
+    if (q === 1) setDPR(Math.min(dpr, 1.5));
+    else if (q === 2) { if (renderer.shadowMap.enabled) { renderer.shadowMap.enabled = false; if (oven) oven.userData.fireLight.castShadow = false; scene.traverse((o) => { if (o.material) [].concat(o.material).forEach((m) => m.needsUpdate = true); }); } else setDPR(Math.min(dpr, 1.25)); }
+    else if (q === 3) setDPR(Math.min(dpr, 1.0));
+    else if (q === 4) { if (bloom) bloom.enabled = false; setDPR(Math.min(dpr, 0.85)); }
   }
   requestAnimationFrame(frame);
   return { renderer, scene };
