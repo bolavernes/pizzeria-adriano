@@ -50,9 +50,12 @@ if (canvas && hasWebGL()) {
 loadMenu().then(({ menu }) => {
   const secs = visibleSections(menu);
   const list = document.getElementById('cat-list');
-  if (list) list.innerHTML = secs.filter((s) => s.style !== 'season').map((s) => `
-    <li><a href="speisekarte/#${esc(s.id)}">${ILL[s.icon] || ''}<span class="t">${esc(s.title)}</span><span class="s">${esc(s.subtitle || '')}</span></a></li>`).join('');
-  hoverPreview(secs);
+  if (list) {
+    const count = (s) => s.groups.reduce((a, g) => a + g.items.length, 0);
+    list.innerHTML = secs.filter((s) => s.style !== 'season').map((s, i) => `
+    <li><a href="speisekarte/#${esc(s.id)}" data-photo="${esc(s.photo || '')}" data-cap="${esc(s.title)}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${esc(s.title)}</span><span class="s">${esc(s.subtitle || '')}</span><span class="c">${count(s)}</span></a></li>`).join('');
+    photoSwap(list);
+  }
   const season = secs.find((s) => s.style === 'season');
   const box = document.getElementById('season'), sBtn = document.getElementById('season-btn'), sDlg = document.getElementById('season-dlg');
   if (season && box && sBtn && sDlg) {
@@ -97,20 +100,26 @@ document.getElementById('gallery')?.addEventListener('click', (e) => { const b =
 lb?.addEventListener('click', (e) => { const b = e.target.closest('[data-lb]'); if (b) show(cur + +b.dataset.lb); else if (e.target === lb || e.target.tagName === 'FIGURE') lb.close(); });
 lb?.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
 
-/* Kategorien: Foto folgt dem Mauszeiger */
-function hoverPreview(secs) {
-  const list = document.getElementById('cat-list'); if (!list || !matchMedia('(hover: hover)').matches) return;
-  const fig = document.createElement('div'); fig.className = 'cat-preview'; fig.innerHTML = '<img alt="">'; document.body.append(fig);
-  const img = fig.firstChild; let x = 0, y = 0, tx = 0, ty = 0, on = false, raf;
-  const photo = Object.fromEntries(secs.map((s) => [s.id, s.photo]));
-  const loop = () => { x += (tx - x) * 0.18; y += (ty - y) * 0.18; fig.style.transform = `translate3d(${x}px,${y}px,0) rotate(${(tx - x) * 0.03}deg)`; raf = requestAnimationFrame(loop); };
-  list.addEventListener('mousemove', (e) => { tx = e.clientX + 24; ty = e.clientY - 120; });
-  list.addEventListener('mouseover', (e) => {
-    const a = e.target.closest('a'); if (!a) return;
-    const id = a.getAttribute('href').split('#')[1]; const ph = photo[id];
-    if (!ph) { fig.classList.remove('is-on'); return; }
-    img.src = new URL(`../img/foto/${ph}-800.webp`, import.meta.url).href; fig.classList.add('is-on');
-    if (!on) { on = true; x = tx; y = ty; loop(); }
-  });
-  list.addEventListener('mouseleave', () => { fig.classList.remove('is-on'); on = false; cancelAnimationFrame(raf); });
+/* Kategorien: das Foto rechts wechselt weich zur gewählten Kategorie */
+function photoSwap(list) {
+  const fig = document.getElementById('karte-photo'); if (!fig) return;
+  const A = fig.querySelector('.kp-a'), B = fig.querySelector('.kp-b'), cap = document.getElementById('karte-cap');
+  const base = { src: A.currentSrc || A.src, cap: cap.textContent };
+  let front = A, back = B, cur = base.src, t;
+  const show = (src, text) => {
+    if (src === cur) return; cur = src;
+    back.onload = () => { back.classList.add('is-on'); front.classList.remove('is-on'); [front, back] = [back, front]; };
+    back.src = src; cap.textContent = text;
+  };
+  const pick = (a) => { clearTimeout(t); const ph = a.dataset.photo; if (ph) show(new URL(`../img/foto/${ph}-800.webp`, import.meta.url).href, a.dataset.cap); };
+  list.addEventListener('mouseover', (e) => { const a = e.target.closest('a'); if (a) pick(a); });
+  list.addEventListener('focusin', (e) => { const a = e.target.closest('a'); if (a) pick(a); });
+  list.addEventListener('mouseleave', () => { t = setTimeout(() => show(base.src, base.cap), 900); });
+}
+
+/* Stempel: wird beim ersten Sichtkontakt „aufgedrückt“ */
+const stamp = document.querySelector('.karte .stamp');
+if (stamp && !reduced) {
+  stamp.classList.add('will-stamp');
+  new IntersectionObserver(([e], o) => { if (e.isIntersecting) { setTimeout(() => { stamp.classList.remove('will-stamp'); stamp.classList.add('is-stamped'); }, 350); o.disconnect(); } }, { threshold: 0.6 }).observe(stamp);
 }

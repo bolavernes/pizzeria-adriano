@@ -27,7 +27,7 @@
 
 <header class="site-head" id="kopf">
   <div class="wrap">
-    <a class="brand" href="./">Adriano</a>
+    <a class="brand" href="./"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></a>
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
       <a href="speisekarte/">Speisekarte</a>
       <a href="#kueche">Küche</a>
@@ -48,47 +48,76 @@
       <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht in unseren Holzofen mit brennendem Feuer. Zum Schwenken ziehen oder Pfeiltasten verwenden."></canvas>
       <div class="hero-copy">
         <div class="wrap">
-          <div class="hero-step is-on" data-from="0" data-to="0.3">
-            <h1>Pizza aus dem Holzofen.</h1>
-            <p class="lead">Pizzeria Adriano in der Wallensteinstraße 54 – täglich von 11 bis 24 Uhr, warme Küche bis 22:30.</p>
+          <div class="hero-step hero-intro is-on" data-from="0" data-to="0.24">
+            <h1 class="hero-logo"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></h1>
+            <p class="hero-meta">Wallensteinstraße 54 – täglich von 11 bis 24 Uhr, warme Küche bis 22:30</p>
+          </div>
+          <div class="hero-step" data-from="0.3" data-to="0.62">
+            <h2>Pizza aus dem Steinofen.</h2>
+            <p class="lead">Mit echtem Holzfeuer und von Hand gezogenem Teig, gebacken in wenigen Minuten bei voller Hitze.</p>
             <div class="hero-actions">
               <a class="btn" href="speisekarte/">Speisekarte ansehen</a>
               <a class="link" href="tel:+4313327351">Tisch reservieren: 01 33 27 351</a>
             </div>
           </div>
-          <div class="hero-step" data-from="0.36" data-to="0.66">
-            <h2>Den Ofen sehen Sie vom Tisch aus.</h2>
-            <p class="lead">Wer im ersten Raum nach dem Eingang Platz nimmt, schaut unserem Pizzakoch direkt bei der Arbeit am Holzofen zu.</p>
-          </div>
-          <div class="hero-step" data-from="0.74" data-to="1.01">
+          <div class="hero-step" data-from="0.7" data-to="1.01">
             <h2><span data-count="pizza">42</span> Pizzen. Ein Feuer.</h2>
-            <p class="lead">Von der Marinara bis zur Pizza Adriano – jede wird im Holzofen gebacken.</p>
+            <p class="lead">Den Ofen sehen Sie vom Tisch aus: Wer im ersten Raum Platz nimmt, schaut unserem Pizzakoch direkt bei der Arbeit zu.</p>
             <div class="hero-actions"><a class="btn" href="speisekarte/#pizza">Zu den Pizzen</a></div>
           </div>
         </div>
       </div>
-      <div class="hero-hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v13M6 12l6 6 6-6"/></svg>Scrollen – der Blick wandert durch den Ofen</div>
+      <div class="hero-hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v13M6 12l6 6 6-6"/></svg>Scrollen</div>
       <div class="hero-progress" aria-hidden="true"><i id="prog"></i></div>
     </div>
   </section>
 
   <!-- Karte -->
-  <section class="section" id="karte">
-    <div class="wrap">
-      <div class="section-head has-stamp reveal">
-        <h2>Die Karte</h2>
-        <div class="stamp" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="st-c" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width=".8"/><text font-size="10.5" letter-spacing="1.2"><textPath href="#st-c" textLength="272" lengthAdjust="spacing">Pizzeria Adriano · Holzofen · Wien 1200 ·</textPath></text><text x="60" y="57" text-anchor="middle" font-size="10" font-style="italic">dal</text><text x="60" y="71" text-anchor="middle" font-size="13" font-weight="700">Forno</text></svg></div>
-        <p class="dropcap">Antipasti, Pasta, Fisch und über vierzig Holzofenpizzen. Vieles machen wir selbst – vom Pesto bis zum Tiramisu.</p>
+  <section class="section karte" id="karte" aria-labelledby="h-karte">
+    <div class="wrap karte-grid">
+      <div class="karte-main">
+        <p class="eyebrow reveal">Die Karte</p>
+        <h2 id="h-karte" class="reveal">Antipasti, Pasta, Fisch – und über vierzig Pizzen aus dem Holzofen.</h2>
+        <p class="karte-intro reveal">Vieles machen wir selbst, vom Pesto bis zum Tiramisu. Wählen Sie eine Kategorie:</p>
+        <ol class="karte-index reveal" id="cat-list" aria-label="Kategorien der Speisekarte"></ol>
+        <div class="karte-actions reveal">
+          <a class="btn" href="speisekarte/">Ganze Speisekarte</a>
+          <button class="season-toggle" id="season-btn" type="button" aria-haspopup="dialog" aria-controls="season-dlg" hidden></button>
+        </div>
+        <dialog class="season-dlg" id="season-dlg" aria-labelledby="season-h"><div class="season" id="season"></div></dialog>
       </div>
-      <div class="menu-teaser">
-        <ul class="cat-list reveal" id="cat-list" aria-label="Kategorien der Speisekarte"></ul>
-        <div class="teaser-side">
-          <figure class="teaser-photo reveal"><img src="assets/img/foto/speisekarte-hand-800.webp" srcset="assets/img/foto/speisekarte-hand-800.webp 800w, assets/img/foto/speisekarte-hand-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 40vw" alt="Ein Gast blättert in der roten Adriano-Speisekarte" width="800" height="1000" loading="lazy"></figure>
-          <button class="season-toggle reveal" id="season-btn" type="button" aria-haspopup="dialog" aria-controls="season-dlg" hidden></button>
-          <dialog class="season-dlg" id="season-dlg" aria-labelledby="season-h"><div class="season" id="season"></div></dialog>
+      <div class="karte-visual">
+        <figure class="karte-photo reveal" id="karte-photo">
+          <img class="kp-a is-on" src="assets/img/foto/speisekarte-hand-800.webp" srcset="assets/img/foto/speisekarte-hand-800.webp 800w, assets/img/foto/speisekarte-hand-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 42vw" alt="Ein Gast blättert in der roten Adriano-Speisekarte" width="800" height="1000" loading="lazy">
+          <img class="kp-b" alt="" width="800" height="1000" loading="lazy">
+          <figcaption id="karte-cap">Die Karte</figcaption>
+        </figure>
+        <div class="stamp" aria-hidden="true">
+          <svg viewBox="0 0 200 200">
+            <defs>
+              <path id="st-top" d="M100,100 m-72,0 a72,72 0 1,1 144,0"/>
+              <path id="st-bot" d="M100,100 m-80,0 a80,80 0 0,0 160,0"/>
+              <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2" seed="7" result="n"/>
+                <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.5 1.45" result="holes"/>
+                <feComposite in="SourceGraphic" in2="holes" operator="in" result="inked"/>
+                <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="3" result="w"/>
+                <feDisplacementMap in="inked" in2="w" scale="2.2"/>
+              </filter>
+            </defs>
+            <g filter="url(#ink)" fill="currentColor">
+              <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="3.2"/>
+              <circle cx="100" cy="100" r="87" fill="none" stroke="currentColor" stroke-width="1"/>
+              <circle cx="100" cy="100" r="54" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <text class="st-ring" font-size="18" letter-spacing="1.6"><textPath href="#st-top" startOffset="50%" text-anchor="middle">Pizzeria Adriano</textPath></text>
+              <text class="st-ring" font-size="14" letter-spacing="2"><textPath href="#st-bot" startOffset="50%" text-anchor="middle">Wien · 1200</textPath></text>
+              <text x="27" y="105" font-size="12" text-anchor="middle">★</text><text x="173" y="105" font-size="12" text-anchor="middle">★</text>
+              <text class="st-dal" x="100" y="92" text-anchor="middle" font-size="17">dal</text>
+              <text class="st-forno" x="100" y="120" text-anchor="middle" font-size="31">Forno</text>
+            </g>
+          </svg>
         </div>
       </div>
-      <p class="reveal" style="margin-top:40px"><a class="btn" href="speisekarte/">Ganze Speisekarte öffnen</a></p>
     </div>
   </section>
   <div class="gingham" aria-hidden="true"></div>
@@ -123,7 +152,7 @@
           <img src="assets/img/foto/pizzaiolo-800.webp" srcset="assets/img/foto/pizzaiolo-800.webp 800w, assets/img/foto/pizzaiolo-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 45vw" alt="Der Pizzakoch zieht den Teig auf der Arbeitsfläche aus" width="800" height="1000" loading="lazy">
         </figure>
         <div class="txt reveal">
-          <p class="dropcap">Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
+          <p>Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
           <p>Die beiden Räume sind offen verbunden. In den warmen Monaten sitzen Sie auch draußen im Schanigarten.</p>
         </div>
         <figure class="small reveal">
@@ -205,7 +234,7 @@
 <div class="gingham" aria-hidden="true"></div>
 <footer class="site-foot">
   <div class="wrap">
-    <div><a class="brand" href="./">Adriano</a><p>Ristorante – Pizzeria<br>Wallensteinstraße 54, 1200 Wien</p></div>
+    <div><a class="brand" href="./"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></a><p>Ristorante – Pizzeria<br>Wallensteinstraße 54, 1200 Wien</p></div>
     <ul>
       <li><a href="speisekarte/">Speisekarte</a></li>
       <li><a href="#lokal">Das Lokal</a></li>
@@ -221,5 +250,6 @@
 </footer>
 
 <script type="module" src="assets/js/site.js?v=20261022"></script>
+<a class="fab-menu" href="speisekarte/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4.3 9.3 4.4 12 6c2.7-1.6 5.5-1.7 8-.5v13c-2.5-1.2-5.3-1.1-8 .5-2.7-1.6-5.5-1.7-8-.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13.5" stroke="currentColor" stroke-width="1.5"/></svg>Speisekarte</a>
 </body>
 </html>

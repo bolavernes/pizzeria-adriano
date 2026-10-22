@@ -311,3 +311,94 @@ body::after { content: ""; position: fixed; inset: 10px; border: 1px solid color
 .season-dlg h3 { padding-right: 48px; }
 html:has(.season-dlg[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .season-dlg[open], .season-dlg[open]::backdrop { animation: none; } }
+
+/* =====================================================================
+   v4: Logo vom Schild, Kabel-Überschriften, Hero mit Logo, leichtere Karte
+   ===================================================================== */
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
+.logo { display: block; aspect-ratio: 965 / 112; background: currentColor; -webkit-mask: url(../img/logo-adriano.svg) no-repeat center / contain; mask: url(../img/logo-adriano.svg) no-repeat center / contain; }
+.brand { display: flex; align-items: center; }
+.brand .logo { width: clamp(118px, 11vw, 148px); }
+.site-head .brand, .site-foot .brand { color: var(--c-sign); }
+.site-head.is-solid .brand { color: var(--c-wine); }
+.site-foot .brand .logo { width: 170px; margin-bottom: 14px; }
+.nav a, .head-call, .btn, .link, .menu-btn { font-family: var(--font-head); }
+.nav a { font-size: .98rem; letter-spacing: .01em; }
+.btn { font-weight: 500; letter-spacing: .02em; }
+/* kursive Auszeichnungen in der Antiqua (echte Kursive statt schräger Grotesk) */
+.mk-sec-head .sub, .mk-group-title, .mk-tip, .flag.badge, .g-cap, .lightbox figcaption { font-family: var(--font-body); }
+.fact .v, .besuch-tel, .visit .big-tel { font-style: normal; }
+.fact .v { font-family: var(--font-head); font-weight: 500; }
+.section-head h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); line-height: 1.02; }
+.section-head h2::before { content: none; }
+
+/* Hero: zuerst das Logo vor dem Feuer, dann Fahrt aus dem Ofen */
+.hero { height: 300vh; }
+.hero-intro { left: 50%; width: min(860px, 88vw); text-align: center; transform: translate(-50%, -42%); }
+.hero-intro.is-on { transform: translate(-50%, -50%); }
+.hero-intro::before { inset: -18% -12%; background: radial-gradient(closest-side, rgba(10, 6, 4, .62), rgba(10, 6, 4, 0)); }
+.hero-logo { margin: 0; color: var(--c-sign); filter: drop-shadow(0 6px 34px rgba(10, 6, 4, .9)) drop-shadow(0 1px 2px rgba(10, 6, 4, .9)); }
+.hero-logo .logo { width: 100%; }
+.hero-meta { font-family: var(--font-head); font-size: clamp(.92rem, 1.25vw, 1.08rem); letter-spacing: .02em; color: var(--c-cream); margin: clamp(18px, 2.4vw, 30px) auto 0; max-width: 34em; text-shadow: 0 1px 14px rgba(10, 6, 4, .95), 0 0 2px rgba(10, 6, 4, .8); }
+.hero-copy::before { transition: opacity .8s; }
+.hero-stage:has(.hero-intro.is-on) .hero-copy::before { opacity: 0; }
+.hero-progress { right: auto; left: var(--gutter); }
+@media (max-width: 860px) {
+  .hero-intro { top: 46%; bottom: auto; transform: translate(-50%, -42%); width: 90vw; }
+  .hero-intro.is-on { transform: translate(-50%, -50%); }
+  .hero-hint { display: none; }
+}
+
+/* Schwebender Speisekarte-Knopf */
+.fab-menu { position: fixed; right: max(20px, env(safe-area-inset-right, 0px)); bottom: max(20px, env(safe-area-inset-bottom, 0px)); z-index: 60; display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px 13px 18px; background: var(--c-wine); color: #fff; font-family: var(--font-head); font-weight: 500; font-size: 1rem; letter-spacing: .02em; text-decoration: none; border-radius: 999px; box-shadow: 0 12px 30px -10px rgba(20, 8, 4, .6), inset 0 0 0 1px rgba(255, 255, 255, .14); transition: transform .3s cubic-bezier(.2,.8,.2,1), background .25s; }
+.fab-menu svg { width: 20px; height: 20px; }
+.fab-menu:hover { background: var(--c-wine-bright); transform: translateY(-2px); }
+@media (max-width: 640px) {
+  .fab-menu { right: auto; left: 50%; transform: translateX(-50%); bottom: max(16px, env(safe-area-inset-bottom, 0px)); }
+  .fab-menu:hover { transform: translateX(-50%) translateY(-2px); }
+  .hero-step:not(.hero-intro) { bottom: 104px; }
+  .site-foot { padding-bottom: 90px; }
+}
+
+/* Karte auf der Startseite: Register + wechselndes Foto */
+.karte-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(40px, 7vw, 110px); align-items: start; }
+.eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; font-family: var(--font-head); font-weight: 500; font-size: .95rem; letter-spacing: .06em; color: var(--c-wine); }
+.eyebrow::before { content: ""; width: 34px; height: 1px; background: currentColor; }
+.karte h2 { font-size: clamp(1.9rem, 3.3vw, 2.9rem); line-height: 1.1; max-width: 17em; color: var(--c-ink); }
+.karte-intro { color: var(--c-ink-soft); margin: 22px 0 30px; font-size: 1.08rem; }
+.karte-index { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(43, 38, 34, .16); }
+.karte-index a { position: relative; display: grid; grid-template-columns: 2.4em minmax(0, 1fr) auto; align-items: baseline; gap: 2px 14px; padding: 15px 0 14px; border-bottom: 1px solid rgba(43, 38, 34, .16); text-decoration: none; }
+.karte-index .n, .karte-index .c { font-family: var(--font-head); font-size: .85rem; color: var(--c-ink-soft); font-variant-numeric: tabular-nums; }
+.karte-index .t { font-family: var(--font-head); font-weight: 500; font-size: clamp(1.3rem, 2.1vw, 1.7rem); line-height: 1.15; transition: transform .4s cubic-bezier(.2,.8,.2,1), color .25s; }
+.karte-index .s { grid-column: 2; font-style: italic; font-size: .95rem; color: var(--c-ink-soft); }
+.karte-index .c { grid-column: 3; grid-row: 1; }
+.karte-index .c::after { content: " Gerichte"; }
+.karte-index a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--c-wine); transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.karte-index a:hover::after, .karte-index a:focus-visible::after { transform: scaleX(1); }
+.karte-index a:hover .t, .karte-index a:focus-visible .t { color: var(--c-wine); transform: translateX(6px); }
+.karte-actions { display: flex; flex-wrap: wrap; gap: 16px 22px; align-items: center; margin-top: 34px; }
+.karte-actions .btn { margin: 4px; }
+.karte-actions .season-toggle { width: auto; padding: 11px 16px 11px 14px; gap: 12px; outline-offset: 3px; }
+.karte-actions .season-toggle .ill { width: 30px; }
+.karte-actions .season-toggle b { font-family: var(--font-head); font-weight: 500; font-size: 1.05rem; }
+.karte-actions .season-toggle small { font-size: .85rem; }
+.karte-actions .season-toggle .st-plus { width: 28px; height: 28px; font-size: 1.1rem; }
+.karte-visual { position: sticky; top: 112px; }
+.karte-photo { position: relative; margin: 0; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 2px; background: var(--c-paper-2); }
+.karte-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); transition: opacity .7s ease, transform 1.6s cubic-bezier(.2,.8,.2,1); }
+.karte-photo img.is-on { opacity: 1; transform: none; }
+.karte-photo figcaption { position: absolute; left: 18px; bottom: 16px; font-family: var(--font-head); font-size: .95rem; color: #fff; text-shadow: 0 1px 14px rgba(0, 0, 0, .7); }
+@media (max-width: 860px) {
+  .karte-grid { grid-template-columns: 1fr; }
+  .karte-visual { position: relative; top: 0; order: -1; }
+  .karte-photo { aspect-ratio: 4 / 3; }
+}
+
+/* Stempel statt drehendem Logo */
+.karte .stamp { position: absolute; left: -62px; top: -56px; right: auto; width: 150px; color: var(--c-wine); opacity: .9; mix-blend-mode: multiply; transform: rotate(-14deg); animation: none; pointer-events: none; z-index: 2; }
+.stamp svg text { font-family: var(--font-head); font-weight: 500; }
+.stamp .st-dal { font-family: var(--font-body); font-style: italic; font-weight: 400; }
+.stamp .st-forno { font-weight: 600; }
+.stamp.will-stamp { opacity: 0; transform: rotate(-30deg) scale(1.6); }
+.stamp.is-stamped { opacity: .9; transform: rotate(-14deg) scale(1); transition: transform .5s cubic-bezier(.3,1.5,.5,1), opacity .15s; }
+@media (max-width: 860px) { .karte .stamp { left: auto; right: 12px; top: -38px; width: 112px; } }

@@ -40,8 +40,8 @@ function dish(i, s, compact) {
   const cls = ['dish', i.highlight ? 'is-highlight' : '', q && norm(i.name).includes(q) ? 'is-hit' : '', (state.noAl.size && !al.length) ? 'no-al-info' : ''].join(' ');
   return `<article class="${cls}" id="g-${esc(i.id)}" style="--d:${(dish.n = (dish.n || 0) + 1) % 6}">
     ${i.highlight ? `<span class="hl">${esc(i.highlight)}</span>` : ''}
-    <div class="dish-head"><h3>${hl(i.name, q)}</h3>${flags}${!i.desc ? price : ''}</div>
-    ${i.desc ? `<p class="dish-desc">${hl(i.desc, q)}${price}</p>` : ''}
+    <div class="dish-head"><h3>${hl(i.name, q)}</h3>${flags}<span class="lead-dots" aria-hidden="true"></span>${price}</div>
+    ${i.desc ? `<p class="dish-desc">${hl(i.desc, q)}</p>` : ''}
     <p class="dish-al">${al.map((a) => `<abbr title="${esc(MENU.allergensLong?.[a] || MENU.allergens?.[a] || a)}">${esc(a)}</abbr>`).join('')}</p>
   </article>`;
 }
@@ -49,7 +49,7 @@ const active = () => !!(state.q || state.veg || state.vegan || state.spicy || st
 function secHTML(s, groups, idp = '') {
   return `<section class="mk-sec ${s.style === 'season' ? 'mk-season' : ''} ${s.compact ? 'compact' : ''}" ${idp ? '' : `id="${esc(s.id)}"`} aria-labelledby="h-${idp}${esc(s.id)}">
       ${idp ? '<button class="sd-close" type="button" data-close aria-label="Schließen">×</button>' : ''}
-      <div class="mk-sec-head">${ILL[s.icon] || ''}<h2 id="h-${idp}${esc(s.id)}">${esc(s.title)}</h2>${s.subtitle ? `<span class="sub">${esc(s.subtitle)}</span>` : ''}</div>
+      <div class="mk-sec-head">${ILL[s.icon] || ''}<h2 id="h-${idp}${esc(s.id)}">${s.style === 'season' ? '' : `<span class="mk-no">${String(SECS.filter((x) => x.style !== 'season').indexOf(s) + 1).padStart(2, '0')}</span>`}${esc(s.title)}</h2>${s.subtitle ? `<span class="sub">${esc(s.subtitle)}</span>` : ''}</div>
       ${s.photo ? `<figure class="mk-photo"><img src="${IMG(s.photo, 1400)}" srcset="${IMG(s.photo, 800)} 800w, ${IMG(s.photo, 1400)} 1400w" sizes="(max-width: 760px) 100vw, 1200px" alt="" loading="lazy" decoding="async"></figure>` : ''}
       ${s.note ? `<p class="mk-sec-note">${esc(s.note)}</p>` : ''}${groups}</section>`;
 }
