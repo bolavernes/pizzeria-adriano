@@ -10,6 +10,8 @@ export function wireDialog(dlg, openers) {
   if (!dlg) return () => {};
   const open = () => {
     dlg._last = document.activeElement; if (!dlg.open) dlg.showModal();
+    // Fokus aufs Fenster selbst, nicht auf das ×
+    dlg.setAttribute('tabindex', '-1'); dlg.focus({ preventScroll: true });
     dlg.querySelectorAll('video[data-src]').forEach((v) => { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); });
   };
   openers.forEach((b) => b && b.addEventListener('click', (e) => { e.preventDefault(); open(); }));
