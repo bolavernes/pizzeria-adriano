@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de" class="v2">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pizzeria Adriano – Entwurf 2 (dunkel)</title>
+<meta name="description" content="Zweiter Entwurf der Website der Pizzeria Adriano in Schwarz und Weinrot: Holzofenpizza, Pasta und Pesce in der Wallensteinstraße 54, 1200 Wien.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d0a09">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/itc-newtext-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/yellowtail.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/brand.css?v=20261023">
+<link rel="stylesheet" href="../assets/css/site.css?v=20261023">
+<link rel="stylesheet" href="../assets/css/v2.css?v=20261023">
+<script type="importmap">{"imports":{"three":"../assets/vendor/three.module.min.js"}}</script>
+<link rel="modulepreload" href="../assets/vendor/three.module.min.js">
+</head>
+<body class="v2">
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<header class="site-head" id="kopf">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></a>
+    <nav class="nav" id="nav" aria-label="Hauptnavigation">
+      <a href="../speisekarte/">Speisekarte</a>
+      <a href="#saison">Saison</a>
+      <a href="#kueche">Küche</a>
+      <a href="#lokal">Das Lokal</a>
+      <a href="#feiern">Feiern</a>
+      <a href="#besuch">Besuch</a>
+    </nav>
+    <a class="head-call" href="tel:+4313327351">01 33 27 351</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Navigation öffnen"><span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></button>
+  </div>
+</header>
+
+<main id="inhalt">
+  <!-- Hero: Logo vor dem Feuer -->
+  <section class="v2-hero" id="ofen" aria-label="Pizzeria Adriano">
+    <div class="v2-stage">
+      <picture class="hero-poster" aria-hidden="true"><source media="(max-aspect-ratio: 9/10)" srcset="../assets/img/ofen-start-hoch.webp"><img src="../assets/img/ofen-start.webp" alt="" width="1600" height="1000" fetchpriority="high"></picture>
+      <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht in unseren Holzofen mit brennendem Feuer"></canvas>
+      <div class="v2-hero-copy">
+        <h1 class="hero-logo"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano – Ristorante Pizzeria</span></h1>
+        <p class="script v2-tag">Pizza aus dem Holzofen</p>
+        <p class="hero-meta"><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Wallensteinstraße 54</a> · täglich 11–24 Uhr · warme Küche bis 22:30</p>
+      </div>
+    </div>
+    <svg class="v2-wave" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0,70 C240,150 480,150 720,90 C960,30 1200,20 1440,80 L1440,140 L0,140 Z"/></svg>
+  </section>
+
+  <!-- Über uns: Text links, laufende Bilder rechts -->
+  <section class="v2-about" id="lokal">
+    <div class="wrap v2-about-grid">
+      <div class="v2-about-txt reveal">
+        <p class="script">Ristorante · Pizzeria</p>
+        <h2>Zwei Räume, ein Holzofen.</h2>
+        <p>Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
+        <p>Den Ofen sehen Sie vom Tisch aus: Wer im ersten Raum Platz nimmt, schaut unserem Pizzakoch direkt bei der Arbeit zu.</p>
+        <div class="v2-actions"><a class="pill" href="../speisekarte/">Zur Speisekarte</a><a class="pill pill-ghost" href="tel:+4313327351">Tisch reservieren</a></div>
+      </div>
+      <div class="v2-tiles" aria-hidden="true">
+        <div class="v2-trow" data-dir="-1"><div class="t"><img src="../assets/img/foto/pizza-rucola-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/pizzen.webp" data-src="../assets/video/pizzen.mp4"></video></div><div class="t"><img src="../assets/img/foto/teig-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/gast-pizza-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/ofen.webp" data-src="../assets/video/ofen.mp4"></video></div><div class="t"><img src="../assets/img/foto/pizzaiolo-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/pizza-rucola-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/pizzen.webp" data-src="../assets/video/pizzen.mp4"></video></div><div class="t"><img src="../assets/img/foto/teig-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/gast-pizza-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/ofen.webp" data-src="../assets/video/ofen.mp4"></video></div><div class="t"><img src="../assets/img/foto/pizzaiolo-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div></div>
+        <div class="v2-trow" data-dir="1"><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/belag.webp" data-src="../assets/video/belag.mp4"></video></div><div class="t"><img src="../assets/img/foto/spaghetti-muscheln-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/tiramisu-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/flambiert.webp" data-src="../assets/video/flambiert.mp4"></video></div><div class="t"><img src="../assets/img/foto/pasta-pesto-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/salat-scampi-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/belag.webp" data-src="../assets/video/belag.mp4"></video></div><div class="t"><img src="../assets/img/foto/spaghetti-muscheln-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/tiramisu-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="../assets/video/flambiert.webp" data-src="../assets/video/flambiert.mp4"></video></div><div class="t"><img src="../assets/img/foto/pasta-pesto-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="../assets/img/foto/salat-scampi-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Saison-Special -->
+  <section class="v2-special" id="saison">
+    <div class="wrap v2-special-grid">
+      <figure class="v2-special-media reveal">
+        <video muted loop playsinline preload="none" poster="../assets/video/pizza-zucca.webp" data-src="../assets/video/pizza-zucca.mp4"></video>
+        <span class="sticker" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="stk" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text font-size="11" letter-spacing="2.4"><textPath href="#stk">HERBST SPECIAL · HERBST SPECIAL · </textPath></text></svg><b>Nur zur<br>Saison</b></span>
+      </figure>
+      <div class="v2-special-txt reveal" id="v2-season"></div>
+    </div>
+  </section>
+
+  <!-- Karte: Kategorien zum Durchwischen -->
+  <section class="v2-menu" id="karte">
+    <div class="wrap v2-head reveal">
+      <p class="script">von Antipasti bis Dolci</p>
+      <h2>Die Karte</h2>
+    </div>
+    <div class="v2-cards-wrap">
+      <div class="v2-cards" id="v2-cards"></div>
+      <div class="wrap v2-cards-nav"><button type="button" class="round" data-dir="-1" aria-label="Zurück">‹</button><button type="button" class="round" data-dir="1" aria-label="Weiter">›</button><a class="pill" href="../speisekarte/">Ganze Speisekarte</a></div>
+    </div>
+  </section>
+
+  <!-- Reels -->
+  <section class="v2-reels" id="kueche">
+    <div class="wrap v2-head reveal">
+      <p class="script">frisch aus der Küche</p>
+      <h2>Holzfeuer, Teig &amp; Pfanne</h2>
+    </div>
+    <div class="v2-reel-strip" id="v2-reels"><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/feuer.webp" data-src="../assets/video/feuer.mp4"></video><figcaption>Das Holzfeuer</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/belag.webp" data-src="../assets/video/belag.mp4"></video><figcaption>Frisch belegt</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/ofen.webp" data-src="../assets/video/ofen.mp4"></video><figcaption>Ab in den Ofen</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/pizza-adriano.webp" data-src="../assets/video/pizza-adriano.mp4"></video><figcaption>Pizza Adriano</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/spaghetti.webp" data-src="../assets/video/spaghetti.mp4"></video><figcaption>Spaghetti ai pesci</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/flambiert.webp" data-src="../assets/video/flambiert.mp4"></video><figcaption>Flambiert</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/pizza-baerlauch.webp" data-src="../assets/video/pizza-baerlauch.mp4"></video><figcaption>Aus dem Ofen</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="../assets/video/pizzen.webp" data-src="../assets/video/pizzen.mp4"></video><figcaption>Frisch serviert</figcaption></figure></div>
+  </section>
+
+  <!-- Feiern & Gutscheine -->
+  <section class="section v2-feiern" id="feiern">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Feiern im Adriano</h2>
+        <p>Geburtstag, Firmenessen oder Taufe: Für geschlossene Gesellschaften stellen wir Ihnen das ganze Lokal mit 40 Plätzen zur Verfügung.</p>
+      </div>
+      <figure class="feiern-photo reveal"><img src="../assets/img/foto/tafel-1400.webp" srcset="../assets/img/foto/tafel-800.webp 800w, ../assets/img/foto/tafel-1400.webp 1400w" sizes="(max-width: 1200px) 100vw, 1200px" alt="Gedeckte Tafel mit Pasta, Fisch, Fleisch und Beilagen auf rot-weiß kariertem Tischtuch" width="1400" height="933" loading="lazy"></figure>
+      <div class="feiern">
+        <div class="reveal">
+          <h3>Anfrage für Ihre Feier</h3>
+          <p>Schreiben Sie uns Datum und Personenzahl – wir melden uns mit einem Vorschlag.</p>
+          <form class="form" name="feier-anfrage" method="POST" data-netlify="true" netlify-honeypot="firma" action="danke.html">
+            <input type="hidden" name="form-name" value="feier-anfrage">
+            <p class="sr-only"><label>Nicht ausfüllen <input name="firma" id="f-firma"></label></p>
+            <label>Name <input id="f-name" name="name" autocomplete="name" required></label>
+            <label>Telefon oder E-Mail <input id="f-kontakt" name="kontakt" required></label>
+            <label>Datum <input id="f-datum" name="datum" type="date" required></label>
+            <label>Personen <input id="f-personen" name="personen" type="number" min="1" max="40" inputmode="numeric" required></label>
+            <label class="full">Ihre Nachricht <textarea id="f-nachricht" name="nachricht" placeholder="z. B. Geburtstag, Uhrzeit, Menüwünsche"></textarea></label>
+            <p class="hint">Ihre Angaben verwenden wir nur zur Beantwortung der Anfrage. <a class="link" href="../datenschutz/">Datenschutz</a></p>
+            <button class="btn" type="submit">Anfrage senden</button>
+          </form>
+        </div>
+        <div class="reveal">
+          <h3>Gutscheine</h3>
+          <p>Das ideale Geschenk: Freude und Genuss schenken mit einem Gutschein vom Adriano. Jeder beliebige Betrag ist möglich – erhältlich direkt im Lokal.</p>
+          <p><a class="link" style="color:var(--c-cream)" href="tel:+4313327351">Gutschein telefonisch reservieren</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Besuch -->
+  <section class="section" id="besuch">
+    <div class="wrap">
+      <div class="section-head reveal"><h2>Besuch &amp; Reservierung</h2></div>
+      <div class="visit reveal">
+        <div>
+          <h3>Reservieren</h3>
+          <a class="big-tel" href="tel:+4313327351">01 33 27 351</a>
+          <p>Mobil: <a href="tel:+4368181352828">0681 81 352 828</a></p>
+          <p>E-Mail: <a href="mailto:info@pizzeria-adriano.at">info@pizzeria-adriano.at</a></p>
+          <p style="margin-top:14px">Auch zum Abholen – einfach anrufen und bestellen.</p>
+        </div>
+        <div>
+          <h3>Öffnungszeiten</h3>
+          <table class="hours"><tbody>
+            <tr><td>Montag – Sonntag</td><td>11:00 – 24:00</td></tr>
+            <tr><td>Warme Küche</td><td>bis 22:30</td></tr>
+            <tr><td>Ruhetag</td><td>keiner</td></tr>
+          </tbody></table>
+        </div>
+        <div>
+          <h3>Adresse</h3>
+          <p><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Wallensteinstraße 54<br>1200 Wien</a></p>
+          <p style="margin-top:14px"><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Route planen</a></p>
+        </div>
+      </div>
+      <div class="map-box reveal" id="map-box">
+        <div class="map-ph">
+          <span class="map-pin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.3" fill="currentColor"/></svg></span>
+          <p><strong>Pizzeria Adriano</strong><br>Wallensteinstraße 54, 1200 Wien</p>
+          <button class="btn" type="button" id="map-load">Karte anzeigen</button>
+          <p class="map-note">Beim Anzeigen wird Google Maps geladen und Ihre IP-Adresse an Google übertragen. <a href="../datenschutz/">Datenschutz</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div><a class="brand" href="./"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></a><p>Ristorante – Pizzeria<br><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Wallensteinstraße 54, 1200 Wien</a></p></div>
+    <ul>
+      <li><a href="../speisekarte/">Speisekarte</a></li>
+      <li><a href="#lokal">Das Lokal</a></li>
+      <li><a href="#feiern">Feiern &amp; Gutscheine</a></li>
+    </ul>
+    <ul>
+      <li><a href="tel:+4313327351">01 33 27 351</a></li>
+      <li><a href="mailto:info@pizzeria-adriano.at">info@pizzeria-adriano.at</a></li>
+      <li><a class="foot-map" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.3" fill="currentColor"/></svg>Google Maps – Route planen</a></li>
+      <li><a href="https://www.facebook.com/AdrianoPizzeria" target="_blank" rel="noopener">Facebook</a></li>
+    </ul>
+    <div class="legal"><span>© Pizzeria Adriano</span><a href="../impressum/">Impressum</a><a href="../datenschutz/">Datenschutz</a></div>
+  </div>
+</footer>
+<a class="fab-menu fab-left" href="../speisekarte/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4.3 9.3 4.4 12 6c2.7-1.6 5.5-1.7 8-.5v13c-2.5-1.2-5.3-1.1-8 .5-2.7-1.6-5.5-1.7-8-.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13.5" stroke="currentColor" stroke-width="1.5"/></svg>Speisekarte</a>
+<a class="fab-menu fab-right" href="tel:+4313327351"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Anrufen</a>
+<script type="module" src="../assets/js/v2.js?v=20261023"></script>
+</body>
+</html>
