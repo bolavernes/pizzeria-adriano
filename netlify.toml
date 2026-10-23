@@ -27,6 +27,19 @@
     X-Robots-Tag = "noindex, nofollow"
     Cache-Control = "no-store"
 
+# Entwurf 2 ist jetzt die Startseite
+[[redirects]]
+  from = "/v2"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/v2/*"
+  to = "/"
+  status = 301
+  force = true
+
 # Alte WordPress-Adressen auf die neuen Seiten umleiten
 [[redirects]]
   from = "/speisen/*"

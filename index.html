@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" class="v2">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,31 +11,30 @@
 <meta property="og:description" content="Holzofenpizza, Pasta und Pesce in der Wallensteinstraße 54. Täglich 11–24 Uhr.">
 <meta property="og:image" content="https://www.pizzeria-adriano.at/assets/img/og-adriano.jpg">
 <meta property="og:url" content="https://www.pizzeria-adriano.at/">
-<meta name="theme-color" content="#15100d">
+<meta name="theme-color" content="#0d0a09">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/itc-newtext-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/brand.css?v=20261022">
-<link rel="stylesheet" href="assets/css/site.css?v=20261022">
+<link rel="preload" href="assets/fonts/yellowtail.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/brand.css?v=20261023">
+<link rel="stylesheet" href="assets/css/site.css?v=20261023">
+<link rel="stylesheet" href="assets/css/v2.css?v=20261023">
 <script type="importmap">{"imports":{"three":"./assets/vendor/three.module.min.js"}}</script>
-<link rel="preload" as="image" href="assets/img/ofen-start.webp" media="(min-aspect-ratio: 9/10)" fetchpriority="high">
-<link rel="preload" as="image" href="assets/img/ofen-start-hoch.webp" media="(max-aspect-ratio: 9/10)" fetchpriority="high">
 <link rel="modulepreload" href="assets/vendor/three.module.min.js">
-<link rel="preload" href="assets/models/pizzaofen.glb?v=20261022" as="fetch" crossorigin>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Pizzeria Adriano","servesCuisine":["Italienisch","Pizza"],"url":"https://www.pizzeria-adriano.at/","telephone":"+43 1 3327351","email":"info@pizzeria-adriano.at","menu":"https://www.pizzeria-adriano.at/speisekarte/","address":{"@type":"PostalAddress","streetAddress":"Wallensteinstraße 54","postalCode":"1200","addressLocality":"Wien","addressCountry":"AT"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"11:00","closes":"24:00"}],"image":"https://www.pizzeria-adriano.at/assets/img/og-adriano.jpg"}
 </script>
 </head>
-<body>
+<body class="v2">
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
-
 <header class="site-head" id="kopf">
   <div class="wrap">
     <a class="brand" href="./"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></a>
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
       <a href="speisekarte/">Speisekarte</a>
+      <a href="#saison">Saison</a>
       <a href="#kueche">Küche</a>
       <a href="#lokal">Das Lokal</a>
-      <a href="#feiern">Feiern &amp; Gutscheine</a>
+      <a href="#feiern">Feiern</a>
       <a href="#besuch">Besuch</a>
     </nav>
     <a class="head-call" href="tel:+4313327351">01 33 27 351</a>
@@ -44,138 +43,71 @@
 </header>
 
 <main id="inhalt">
-  <!-- Hero: der Ofen dreht sich beim Scrollen -->
-  <section class="hero" id="ofen" aria-label="Der Holzofen">
-    <div class="hero-stage">
-      <img class="hero-fallback" src="assets/img/foto/pizza-im-ofen-1400.webp" alt="" width="1120" height="1400">
-      <picture class="hero-poster" aria-hidden="true"><source media="(max-aspect-ratio: 9/10)" srcset="assets/img/ofen-start-hoch.webp"><img src="assets/img/ofen-start.webp" alt="" width="1600" height="1000" fetchpriority="high" decoding="async"></picture>
-      <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht in unseren Holzofen mit brennendem Feuer. Zum Schwenken ziehen oder Pfeiltasten verwenden."></canvas>
-      <div class="hero-copy">
-        <div class="wrap">
-          <div class="hero-step hero-intro is-on" data-from="0" data-to="0.24">
-            <h1 class="hero-logo"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></h1>
-            <p class="hero-meta"><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Wallensteinstraße 54</a> – täglich von 11 bis 24 Uhr, warme Küche bis 22:30</p>
-          </div>
-          <div class="hero-step" data-from="0.3" data-to="0.62">
-            <h2>Pizza aus dem Steinofen.</h2>
-            <p class="lead">Mit echtem Holzfeuer und von Hand gezogenem Teig, gebacken in wenigen Minuten bei voller Hitze.</p>
-            <div class="hero-actions">
-              <a class="btn" href="speisekarte/">Speisekarte ansehen</a>
-              <a class="link" href="tel:+4313327351">Tisch reservieren: 01 33 27 351</a>
-            </div>
-          </div>
-          <div class="hero-step" data-from="0.7" data-to="1.01">
-            <h2><span data-count="pizza">42</span> Pizzen. Ein Feuer.</h2>
-            <p class="lead">Den Ofen sehen Sie vom Tisch aus: Wer im ersten Raum Platz nimmt, schaut unserem Pizzakoch direkt bei der Arbeit zu.</p>
-            <div class="hero-actions"><a class="btn" href="speisekarte/#pizza">Zu den Pizzen</a></div>
-          </div>
-        </div>
+  <!-- Hero: Logo vor dem Feuer -->
+  <section class="v2-hero" id="ofen" aria-label="Pizzeria Adriano">
+    <div class="v2-stage">
+      <picture class="hero-poster" aria-hidden="true"><source media="(max-aspect-ratio: 9/10)" srcset="assets/img/ofen-start-hoch.webp"><img src="assets/img/ofen-start.webp" alt="" width="1600" height="1000" fetchpriority="high"></picture>
+      <canvas class="oven-canvas" id="oven" tabindex="0" aria-label="3D-Ansicht in unseren Holzofen mit brennendem Feuer"></canvas>
+      <div class="v2-hero-copy">
+        <h1 class="hero-logo"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano – Ristorante Pizzeria</span></h1>
+        <p class="script v2-tag">Pizza aus dem Holzofen</p>
+        <p class="hero-meta"><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Wallensteinstraße 54</a> · täglich 11–24 Uhr · warme Küche bis 22:30</p>
       </div>
-      <div class="picdump" id="picdump" aria-hidden="true"><figure class="pd pd-w" style="--i:0"><img src="assets/img/dump/d7.webp" alt="" width="480" height="300" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:1"><img src="assets/img/foto/pizza-rucola-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:2"><img src="assets/img/dump/d1.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:3"><img src="assets/img/dump/d4.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></figure><figure class="pd pd-w" style="--i:4"><img src="assets/img/dump/d8.webp" alt="" width="480" height="300" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:5"><img src="assets/img/foto/gast-pizza-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:6"><img src="assets/img/dump/d3.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:7"><img src="assets/img/dump/d2.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></figure><figure class="pd pd-w" style="--i:8"><img src="assets/img/dump/d9.webp" alt="" width="480" height="300" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:9"><img src="assets/img/dump/d5.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:10"><img src="assets/img/foto/pizza-im-ofen-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"></figure><figure class="pd" style="--i:11"><img src="assets/img/dump/d10.webp" alt="" width="480" height="600" loading="lazy" decoding="async"></figure></div>
-      <div class="hero-hint" id="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v13M6 12l6 6 6-6"/></svg>Scrollen</div>
-      <div class="hero-progress" aria-hidden="true"><i id="prog"></i></div>
     </div>
+    <svg class="v2-wave" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true"><path d="M0,70 C240,150 480,150 720,90 C960,30 1200,20 1440,80 L1440,140 L0,140 Z"/></svg>
   </section>
 
-  <!-- Karte -->
-  <section class="section karte" id="karte" aria-labelledby="h-karte">
-    <div class="wrap karte-grid">
-      <div class="karte-main">
-        <p class="eyebrow reveal">Die Karte</p>
-        <h2 id="h-karte" class="reveal">Antipasti, Pasta, Fisch – und über vierzig Pizzen aus dem Holzofen.</h2>
-        <p class="karte-intro reveal">Vieles machen wir selbst, vom Pesto bis zum Tiramisu. Wählen Sie eine Kategorie:</p>
-        <ol class="karte-index reveal" id="cat-list" aria-label="Kategorien der Speisekarte"></ol>
-        <div class="karte-actions reveal">
-          <a class="btn" href="speisekarte/">Ganze Speisekarte</a>
-          <button class="season-toggle" id="season-btn" type="button" aria-haspopup="dialog" aria-controls="season-dlg" hidden></button>
-        </div>
-        <dialog class="season-dlg" id="season-dlg" aria-labelledby="season-h"><div class="season" id="season"></div></dialog>
+  <!-- Über uns: Text links, laufende Bilder rechts -->
+  <section class="v2-about" id="lokal">
+    <div class="wrap v2-about-grid">
+      <div class="v2-about-txt reveal">
+        <p class="script">Ristorante · Pizzeria</p>
+        <h2>Zwei Räume, ein Holzofen.</h2>
+        <p>Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
+        <p>Den Ofen sehen Sie vom Tisch aus: Wer im ersten Raum Platz nimmt, schaut unserem Pizzakoch direkt bei der Arbeit zu.</p>
+        <div class="v2-actions"><a class="pill" href="speisekarte/">Zur Speisekarte</a><a class="pill pill-ghost" href="tel:+4313327351">Tisch reservieren</a></div>
       </div>
-      <div class="karte-visual">
-        <figure class="karte-photo reveal" id="karte-photo">
-          <img class="kp-a is-on" src="assets/img/foto/speisekarte-hand-800.webp" srcset="assets/img/foto/speisekarte-hand-800.webp 800w, assets/img/foto/speisekarte-hand-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 42vw" alt="Ein Gast blättert in der roten Adriano-Speisekarte" width="800" height="1000" loading="lazy">
-          <img class="kp-b" alt="" width="800" height="1000" loading="lazy">
-          <figcaption id="karte-cap">Die Karte</figcaption>
-        </figure>
-        <div class="stamp" aria-hidden="true">
-          <svg viewBox="0 0 200 200">
-            <defs>
-              <path id="st-top" d="M100,100 m-72,0 a72,72 0 1,1 144,0"/>
-              <path id="st-bot" d="M100,100 m-80,0 a80,80 0 0,0 160,0"/>
-              <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
-                <feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2" seed="7" result="n"/>
-                <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.5 1.45" result="holes"/>
-                <feComposite in="SourceGraphic" in2="holes" operator="in" result="inked"/>
-                <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="3" result="w"/>
-                <feDisplacementMap in="inked" in2="w" scale="2.2"/>
-              </filter>
-            </defs>
-            <g filter="url(#ink)" fill="currentColor">
-              <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="3.2"/>
-              <circle cx="100" cy="100" r="87" fill="none" stroke="currentColor" stroke-width="1"/>
-              <circle cx="100" cy="100" r="54" fill="none" stroke="currentColor" stroke-width="1.6"/>
-              <text class="st-ring" font-size="18" letter-spacing="1.6"><textPath href="#st-top" startOffset="50%" text-anchor="middle">Pizzeria Adriano</textPath></text>
-              <text class="st-ring" font-size="14" letter-spacing="2"><textPath href="#st-bot" startOffset="50%" text-anchor="middle">Wien · 1200</textPath></text>
-              <text x="27" y="105" font-size="12" text-anchor="middle">★</text><text x="173" y="105" font-size="12" text-anchor="middle">★</text>
-              <text class="st-dal" x="100" y="92" text-anchor="middle" font-size="17">dal</text>
-              <text class="st-forno" x="100" y="120" text-anchor="middle" font-size="31">Forno</text>
-            </g>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-  <div class="gingham" aria-hidden="true"></div>
-
-  <!-- Galerie -->
-  <section class="section gallery-sec" id="kueche" aria-labelledby="h-kueche">
-    <div class="wrap">
-      <div class="section-head reveal"><h2 id="h-kueche">Aus der Küche</h2><p>Frisch zubereitet, vieles hausgemacht – und alles, was aus dem Ofen kommt, mit echtem Holzfeuer. Ein paar Szenen aus unseren Reels.</p></div>
-    </div>
-    <div class="marquee" id="gallery">
-      <div class="g-track"><div class="g-row" data-dir="-1"><button class="g-item" type="button" data-i="0" aria-label="Foto vergrößern: Aus dem Holzofen"><img src="assets/img/foto/pizza-im-ofen-800.webp" alt="Pizza auf der Schaufel im Holzofen" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Aus dem Holzofen</span></button><button class="g-item is-video" type="button" data-i="12" aria-label="Video vergrößern: Das Holzfeuer"><video muted loop playsinline preload="none" poster="assets/video/feuer.webp" data-src="assets/video/feuer.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Das Holzfeuer</span></button><button class="g-item" type="button" data-i="1" aria-label="Foto vergrößern: Pizza Rucola"><img src="assets/img/foto/pizza-rucola-800.webp" alt="Pizza mit frischem Rucola auf rot-weiß kariertem Tischtuch" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Pizza Rucola</span></button><button class="g-item" type="button" data-i="2" aria-label="Foto vergrößern: Der Teig, von Hand gezogen"><img src="assets/img/foto/teig-800.webp" alt="Hände ziehen Pizzateig auf der bemehlten Arbeitsfläche aus" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Der Teig, von Hand gezogen</span></button><button class="g-item is-video" type="button" data-i="13" aria-label="Video vergrößern: Frisch belegt"><video muted loop playsinline preload="none" poster="assets/video/belag.webp" data-src="assets/video/belag.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Frisch belegt</span></button><button class="g-item" type="button" data-i="3" aria-label="Foto vergrößern: Spaghetti con frutti di mare"><img src="assets/img/foto/spaghetti-muscheln-800.webp" alt="Teller Spaghetti mit Miesmuscheln und Tomatensauce" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Spaghetti con frutti di mare</span></button><button class="g-item" type="button" data-i="4" aria-label="Foto vergrößern: Unser Pizzakoch"><img src="assets/img/foto/pizzaiolo-800.webp" alt="Der Pizzakoch zieht den Teig aus" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Unser Pizzakoch</span></button><button class="g-item is-video" type="button" data-i="14" aria-label="Video vergrößern: Ab in den Ofen"><video muted loop playsinline preload="none" poster="assets/video/ofen.webp" data-src="assets/video/ofen.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Ab in den Ofen</span></button><button class="g-item" type="button" data-i="5" aria-label="Foto vergrößern: Tiramisu, hausgemacht"><img src="assets/img/foto/tiramisu-800.webp" alt="Ein Stück Tiramisu mit Kakao" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Tiramisu, hausgemacht</span></button><button class="g-item" type="button" data-i="0" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/pizza-im-ofen-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Aus dem Holzofen</span></button><button class="g-item is-video" type="button" data-i="12" aria-hidden="true" tabindex="-1"><video muted loop playsinline preload="none" poster="assets/video/feuer.webp" data-src="assets/video/feuer.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Das Holzfeuer</span></button><button class="g-item" type="button" data-i="1" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/pizza-rucola-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Pizza Rucola</span></button><button class="g-item" type="button" data-i="2" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/teig-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Der Teig, von Hand gezogen</span></button><button class="g-item is-video" type="button" data-i="13" aria-hidden="true" tabindex="-1"><video muted loop playsinline preload="none" poster="assets/video/belag.webp" data-src="assets/video/belag.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Frisch belegt</span></button><button class="g-item" type="button" data-i="3" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/spaghetti-muscheln-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Spaghetti con frutti di mare</span></button><button class="g-item" type="button" data-i="4" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/pizzaiolo-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Unser Pizzakoch</span></button><button class="g-item is-video" type="button" data-i="14" aria-hidden="true" tabindex="-1"><video muted loop playsinline preload="none" poster="assets/video/ofen.webp" data-src="assets/video/ofen.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Ab in den Ofen</span></button><button class="g-item" type="button" data-i="5" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/tiramisu-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Tiramisu, hausgemacht</span></button></div></div>
-      <div class="g-track"><div class="g-row" data-dir="1"><button class="g-item" type="button" data-i="6" aria-label="Foto vergrößern: Pasta mit hausgemachtem Pesto"><img src="assets/img/foto/pasta-pesto-800.webp" alt="Grüne Pasta mit Basilikumpesto" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Pasta mit hausgemachtem Pesto</span></button><button class="g-item is-video" type="button" data-i="15" aria-label="Video vergrößern: Flambiert"><video muted loop playsinline preload="none" poster="assets/video/flambiert.webp" data-src="assets/video/flambiert.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Flambiert</span></button><button class="g-item is-wide" type="button" data-i="7" aria-label="Foto vergrößern: Für die ganze Runde"><img src="assets/img/foto/tafel-800.webp" alt="Gedeckte Tafel mit vielen Gerichten" width="1400" height="933" loading="lazy" decoding="async"><span class="g-cap">Für die ganze Runde</span></button><button class="g-item" type="button" data-i="8" aria-label="Foto vergrößern: Insalata con scampi"><img src="assets/img/foto/salat-scampi-800.webp" alt="Gemischter Salat mit gegrillten Garnelen" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Insalata con scampi</span></button><button class="g-item is-video" type="button" data-i="16" aria-label="Video vergrößern: Spaghetti ai pesci"><video muted loop playsinline preload="none" poster="assets/video/spaghetti.webp" data-src="assets/video/spaghetti.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Spaghetti ai pesci</span></button><button class="g-item" type="button" data-i="9" aria-label="Foto vergrößern: Im Adriano"><img src="assets/img/foto/gast-pizza-800.webp" alt="Ein Gast isst lachend ein Stück Pizza" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Im Adriano</span></button><button class="g-item is-wide" type="button" data-i="10" aria-label="Foto vergrößern: Der Gastraum"><img src="assets/img/foto/gastraum-neu-800.webp" alt="Gastraum mit Holztischen" width="1400" height="933" loading="lazy" decoding="async"><span class="g-cap">Der Gastraum</span></button><button class="g-item is-video" type="button" data-i="17" aria-label="Video vergrößern: Frisch aus dem Ofen"><video muted loop playsinline preload="none" poster="assets/video/pizzen.webp" data-src="assets/video/pizzen.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Frisch aus dem Ofen</span></button><button class="g-item" type="button" data-i="11" aria-label="Foto vergrößern: Die Karte"><img src="assets/img/foto/speisekarte-hand-800.webp" alt="Ein Gast blättert in der Adriano-Speisekarte" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Die Karte</span></button><button class="g-item" type="button" data-i="6" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/pasta-pesto-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Pasta mit hausgemachtem Pesto</span></button><button class="g-item is-video" type="button" data-i="15" aria-hidden="true" tabindex="-1"><video muted loop playsinline preload="none" poster="assets/video/flambiert.webp" data-src="assets/video/flambiert.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Flambiert</span></button><button class="g-item is-wide" type="button" data-i="7" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/tafel-800.webp" alt="" width="1400" height="933" loading="lazy" decoding="async"><span class="g-cap">Für die ganze Runde</span></button><button class="g-item" type="button" data-i="8" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/salat-scampi-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Insalata con scampi</span></button><button class="g-item is-video" type="button" data-i="16" aria-hidden="true" tabindex="-1"><video muted loop playsinline preload="none" poster="assets/video/spaghetti.webp" data-src="assets/video/spaghetti.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Spaghetti ai pesci</span></button><button class="g-item" type="button" data-i="9" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/gast-pizza-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Im Adriano</span></button><button class="g-item is-wide" type="button" data-i="10" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/gastraum-neu-800.webp" alt="" width="1400" height="933" loading="lazy" decoding="async"><span class="g-cap">Der Gastraum</span></button><button class="g-item is-video" type="button" data-i="17" aria-hidden="true" tabindex="-1"><video muted loop playsinline preload="none" poster="assets/video/pizzen.webp" data-src="assets/video/pizzen.mp4" width="480" height="600"></video><span class="g-badge" aria-hidden="true">▶ Reel</span><span class="g-cap">Frisch aus dem Ofen</span></button><button class="g-item" type="button" data-i="11" aria-hidden="true" tabindex="-1"><img src="assets/img/foto/speisekarte-hand-800.webp" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="g-cap">Die Karte</span></button></div></div>
-    </div>
-    <dialog class="lightbox" id="lightbox" aria-label="Foto">
-      <figure><img id="lb-img" alt=""><video id="lb-vid" muted loop playsinline controls hidden></video><figcaption id="lb-cap"></figcaption></figure>
-      <button class="lb-btn lb-prev" type="button" data-lb="-1" aria-label="Vorheriges Foto">←</button>
-      <button class="lb-btn lb-next" type="button" data-lb="1" aria-label="Nächstes Foto">→</button>
-      <form method="dialog"><button class="lb-close" aria-label="Schließen">×</button></form>
-    </dialog>
-    <script type="application/json" id="gallery-data">[{"src": "assets/img/foto/pizza-im-ofen-1400.webp", "cap": "Aus dem Holzofen", "alt": "Pizza auf der Schaufel im Holzofen"}, {"src": "assets/img/foto/pizza-rucola-1400.webp", "cap": "Pizza Rucola", "alt": "Pizza mit frischem Rucola auf rot-weiß kariertem Tischtuch"}, {"src": "assets/img/foto/teig-1400.webp", "cap": "Der Teig, von Hand gezogen", "alt": "Hände ziehen Pizzateig auf der bemehlten Arbeitsfläche aus"}, {"src": "assets/img/foto/spaghetti-muscheln-1400.webp", "cap": "Spaghetti con frutti di mare", "alt": "Teller Spaghetti mit Miesmuscheln und Tomatensauce"}, {"src": "assets/img/foto/pizzaiolo-1400.webp", "cap": "Unser Pizzakoch", "alt": "Der Pizzakoch zieht den Teig aus"}, {"src": "assets/img/foto/tiramisu-1400.webp", "cap": "Tiramisu, hausgemacht", "alt": "Ein Stück Tiramisu mit Kakao"}, {"src": "assets/img/foto/pasta-pesto-1400.webp", "cap": "Pasta mit hausgemachtem Pesto", "alt": "Grüne Pasta mit Basilikumpesto"}, {"src": "assets/img/foto/tafel-1400.webp", "cap": "Für die ganze Runde", "alt": "Gedeckte Tafel mit vielen Gerichten"}, {"src": "assets/img/foto/salat-scampi-1400.webp", "cap": "Insalata con scampi", "alt": "Gemischter Salat mit gegrillten Garnelen"}, {"src": "assets/img/foto/gast-pizza-1400.webp", "cap": "Im Adriano", "alt": "Ein Gast isst lachend ein Stück Pizza"}, {"src": "assets/img/foto/gastraum-neu-1400.webp", "cap": "Der Gastraum", "alt": "Gastraum mit Holztischen"}, {"src": "assets/img/foto/speisekarte-hand-1400.webp", "cap": "Die Karte", "alt": "Ein Gast blättert in der Adriano-Speisekarte"}, {"video": "assets/video/feuer.mp4", "src": "assets/video/feuer.webp", "cap": "Das Holzfeuer", "alt": "Flammen im Holzofen und Gerichte aus der Küche"}, {"video": "assets/video/belag.mp4", "src": "assets/video/belag.webp", "cap": "Frisch belegt", "alt": "Tomatensauce wird auf den Pizzateig gestrichen"}, {"video": "assets/video/ofen.mp4", "src": "assets/video/ofen.webp", "cap": "Ab in den Ofen", "alt": "Eine Pizza wird mit der Schaufel in den Holzofen geschoben"}, {"video": "assets/video/flambiert.mp4", "src": "assets/video/flambiert.webp", "cap": "Flambiert", "alt": "Garnelen werden in der Pfanne flambiert"}, {"video": "assets/video/spaghetti.mp4", "src": "assets/video/spaghetti.webp", "cap": "Spaghetti ai pesci", "alt": "Spaghetti mit Meeresfrüchten werden angerichtet"}, {"video": "assets/video/pizzen.mp4", "src": "assets/video/pizzen.webp", "cap": "Frisch aus dem Ofen", "alt": "Mehrere Pizzen auf rot-weiß kariertem Tischtuch"}]</script>
-
-  </section>
-
-  <!-- Lokal -->
-  <section class="section tone" id="lokal">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <h2>Zwei Räume, ein Holzofen</h2>
-      </div>
-      <div class="lokal">
-        <figure class="big reveal">
-          <img src="assets/img/foto/pizzaiolo-800.webp" srcset="assets/img/foto/pizzaiolo-800.webp 800w, assets/img/foto/pizzaiolo-1400.webp 1120w" sizes="(max-width: 860px) 100vw, 45vw" alt="Der Pizzakoch zieht den Teig auf der Arbeitsfläche aus" width="800" height="1000" loading="lazy">
-        </figure>
-        <div class="txt reveal">
-          <p>Das Adriano hat eine lange Geschichte, die bis in die 70er-Jahre zurückreicht. Seit April 2014 führen Drazen und Gordana Spoljar das Lokal – mit Küchenchefin, Pizzakoch und Service-Team, sieben Tage die Woche.</p>
-          <p>Die beiden Räume sind offen verbunden. In den warmen Monaten sitzen Sie auch draußen im Schanigarten.</p>
-        </div>
-        <figure class="small reveal">
-          <img src="assets/img/foto/gastraum-neu-800.webp" srcset="assets/img/foto/gastraum-neu-800.webp 800w, assets/img/foto/gastraum-neu-1400.webp 1400w" sizes="(max-width: 860px) 100vw, 45vw" alt="Gastraum des Adriano mit Holztischen und Blick zur Fensterfront" width="800" height="533" loading="lazy">
-        </figure>
-        <div class="facts reveal">
-          <div class="fact"><div class="v">40</div><div class="l">Plätze in zwei Räumen</div></div>
-          <div class="fact"><div class="v">7</div><div class="l">Tage die Woche geöffnet – kein Ruhetag</div></div>
-          <div class="fact"><div class="v">22:30</div><div class="l">warme Küche bis</div></div>
-          <div class="fact"><div class="v">2014</div><div class="l">übernommen von Familie Spoljar</div></div>
-        </div>
+      <div class="v2-tiles" aria-hidden="true">
+        <div class="v2-trow" data-dir="-1"><div class="t"><img src="assets/img/foto/pizza-rucola-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/pizzen.webp" data-src="assets/video/pizzen.mp4"></video></div><div class="t"><img src="assets/img/foto/teig-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/gast-pizza-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/ofen.webp" data-src="assets/video/ofen.mp4"></video></div><div class="t"><img src="assets/img/foto/pizzaiolo-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/pizza-rucola-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/pizzen.webp" data-src="assets/video/pizzen.mp4"></video></div><div class="t"><img src="assets/img/foto/teig-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/gast-pizza-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/ofen.webp" data-src="assets/video/ofen.mp4"></video></div><div class="t"><img src="assets/img/foto/pizzaiolo-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div></div>
+        <div class="v2-trow" data-dir="1"><div class="t"><video muted loop playsinline preload="none" poster="assets/video/belag.webp" data-src="assets/video/belag.mp4"></video></div><div class="t"><img src="assets/img/foto/spaghetti-muscheln-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/tiramisu-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/flambiert.webp" data-src="assets/video/flambiert.mp4"></video></div><div class="t"><img src="assets/img/foto/pasta-pesto-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/salat-scampi-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/belag.webp" data-src="assets/video/belag.mp4"></video></div><div class="t"><img src="assets/img/foto/spaghetti-muscheln-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/tiramisu-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><video muted loop playsinline preload="none" poster="assets/video/flambiert.webp" data-src="assets/video/flambiert.mp4"></video></div><div class="t"><img src="assets/img/foto/pasta-pesto-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div><div class="t"><img src="assets/img/foto/salat-scampi-800.webp" alt="" loading="lazy" decoding="async" width="800" height="1000"></div></div>
       </div>
     </div>
   </section>
 
-  <div class="gingham" aria-hidden="true"></div>
+  <!-- Saison-Special -->
+  <section class="v2-special" id="saison">
+    <div class="wrap v2-special-grid">
+      <figure class="v2-special-media reveal">
+        <video muted loop playsinline preload="none" poster="assets/video/pizza-zucca.webp" data-src="assets/video/pizza-zucca.mp4"></video>
+        <span class="sticker" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="stk" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text font-size="11" letter-spacing="2.4"><textPath href="#stk">HERBST SPECIAL · HERBST SPECIAL · </textPath></text></svg><b>Nur zur<br>Saison</b></span>
+      </figure>
+      <div class="v2-special-txt reveal" id="v2-season"></div>
+    </div>
+  </section>
+
+  <!-- Karte: Kategorien zum Durchwischen -->
+  <section class="v2-menu" id="karte">
+    <div class="wrap v2-head reveal">
+      <p class="script">von Antipasti bis Dolci</p>
+      <h2>Die Karte</h2>
+    </div>
+    <div class="v2-cards-wrap">
+      <div class="v2-cards" id="v2-cards"></div>
+      <div class="wrap v2-cards-nav"><button type="button" class="round" data-dir="-1" aria-label="Zurück">‹</button><button type="button" class="round" data-dir="1" aria-label="Weiter">›</button><a class="pill" href="speisekarte/">Ganze Speisekarte</a></div>
+    </div>
+  </section>
+
+  <!-- Reels -->
+  <section class="v2-reels" id="kueche">
+    <div class="wrap v2-head reveal">
+      <p class="script">frisch aus der Küche</p>
+      <h2>Holzfeuer, Teig &amp; Pfanne</h2>
+    </div>
+    <div class="v2-reel-strip" id="v2-reels"><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/feuer.webp" data-src="assets/video/feuer.mp4"></video><figcaption>Das Holzfeuer</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/belag.webp" data-src="assets/video/belag.mp4"></video><figcaption>Frisch belegt</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/ofen.webp" data-src="assets/video/ofen.mp4"></video><figcaption>Ab in den Ofen</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/pizza-adriano.webp" data-src="assets/video/pizza-adriano.mp4"></video><figcaption>Pizza Adriano</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/spaghetti.webp" data-src="assets/video/spaghetti.mp4"></video><figcaption>Spaghetti ai pesci</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/flambiert.webp" data-src="assets/video/flambiert.mp4"></video><figcaption>Flambiert</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/pizza-baerlauch.webp" data-src="assets/video/pizza-baerlauch.mp4"></video><figcaption>Aus dem Ofen</figcaption></figure><figure class="reel"><video muted loop playsinline preload="none" poster="assets/video/pizzen.webp" data-src="assets/video/pizzen.mp4"></video><figcaption>Frisch serviert</figcaption></figure></div>
+  </section>
+
   <!-- Feiern & Gutscheine -->
-  <section class="section rosso" id="feiern">
+  <section class="section v2-feiern" id="feiern">
     <div class="wrap">
       <div class="section-head reveal">
         <h2>Feiern im Adriano</h2>
@@ -206,6 +138,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- Besuch -->
   <section class="section" id="besuch">
@@ -243,8 +176,9 @@
       </div>
     </div>
   </section>
+
 </main>
-<div class="gingham" aria-hidden="true"></div>
+
 <footer class="site-foot">
   <div class="wrap">
     <div><a class="brand" href="./"><span class="logo" aria-hidden="true"></span><span class="sr-only">Pizzeria Adriano</span></a><p>Ristorante – Pizzeria<br><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pizzeria+Adriano+Wallensteinstra%C3%9Fe+54+1200+Wien" target="_blank" rel="noopener">Wallensteinstraße 54, 1200 Wien</a></p></div>
@@ -262,8 +196,8 @@
     <div class="legal"><span>© Pizzeria Adriano</span><a href="impressum/">Impressum</a><a href="datenschutz/">Datenschutz</a></div>
   </div>
 </footer>
-
-<script type="module" src="assets/js/site.js?v=20261022"></script>
-<a class="fab-menu" href="speisekarte/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4.3 9.3 4.4 12 6c2.7-1.6 5.5-1.7 8-.5v13c-2.5-1.2-5.3-1.1-8 .5-2.7-1.6-5.5-1.7-8-.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13.5" stroke="currentColor" stroke-width="1.5"/></svg>Speisekarte</a>
+<a class="fab-menu fab-left" href="speisekarte/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4.3 9.3 4.4 12 6c2.7-1.6 5.5-1.7 8-.5v13c-2.5-1.2-5.3-1.1-8 .5-2.7-1.6-5.5-1.7-8-.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13.5" stroke="currentColor" stroke-width="1.5"/></svg>Speisekarte</a>
+<a class="fab-menu fab-right" href="tel:+4313327351"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>Anrufen</a>
+<script type="module" src="assets/js/v2.js?v=20261023"></script>
 </body>
 </html>

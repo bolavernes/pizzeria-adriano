@@ -1,6 +1,7 @@
 import { loadMenu, visibleSections, formatPrice, esc } from './menu-core.js?v=20261022';
 import { toggleHTML, wireDialog } from './season.js?v=20261022';
 import { ILL } from './ills.js?v=20261022';
+const SK = new URL('../../speisekarte/', import.meta.url).href; // Speisekarte, egal von welcher Seite aus
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -64,7 +65,7 @@ loadMenu().then(({ menu }) => {
   if (list) {
     const count = (s) => s.groups.reduce((a, g) => a + g.items.length, 0);
     list.innerHTML = secs.filter((s) => s.style !== 'season').map((s, i) => `
-    <li><a href="speisekarte/#${esc(s.id)}" data-photo="${esc(s.photo || '')}" data-cap="${esc(s.title)}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${esc(s.title)}</span><span class="s">${esc(s.subtitle || '')}</span><span class="c">${count(s)}</span></a></li>`).join('');
+    <li><a href="${SK}#${esc(s.id)}" data-photo="${esc(s.photo || '')}" data-cap="${esc(s.title)}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${esc(s.title)}</span><span class="s">${esc(s.subtitle || '')}</span><span class="c">${count(s)}</span></a></li>`).join('');
     photoSwap(list);
   }
   const season = secs.find((s) => s.style === 'season');
@@ -77,7 +78,7 @@ loadMenu().then(({ menu }) => {
       <figure class="season-media"><video muted loop playsinline preload="none" poster="${sv}.webp" data-src="${sv}.mp4"></video></figure>
       <h3 id="season-h">${ILL[season.icon] || ''}${esc(season.title)}</h3><p class="when">${esc(season.subtitle || '')}</p>
       <ul>${items.map((i) => `<li><span class="n">${esc(i.name)}</span><span class="p">${esc(formatPrice(i.price, i.pricePrefix))}</span>${i.desc ? `<div class="d">${esc(i.desc)}</div>` : ''}</li>`).join('')}</ul>
-      <a class="link" href="speisekarte/#${esc(season.id)}">In der Speisekarte ansehen</a>`;
+      <a class="link" href="${SK}#${esc(season.id)}">In der Speisekarte ansehen</a>`;
     sBtn.hidden = false;
     wireDialog(sDlg, [sBtn]);
   }

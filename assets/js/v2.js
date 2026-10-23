@@ -1,6 +1,7 @@
 // Entwurf 2 (dunkel): Hero mit Ofen, laufende Bilder, Saison-Special, Kategorien-Karten, Reels
 import { loadMenu, visibleSections, formatPrice, esc } from './menu-core.js?v=20261022';
 import { ILL } from './ills.js?v=20261022';
+const SK = new URL('../../speisekarte/', import.meta.url).href; // Speisekarte, egal von welcher Seite aus
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (id) => document.getElementById(id);
@@ -70,7 +71,7 @@ loadMenu().then(({ menu }) => {
   cards.innerHTML = secs.filter((s) => s.style !== 'season').map((s) => {
     const n = s.groups.reduce((a, g) => a + g.items.length, 0);
     const ph = PHOTO[s.id] || (s.photo ? `foto/${s.photo}-800.webp` : 'foto/tafel-800.webp');
-    return `<a class="v2-card" href="../speisekarte/#${esc(s.id)}"><span class="ph"><img src="${IMG(ph)}" alt="" loading="lazy" decoding="async"></span>
+    return `<a class="v2-card" href="${SK}#${esc(s.id)}"><span class="ph"><img src="${IMG(ph)}" alt="" loading="lazy" decoding="async"></span>
       <span class="bd"><span class="nm">${esc(s.title)}</span><span class="sb">${esc(s.subtitle || '')}</span><span class="ct">${n} Gerichte</span><span class="mehr">Mehr</span></span></a>`;
   }).join('');
   // Saison-Special
@@ -79,7 +80,7 @@ loadMenu().then(({ menu }) => {
     const items = se.groups.flatMap((g) => g.items);
     box.innerHTML = `<p class="script">Saison-Special</p>${ILL[se.icon] || ''}<h2>${esc(se.title)}</h2><p class="when">${esc(se.subtitle || '')} – solange es Kürbis und Sturm gibt.</p>
       <ul class="sp-list">${items.map((i) => `<li><span class="n">${esc(i.name)}</span><span class="p">${esc(formatPrice(i.price, i.pricePrefix))}</span>${i.desc ? `<span class="d">${esc(i.desc)}</span>` : ''}</li>`).join('')}</ul>
-      <a class="pill" href="../speisekarte/#${esc(se.id)}">In der Speisekarte</a>`;
+      <a class="pill" href="${SK}#${esc(se.id)}">In der Speisekarte</a>`;
   } else document.querySelector('.v2-special')?.remove();
 });
 
