@@ -162,3 +162,9 @@ body.v2::after { display: none; } /* kein Seitenrahmen */
   .reel:nth-child(even) { margin-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .sticker svg { animation: none; } }
+
+/* Bild-Reihen seitlich wischbar */
+.v2-track { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
+.v2-track::-webkit-scrollbar { display: none; }
+.v2-track.is-drag { cursor: grabbing; user-select: none; }
+.v2-track .v2-trow { transform: none !important; will-change: auto; }

@@ -39,17 +39,34 @@ const vObs = new IntersectionObserver((es) => es.forEach((e) => {
 }), { rootMargin: '150px' });
 document.querySelectorAll('video[data-src]').forEach((v) => vObs.observe(v));
 
-/* Laufende Bild-Reihen im Weinrot-Block, an den Scroll gekoppelt */
+/* Bild-Reihen im Weinrot-Block: laufen beim Scrollen gegenläufig weiter und lassen sich seitlich wischen/ziehen */
 const about = document.querySelector('.v2-about');
-const rows = [...document.querySelectorAll('.v2-trow')];
+const tracks = [...document.querySelectorAll('.v2-track')].map((el) => ({ el, row: el.firstElementChild, user: 0, auto: 0, ours: -1 }));
 let tick = false;
 function moveRows() {
   tick = false; if (!about) return;
   const r = about.getBoundingClientRect();
-  const p = (innerHeight - r.top) / (innerHeight + r.height);
-  rows.forEach((row) => { const half = row.scrollWidth / 2, dir = +row.dataset.dir; const x = dir < 0 ? -p * half * 0.5 : -half * 0.5 + p * half * 0.5; row.style.transform = `translate3d(${x}px,0,0)`; });
+  const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+  tracks.forEach((t) => {
+    const max = t.el.scrollWidth - t.el.clientWidth; if (max <= 0) return;
+    const span = Math.min(max, t.row.scrollWidth * 0.3), dir = +t.row.dataset.dir;
+    t.auto = reduced ? 0 : dir < 0 ? p * span : (1 - p) * span;
+    const x = Math.round(Math.min(max, Math.max(0, t.auto + t.user)));
+    if (Math.abs(t.el.scrollLeft - x) > 1) { t.ours = x; t.el.scrollLeft = x; }
+  });
 }
-if (!reduced) { addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(moveRows); } }, { passive: true }); addEventListener('resize', moveRows); moveRows(); }
+tracks.forEach((t) => {
+  // eigenes Wischen merken, damit der Scroll-Lauf von dort weitergeht
+  t.el.addEventListener('scroll', () => { if (Math.abs(t.el.scrollLeft - t.ours) <= 1) return; t.user = t.el.scrollLeft - t.auto; }, { passive: true });
+  // Ziehen mit der Maus (Touch und Trackpad scrollen nativ)
+  let down = false, sx = 0, sl = 0;
+  t.el.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = t.el.scrollLeft; t.el.classList.add('is-drag'); });
+  addEventListener('pointermove', (e) => { if (down) t.el.scrollLeft = sl - (e.clientX - sx); });
+  addEventListener('pointerup', () => { if (down) { down = false; t.el.classList.remove('is-drag'); } });
+  t.el.addEventListener('dragstart', (e) => e.preventDefault());
+});
+addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(moveRows); } }, { passive: true });
+addEventListener('resize', moveRows); moveRows();
 
 /* Kategorien-Karten: Pfeile scrollen um eine Karte */
 const cards = $('v2-cards');
